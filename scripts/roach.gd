@@ -1,88 +1,89 @@
 extends CharacterBody2D
 
-# Export variables.
+# Enemy movement properties.
 @export var gravity = 600
-@export var speed : int = 50
+@export var speed: int = 50
 @export var acceleration: float = 600
 @export var friction: float = 800
 
-# Setting the direction (Default: Left).
+# Patrol system.
+@export var patrol_points: Node # Parent node containing patrol points.
+@export var wait_time: int = 3 # Time to wait at each patrol point.
+var no_of_points: int = 0
+var point_positions: Array[Vector2] = []
+var current_point_position: int = 0
+
+# Direction and movement state.
 var direction: Vector2 = Vector2.LEFT
+var can_walk: bool = true
 
-# Patrol point variables.
-@export var patrol_points : Node
-@export var wait_time : int = 3
-var no_of_points: int
-var point_positions: Array[Vector2]
-var current_point: Vector2
-var current_point_position: int
-
-# Ready variables.
+# Node references.
 @onready var sprite = $Sprite
 @onready var anim = $Animation
 @onready var timer = $Timer
 
-# Code relating to the state machine.
-enum States { idle, walk }
-var current_state : States
-var can_walk: bool = true
+# State machine.
+enum States {idle, walk}
+var current_state: States = States.idle
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if patrol_points != null:
-		no_of_points = patrol_points.get_children().size()
+	# Initialize patrol points.
+	if patrol_points:
+		no_of_points = patrol_points.get_child_count()
 		for point in patrol_points.get_children():
 			point_positions.append(point.global_position)
-		current_point = point_positions[current_point_position]
 	else:
 		print("No patrol points available.")
 
-	timer.wait_time = wait_time
-		
-	current_state = States.idle
+	timer.wait_time = wait_time # Set timer wait duration.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
+
 	if can_walk:
 		roach_patrol(delta)
+
 	move_and_slide()
 	animate_roach()
 
-	print("State: ", States.keys()[current_state])	
+	print("State: ", States.keys()[current_state]) # Debugging state output.
 
+# Applies gravity if the enemy is airborne.
 func apply_gravity(delta: float):
 	if !is_on_floor():
 		velocity.y += gravity * delta
 
-# Enemy patrol logic focused on patrol points.
+# Patrol logic, moving between defined patrol points.
 func roach_patrol(delta: float):
-	if point_positions.size() == 0:
+	if point_positions.is_empty():
 		return
 
 	var target_point = point_positions[current_point_position]
 	direction = (target_point - global_position).normalized()
 
-	# Flip sprite based on direction
+	# Flip sprite based on movement direction.
 	sprite.flip_h = direction.x < 0
 
-	# Move towards the target patrol point
+	# Move towards the patrol point.
 	velocity.x = move_toward(velocity.x, direction.x * speed, acceleration * delta)
 	current_state = States.walk
 
-	# Check if close enough to the patrol point
+	# Stop moving when close enough to the target.
 	if global_position.distance_to(target_point) < 5:
-		can_walk = false  # Stop moving
-		velocity.x = 0  # Stop horizontal movement
+		can_walk = false
+		velocity.x = 0
 		current_state = States.idle
-		timer.start()  # Start the pause timer
+		timer.start()
 
+# Updates animation based on current state.
 func animate_roach():
-	if current_state == States.idle:
-		anim.play("idle")
-	elif current_state == States.walk:
-		anim.play("walk")
+	match current_state:
+		States.idle:
+			anim.play("idle")
+		States.walk:
+			anim.play("walk")
 
+# Resumes movement after waiting at a patrol point.
 func _on_timer_timeout() -> void:
 	can_walk = true
 	current_point_position = (current_point_position + 1) % no_of_points
