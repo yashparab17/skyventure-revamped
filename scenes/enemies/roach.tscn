@@ -64,6 +64,8 @@ _data = {
 }
 
 [node name="Roach" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_uh4oa")
 
 [node name="Collision" type="CollisionShape2D" parent="."]

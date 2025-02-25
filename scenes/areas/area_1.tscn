@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://c2raa0glxgp56"]
+[gd_scene load_steps=8 format=4 uid="uid://c2raa0glxgp56"]
 
 [ext_resource type="Texture2D" uid="uid://bisqnnoydbf40" path="res://assets/tilesets/area_1/example_tileset.png" id="1_g4rlx"]
 [ext_resource type="PackedScene" uid="uid://qjnr80eka1o8" path="res://scenes/backgrounds/sky_parallax_background.tscn" id="1_y41uj"]
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/player/player.tscn" id="2_natpb"]
 [ext_resource type="PackedScene" uid="uid://s50fl3a4b3ib" path="res://scenes/enemies/roach.tscn" id="3_cj633"]
+[ext_resource type="PackedScene" uid="uid://benelgf3benh8" path="res://scenes/items/gun_1_pickup.tscn" id="5_f24j5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e38ae"]
 texture = ExtResource("1_g4rlx")
@@ -386,7 +387,7 @@ texture = ExtResource("1_g4rlx")
 
 [sub_resource type="TileSet" id="TileSet_we6ye"]
 physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 2
+physics_layer_0/collision_mask = 14
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Ground"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
@@ -415,3 +416,6 @@ position = Vector2(64, 64)
 
 [node name="Point2" type="Marker2D" parent="Roach/PatrolPoints"]
 position = Vector2(-64, 64)
+
+[node name="Gun Pickup 1" parent="." instance=ExtResource("5_f24j5")]
+position = Vector2(56, -8)

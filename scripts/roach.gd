@@ -46,8 +46,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	animate_roach()
 
-	print("State: ", States.keys()[current_state]) # Debugging state output.
-
 # Applies gravity if the enemy is airborne.
 func apply_gravity(delta: float):
 	if !is_on_floor():
@@ -79,9 +77,11 @@ func roach_patrol(delta: float):
 func animate_roach():
 	match current_state:
 		States.idle:
-			anim.play("idle")
+			if anim.current_animation != "idle":
+				anim.play("idle")
 		States.walk:
-			anim.play("walk")
+			if anim.current_animation != "walk":
+				anim.play("walk")
 
 # Resumes movement after waiting at a patrol point.
 func _on_timer_timeout() -> void:
