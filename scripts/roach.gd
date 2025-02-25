@@ -5,13 +5,13 @@ extends CharacterBody2D
 @export var speed : int = 50
 @export var acceleration: float = 600
 @export var friction: float = 800
-@export var patrol_points : Node
-@export var wait_time : int = 3
 
 # Setting the direction (Default: Left).
 var direction: Vector2 = Vector2.LEFT
 
 # Patrol point variables.
+@export var patrol_points : Node
+@export var wait_time : int = 3
 var no_of_points: int
 var point_positions: Array[Vector2]
 var current_point: Vector2
@@ -44,13 +44,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
-
 	if can_walk:
-		enemy_patrol(delta)
-
+		roach_patrol(delta)
 	move_and_slide()
-
-	animate_enemy()
+	animate_roach()
 
 	print("State: ", States.keys()[current_state])	
 
@@ -59,7 +56,7 @@ func apply_gravity(delta: float):
 		velocity.y += gravity * delta
 
 # Enemy patrol logic focused on patrol points.
-func enemy_patrol(delta: float):
+func roach_patrol(delta: float):
 	if point_positions.size() == 0:
 		return
 
@@ -80,7 +77,7 @@ func enemy_patrol(delta: float):
 		current_state = States.idle
 		timer.start()  # Start the pause timer
 
-func animate_enemy():
+func animate_roach():
 	if current_state == States.idle:
 		anim.play("idle")
 	elif current_state == States.walk:

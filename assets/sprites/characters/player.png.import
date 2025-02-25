@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba8m6ipp26est"
-path="res://.godot/imported/roach.png-3da0bc530aaacbd51de6f2f3d07b90ac.ctex"
+uid="uid://c8xkk7pjpcho3"
+path="res://.godot/imported/player.png-4508374c418cbfe7b79c5beffcb67188.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/roach.png"
-dest_files=["res://.godot/imported/roach.png-3da0bc530aaacbd51de6f2f3d07b90ac.ctex"]
+source_file="res://assets/sprites/characters/player.png"
+dest_files=["res://.godot/imported/player.png-4508374c418cbfe7b79c5beffcb67188.ctex"]
 
 [params]
 

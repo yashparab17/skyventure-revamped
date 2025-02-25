@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=4 uid="uid://c2raa0glxgp56"]
 
-[ext_resource type="Texture2D" uid="uid://bisqnnoydbf40" path="res://assets/tilesets/example_tileset.png" id="1_g4rlx"]
+[ext_resource type="Texture2D" uid="uid://bisqnnoydbf40" path="res://assets/tilesets/area_1/example_tileset.png" id="1_g4rlx"]
 [ext_resource type="PackedScene" uid="uid://qjnr80eka1o8" path="res://scenes/backgrounds/sky_parallax_background.tscn" id="1_y41uj"]
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/player/player.tscn" id="2_natpb"]
 [ext_resource type="PackedScene" uid="uid://s50fl3a4b3ib" path="res://scenes/enemies/roach.tscn" id="3_cj633"]
