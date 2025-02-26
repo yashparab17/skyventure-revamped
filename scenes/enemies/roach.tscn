@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://s50fl3a4b3ib"]
+[gd_scene load_steps=11 format=3 uid="uid://s50fl3a4b3ib"]
 
 [ext_resource type="Texture2D" uid="uid://ba8m6ipp26est" path="res://assets/sprites/characters/roach.png" id="1_piddw"]
 [ext_resource type="Script" path="res://scripts/roach.gd" id="1_uh4oa"]
@@ -20,6 +20,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2i(1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Collision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_7exw2"]
@@ -56,12 +68,75 @@ tracks/0/keys = {
 "values": [Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_v7rxn"]
+resource_name = "hurt"
+length = 0.2
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(0, 2), Vector2i(1, 2)]
+}
+
+[sub_resource type="Animation" id="Animation_kiuqo"]
+resource_name = "death"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 3), Vector2i(1, 3), Vector2i(2, 3), Vector2i(1, 3), Vector2i(2, 3), Vector2i(1, 3), Vector2i(2, 3), Vector2i(1, 3), Vector2i(2, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hurtbox/HurtboxCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Collision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w2pvh"]
 _data = {
 "RESET": SubResource("Animation_0eq0l"),
+"death": SubResource("Animation_kiuqo"),
+"hurt": SubResource("Animation_v7rxn"),
 "idle": SubResource("Animation_7exw2"),
 "walk": SubResource("Animation_y8mie")
 }
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mfqj3"]
+height = 24.0
 
 [node name="Roach" type="CharacterBody2D"]
 collision_layer = 4
@@ -76,7 +151,7 @@ shape = SubResource("CapsuleShape2D_a8vlp")
 position = Vector2(0, -10)
 texture = ExtResource("1_piddw")
 hframes = 4
-vframes = 2
+vframes = 4
 frame = 1
 
 [node name="Animation" type="AnimationPlayer" parent="."]
@@ -88,4 +163,14 @@ libraries = {
 wait_time = 3.0
 autostart = true
 
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_mfqj3")
+debug_color = Color(0.991572, 0, 0.26379, 0.42)
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

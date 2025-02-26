@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ckq32nl7vk503"]
+[gd_scene load_steps=7 format=3 uid="uid://ckq32nl7vk503"]
 
 [ext_resource type="Texture2D" uid="uid://litsq0v1ug6l" path="res://assets/sprites/projectiles/bullet_1.png" id="1_svfqq"]
 [ext_resource type="Script" path="res://scripts/bullet_1.gd" id="2_ngnpv"]
@@ -30,6 +30,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_reqvq"]
+size = Vector2(20, 6)
+
 [node name="Bullet 1" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_05h55")
 animation = &"shot"
@@ -40,4 +43,13 @@ wait_time = 5.0
 one_shot = true
 autostart = true
 
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_reqvq")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
