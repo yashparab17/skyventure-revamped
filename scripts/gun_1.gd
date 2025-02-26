@@ -5,7 +5,7 @@ extends Node2D
 
 # Bullet variables.
 @export var cooldown: float = 0.2
-@export var shoot_offset: Vector2 = Vector2(0, -3)
+@export var shoot_offset: Vector2 = Vector2(0, -2)
 
 @onready var muzzle = $Muzzle
 var can_shoot = true

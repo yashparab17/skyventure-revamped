@@ -45,7 +45,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	
-	if can_walk:
+	if can_walk and current_state != States.death:
 		roach_patrol(delta)
 	
 	move_and_slide()
