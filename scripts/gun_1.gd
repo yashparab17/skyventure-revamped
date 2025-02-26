@@ -38,3 +38,12 @@ func raise_gun():
 # Resets the gun position.
 func lower_gun():
 	position = original_position
+
+# Flips the muzzle when player changes direction.
+func flip_muzzle(flip: bool):
+	$Sprite.flip_h = flip
+
+	if flip:
+		$Muzzle.position.x = - abs($Muzzle.position.x)
+	else:
+		$Muzzle.position.x = abs($Muzzle.position.x)

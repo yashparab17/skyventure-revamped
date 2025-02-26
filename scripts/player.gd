@@ -98,13 +98,7 @@ func collect_gun():
 # Flips the gun when the player flips direction.
 func flip_gun(flip: bool):
 	if gun_instance:
-		var gun_sprite = gun_instance.get_node("Sprite")
-		var muzzle = gun_instance.get_node("Muzzle")
-
-		if gun_sprite:
-			gun_sprite.flip_h = flip
-		if muzzle:
-			muzzle.position.x *= -1
+		gun_instance.flip_muzzle(flip)
 
 # Updates animation based on player state.
 func animate_player():
