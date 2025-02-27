@@ -68,7 +68,7 @@ func handle_ground_movement(direction: float, delta: float):
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 		current_state = States.idle_shoot if shoot_timer > 0 else States.idle
 
-	if gun_instance and Input.is_action_just_pressed("shoot"):
+	if gun_instance and Input.is_action_just_pressed("shoot") and shoot_timer <= 0:
 		shoot_bullet(1 if not sprite.flip_h else -1)
 		shoot_timer = shoot_cooldown
 		current_state = States.walk_shoot if direction else States.idle_shoot
@@ -77,7 +77,7 @@ func handle_ground_movement(direction: float, delta: float):
 func handle_air_movement(direction: float, delta: float):
 	if velocity.y > 0:
 		current_state = States.fall
-	velocity.x = move_toward(velocity.x, speed * float(direction), acceleration * delta)
+	velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta)
 
 # Spawns and shoots a bullet using the gun instance.
 func shoot_bullet(direction: float):
