@@ -78,22 +78,6 @@ func roach_patrol(delta: float):
 		current_state = States.idle
 		timer.start()
 
-# Updates animation based on current state.
-func animate_roach():
-	match current_state:
-		States.idle:
-			if anim.current_animation != "idle":
-				anim.play("idle")
-		States.walk:
-			if anim.current_animation != "walk":
-				anim.play("walk")
-		States.hurt:
-			if anim.current_animation != "hurt":
-				anim.play("hurt")
-		States.death:
-			if anim.current_animation != "death":
-				anim.play("death", -1, 1, false) # Plays death animation once without looping.
-
 # Resumes movement after waiting at a patrol point.
 func _on_timer_timeout() -> void:
 	can_walk = true
@@ -123,3 +107,19 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			queue_free() # Remove the enemy from the scene.
 		else:
 			can_walk = true # Resume movement if still alive.
+
+# Updates animation based on current state.
+func animate_roach():
+	match current_state:
+		States.idle:
+			if anim.current_animation != "idle":
+				anim.play("idle")
+		States.walk:
+			if anim.current_animation != "walk":
+				anim.play("walk")
+		States.hurt:
+			if anim.current_animation != "hurt":
+				anim.play("hurt")
+		States.death:
+			if anim.current_animation != "death":
+				anim.play("death", -1, 1, false) # Plays death animation once without looping.

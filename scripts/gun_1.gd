@@ -6,7 +6,6 @@ extends Node2D
 # Bullet variables.
 @export var cooldown: float = 0.2
 @export var shoot_offset: Vector2 = Vector2(0, -2)
-
 @onready var muzzle = $Muzzle
 var can_shoot = true
 var original_position: Vector2
@@ -20,13 +19,14 @@ func shoot(direction: float):
 		can_shoot = false
 		raise_gun()
 
+		# Instantiates the bullet and adds it to the scene.
 		if bullet_scene != null:
 			var bullet = bullet_scene.instantiate() as Node2D
 			bullet.global_position = muzzle.global_position
 			bullet.direction = direction
 			get_tree().current_scene.add_child(bullet)
 
-
+		# Cooldown timer.
 		await get_tree().create_timer(cooldown).timeout
 		lower_gun()
 		can_shoot = true

@@ -28,7 +28,9 @@ var shoot_timer = 0.0
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	shoot_timer -= delta
+
 	handle_movement_and_shooting(delta)
+
 	move_and_slide()
 	animate_player()
 
