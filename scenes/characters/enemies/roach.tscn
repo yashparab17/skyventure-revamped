@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://s50fl3a4b3ib"]
 
-[ext_resource type="Texture2D" uid="uid://ba8m6ipp26est" path="res://assets/sprites/characters/roach.png" id="1_piddw"]
-[ext_resource type="Script" path="res://scripts/roach.gd" id="1_uh4oa"]
+[ext_resource type="Texture2D" uid="uid://ba8m6ipp26est" path="res://assets/sprites/characters/enemies/roach.png" id="1_piddw"]
+[ext_resource type="Script" path="res://scripts/characters/enemies/roach.gd" id="1_uh4oa"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a8vlp"]
 radius = 8.0
