@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://cposwutdmumy1"]
+
+[ext_resource type="Texture2D" uid="uid://cl6oh48coj64p" path="res://assets/sprites/characters/enemies/swordbob.png" id="1_h2vy3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k5yyr"]
+radius = 8.0
+height = 16.0
+
+[sub_resource type="Animation" id="Animation_qayxh"]
+resource_name = "idle"
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jkonk"]
+resource_name = "walk"
+length = 0.45
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_v1nkl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sid3r"]
+_data = {
+"RESET": SubResource("Animation_v1nkl"),
+"idle": SubResource("Animation_qayxh"),
+"walk": SubResource("Animation_jkonk")
+}
+
+[node name="Swordbob" type="CharacterBody2D"]
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_k5yyr")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(4, -8)
+texture = ExtResource("1_h2vy3")
+hframes = 4
+vframes = 3
+frame = 5
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sid3r")
+}
