@@ -5,8 +5,9 @@ extends CharacterBody2D
 @export var speed: int = 50
 @export var acceleration: float = 600
 
-# Enemy health properties.
+# Enemy health and damage properties.
 @export var health_amount: int = 3
+@export var damage_amount: int = 1
 
 # Patrol system.
 @export var patrol_points: Node # Parent node containing patrol points.

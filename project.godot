@@ -15,6 +15,10 @@ run/main_scene="res://scenes/areas/area_1.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+HealthManager="*res://scripts/health_manager.gd"
+
 [display]
 
 window/size/viewport_width=480
@@ -22,6 +26,11 @@ window/size/viewport_height=240
 window/size/window_width_override=960
 window/size/window_height_override=480
 window/stretch/mode="viewport"
+
+[global_group]
+
+enemy=""
+player=""
 
 [input]
 

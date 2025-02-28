@@ -138,7 +138,7 @@ _data = {
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mfqj3"]
 height = 24.0
 
-[node name="Roach" type="CharacterBody2D"]
+[node name="Roach" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_uh4oa")

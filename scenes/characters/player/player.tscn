@@ -1,10 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dm2gstauhcofm"]
+[gd_scene load_steps=13 format=3 uid="uid://dm2gstauhcofm"]
 
 [ext_resource type="Script" path="res://scripts/characters/player/player.gd" id="1_4jjpf"]
 [ext_resource type="Texture2D" uid="uid://c8xkk7pjpcho3" path="res://assets/sprites/characters/player/player.png" id="1_epty3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fc3fl"]
-radius = 8.0
+radius = 6.0
 height = 16.0
 
 [sub_resource type="Animation" id="Animation_4f4pb"]
@@ -137,6 +137,10 @@ _data = {
 "walk_shoot": SubResource("Animation_0h2kq")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_otcs5"]
+radius = 8.0
+height = 20.0
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 collision_mask = 5
@@ -163,3 +167,14 @@ autoplay = "idle"
 
 [node name="GunHoldPosition" type="Marker2D" parent="."]
 position = Vector2(8, -6)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -8)
+shape = SubResource("CapsuleShape2D_otcs5")
+debug_color = Color(0.982472, 0, 0.361879, 0.42)
+
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

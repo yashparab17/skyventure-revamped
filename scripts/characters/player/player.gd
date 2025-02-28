@@ -127,3 +127,8 @@ func animate_player():
 		States.fall:
 			if anim.current_animation != "fall":
 				anim.play("fall")
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemy"):
+		print("Enemy entered. Damage: ", body.damage_amount)
+		HealthManager.decrease_health(body.damage_amount)
