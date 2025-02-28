@@ -33,7 +33,7 @@ enum States {idle, walk, hurt, death}
 var current_state: States = States.idle
 
 func _ready() -> void:
-	# Initialize patrol points.
+	# Initializes patrol points.
 	if patrol_points:
 		no_of_points = patrol_points.get_child_count()
 		for point in patrol_points.get_children():
@@ -41,7 +41,7 @@ func _ready() -> void:
 	else:
 		print("No patrol points available.")
 	
-	timer.wait_time = wait_time # Set timer wait duration.
+	timer.wait_time = wait_time # Sets timer wait duration.
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -65,14 +65,14 @@ func roach_patrol(delta: float):
 	var target_point = point_positions[current_point_position]
 	direction = (target_point - global_position).normalized()
 	
-	# Flip sprite based on movement direction.
+	# Flips sprite based on movement direction.
 	sprite.flip_h = direction.x < 0
 	
-	# Move towards the patrol point.
+	# Moves towards the patrol point.
 	velocity.x = move_toward(velocity.x, direction.x * speed, acceleration * delta)
 	current_state = States.walk
 	
-	# Stop moving when close enough to the target.
+	# Stops moving when close enough to the target.
 	if global_position.distance_to(target_point) < 5:
 		can_walk = false
 		velocity.x = 0
@@ -88,26 +88,26 @@ func _on_timer_timeout() -> void:
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.get_parent().has_method("get_damage_amount"):
 		var node = area.get_parent() as Node
-		health_amount -= node.damage_amount # Reduce health based on bullet damage.
+		health_amount -= node.damage_amount # Reduces health based on bullet damage.
 
 		current_state = States.hurt
-		can_walk = false # Stop movement.
+		can_walk = false # Stops movement.
 		velocity.x = 0
 		velocity.y = 0
 		await get_tree().create_timer(0.2).timeout # Brief stun duration.
 		
 		if health_amount <= 0:
 			current_state = States.death
-			await anim.animation_finished # Wait for death animation to finish.
+			await anim.animation_finished # Waits for death animation to finish.
 			
-			# Spawn the death effect at the enemy's position.
+			# Spawns the death effect at the enemy's position.
 			var entity_death_instance = entity_death.instantiate() as Node2D
 			entity_death_instance.global_position = global_position + sprite.position
 			get_parent().add_child(entity_death_instance)
 			
-			queue_free() # Remove the enemy from the scene.
+			queue_free() # Removes the enemy from the scene.
 		else:
-			can_walk = true # Resume movement if still alive.
+			can_walk = true # Resumes movement if still alive.
 
 # Updates animation based on current state.
 func animate_roach():
