@@ -33,7 +33,7 @@ enum States {idle, walk, hurt, death}
 var current_state: States = States.idle
 
 func _ready() -> void:
-	# Initialize patrol points.
+	# Initializes patrol points.
 	if patrol_points:
 		no_of_points = patrol_points.get_child_count()
 		for point in patrol_points.get_children():
@@ -41,7 +41,7 @@ func _ready() -> void:
 	else:
 		print("No patrol points available.")
 	
-	timer.wait_time = wait_time # Set timer wait duration.
+	timer.wait_time = wait_time # Sets timer wait duration.
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -65,7 +65,7 @@ func roach_patrol(delta: float):
 	var target_point = point_positions[current_point_position]
 	direction = (target_point - global_position).normalized()
 	
-	# Flip sprite based on movement direction.
+	# Flips sprite based on movement direction.
 	sprite.flip_h = direction.x < 0
 	
 	# Moves towards the patrol point.

@@ -6,6 +6,21 @@
 radius = 8.0
 height = 16.0
 
+[sub_resource type="Animation" id="Animation_v1nkl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_qayxh"]
 resource_name = "idle"
 step = 0.02
@@ -37,21 +52,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_v1nkl"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sid3r"]
