@@ -405,9 +405,8 @@ tile_set = SubResource("TileSet_we6ye")
 [node name="Player" parent="." instance=ExtResource("2_natpb")]
 position = Vector2(240, 120)
 
-[node name="Roach" parent="." node_paths=PackedStringArray("patrol_points") instance=ExtResource("3_cj633")]
-position = Vector2(368, 144)
-patrol_points = NodePath("PatrolPoints")
+[node name="Roach" parent="." instance=ExtResource("3_cj633")]
+position = Vector2(368, 208)
 
 [node name="PatrolPoints" type="Node2D" parent="Roach"]
 
