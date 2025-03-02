@@ -11,7 +11,7 @@ extends CharacterBody2D
 @export var damage_amount: int = 1
 
 # Direction and movement state.
-var direction: Vector2 = Vector2.LEFT
+var direction : Vector2
 var can_walk: bool = true
 
 # Patrol system.
@@ -75,8 +75,7 @@ func roach_patrol(delta: float):
 	direction = (target_point - global_position).normalized()
 	
 	# Flip sprite based on movement direction.
-	sprite.flip_h = direction.x < 0
-	detection_area.position.x = -24 if sprite.flip_h else 24
+	flip_direction(direction.x)
 	
 	# Move towards the patrol point.
 	velocity.x = move_toward(velocity.x, direction.x * speed, acceleration * delta)
@@ -91,12 +90,18 @@ func roach_patrol(delta: float):
 		patrol_timer.stop()
 		patrol_timer.start()
 		
+# Flips direction accordingly.
+func flip_direction(dir_x: float):
+	if dir_x != 0:
+		sprite.flip_h = dir_x < 0
+		detection_area.position.x = -24 if sprite.flip_h else 24
+		
 # Alert jump before chasing.
 func roach_alert():
 	if is_on_floor():
 		direction = (player_ref.global_position - global_position).normalized()
-		sprite.flip_h = direction.x < 0
-		detection_area.position.x = -24 if sprite.flip_h else 24
+		
+		flip_direction(direction.x)
 		
 		velocity.y = -150 # Jump force.
 		current_state = States.alert
@@ -114,8 +119,7 @@ func roach_chase(delta: float):
 	direction = (player_ref.global_position - global_position).normalized()
 	
 	# Flip sprite based on movement direction.
-	sprite.flip_h = direction.x < 0
-	detection_area.position.x = -24 if sprite.flip_h else 24
+	flip_direction(direction.x)
 	
 	# Move towards the player.
 	velocity.x = move_toward(velocity.x, direction.x * chase_speed, acceleration * delta)
@@ -165,8 +169,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		health_amount -= bullet_damage # Reduce health based on bullet damage.
 		
 		if bullet_direction != 0:
-			sprite.flip_h = bullet_direction > 0
-			detection_area.position.x = -24 if sprite.flip_h else 24
+			flip_direction(-bullet.global_position.direction_to(global_position).x)
 
 		current_state = States.hurt
 		can_walk = false # Stop movement.
