@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://s50fl3a4b3ib"]
+[gd_scene load_steps=14 format=3 uid="uid://s50fl3a4b3ib"]
 
 [ext_resource type="Texture2D" uid="uid://ba8m6ipp26est" path="res://assets/sprites/characters/enemies/roach.png" id="1_piddw"]
 [ext_resource type="Script" path="res://scripts/characters/enemies/roach.gd" id="1_uh4oa"]
@@ -21,7 +21,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2i(0, 2), Vector2i(1, 2)]
+"values": [Vector2i(0, 4), Vector2i(1, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_kiuqo"]
@@ -37,7 +37,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Vector2i(0, 4), Vector2i(1, 4), Vector2i(2, 4), Vector2i(1, 4), Vector2i(2, 4), Vector2i(1, 4), Vector2i(2, 4), Vector2i(1, 4), Vector2i(2, 4)]
+"values": [Vector2i(0, 6), Vector2i(1, 6), Vector2i(2, 6), Vector2i(1, 6), Vector2i(2, 6), Vector2i(1, 6), Vector2i(2, 6), Vector2i(1, 6), Vector2i(2, 6)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -79,7 +79,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2i(0, 3), Vector2i(1, 3)]
+"values": [Vector2i(0, 5), Vector2i(1, 5)]
 }
 
 [sub_resource type="Animation" id="Animation_7exw2"]
@@ -116,9 +116,45 @@ tracks/0/keys = {
 "values": [Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_dnxw3"]
+resource_name = "chase"
+length = 0.6
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 3), Vector2i(1, 3), Vector2i(2, 3), Vector2i(3, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_1rixp"]
+resource_name = "alert"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 2)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w2pvh"]
 _data = {
+"alert": SubResource("Animation_1rixp"),
 "attack": SubResource("Animation_bv5it"),
+"chase": SubResource("Animation_dnxw3"),
 "death": SubResource("Animation_kiuqo"),
 "hurt": SubResource("Animation_v7rxn"),
 "idle": SubResource("Animation_7exw2"),
@@ -144,8 +180,8 @@ shape = SubResource("CapsuleShape2D_a8vlp")
 position = Vector2(0, -10)
 texture = ExtResource("1_piddw")
 hframes = 4
-vframes = 5
-frame = 8
+vframes = 7
+frame = 16
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {

@@ -34,7 +34,7 @@ var player_ref: Node2D = null
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 
 # State machine.
-enum States {idle, walk, chase, hurt, death}
+enum States {idle, walk, alert, chase, hurt, death}
 var current_state: States = States.idle
 
 func _ready() -> void:
@@ -90,6 +90,21 @@ func roach_patrol(delta: float):
 		current_state = States.idle
 		patrol_timer.stop()
 		patrol_timer.start()
+		
+# Alert jump before chasing.
+func roach_alert():
+	if is_on_floor():
+		direction = (player_ref.global_position - global_position).normalized()
+		sprite.flip_h = direction.x < 0
+		detection_area.position.x = -24 if sprite.flip_h else 24
+		
+		velocity.y = -150  # Jump force
+		current_state = States.alert
+		await anim.animation_finished  # Wait before starting chase.
+
+		# Now start chasing
+		current_state = States.chase
+		can_walk = true  # Allow movement again
 
 # Handles enemy chasing the player.
 func roach_chase(delta: float):
@@ -114,16 +129,20 @@ func _on_patrol_timer_timeout() -> void:
 
 # Handles player entering the detection area.
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):  # Ensure it's the player.
-		chasing = true
+	if body.is_in_group("player") and current_state not in [States.chase, States.alert]:  
+		# Only alert if not already chasing
 		player_ref = body
-		can_walk = true  # Allow movement immediately.
-		chase_timer.stop()  # Reset the cooldown timer.
+		chasing = true
+		can_walk = false  # Stop movement
+		velocity.x = 0
+		roach_alert()
+		
+	chase_timer.stop()
 
 # Handles player exiting the detection area.
 func _on_detection_area_body_exited(body: Node2D) -> void:
 	if body == player_ref:
-		chase_timer.start()  # Start the 1-second chase timer.
+		chase_timer.start()  # Start the 2-second chase timer.
 
 # Stops chase after the cooldown period.
 func _on_chase_timer_timeout() -> void:
@@ -167,9 +186,12 @@ func animate_roach():
 		States.walk:
 			if anim.current_animation != "walk":
 				anim.play("walk")
+		States.alert:
+			if anim.current_animation != "alert":
+				anim.play("alert")
 		States.chase:
-			if anim.current_animation != "walk":
-				anim.play("walk")
+			if anim.current_animation != "chase":
+				anim.play("chase")
 		States.hurt:
 			if anim.current_animation != "hurt":
 				anim.play("hurt")
