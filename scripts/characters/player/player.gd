@@ -11,6 +11,8 @@ var gun_instance = null
 @export var jump_force: int = -300
 @export var acceleration: float = 600
 @export var friction: float = 800
+@export var hurt_knockback: Vector2 = Vector2(150, -200)
+@export var hurt_duration: float = 0.5
 
 # Node references.
 @onready var sprite: Sprite2D = $Sprite
@@ -18,14 +20,20 @@ var gun_instance = null
 @onready var gun_hold_position: Marker2D = $GunHoldPosition
 
 # State machine.
-enum States {idle, walk, jump, fall, idle_shoot, walk_shoot, jump_shoot, fall_shoot}
+enum States {idle, walk, jump, fall, idle_shoot, walk_shoot, jump_shoot, fall_shoot, hurt}
 var current_state: States = States.idle
 
 # Shooting properties.
 var shoot_cooldown = 0.2
 var shoot_timer = 0.0
 
+# Invulnerability properties.
+var is_invulnerable = false
+
 func _physics_process(delta: float) -> void:
+	if current_state == States.hurt:
+		return
+	
 	apply_gravity(delta)
 	shoot_timer -= delta
 
@@ -81,7 +89,7 @@ func handle_air_movement(direction: float, delta: float):
 	else:
 		current_state = States.jump_shoot if shoot_timer > 0 else States.jump
 	velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta)
-	
+
 	# Shooting logic while airborne.
 	if gun_instance and Input.is_action_just_pressed("shoot") and shoot_timer <= 0:
 		shoot_bullet(1 if not sprite.flip_h else -1)
@@ -111,11 +119,38 @@ func flip_gun(flip: bool):
 	if gun_instance:
 		gun_instance.flip_muzzle(flip)
 
-# Handles player taking damage when hit by an enemy.
+# Checks for collision in the hurtbox.
 func _on_hurtbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("enemy"):
-		print("Enemy entered. Damage: ", body.damage_amount)
-		HealthManager.decrease_health(body.damage_amount)
+	if body.is_in_group("enemy") and not is_invulnerable:
+		take_damage(body.damage_amount, body.global_position.x)
+
+# Handles player taking damage when hit by an enemy.
+func take_damage(damage: int, enemy_x: float):
+	is_invulnerable = true
+	HealthManager.decrease_health(damage)
+	current_state = States.hurt
+	
+	# Allow animation to play while paused.
+	anim.process_mode = Node.PROCESS_MODE_ALWAYS
+	anim.play("hurt")
+
+	# Apply knockback direction.
+	var knockback_direction = 1 if enemy_x < global_position.x else -1
+	velocity = hurt_knockback * Vector2(knockback_direction, 1)
+
+	# Ensure animation starts before pausing.
+	await get_tree().process_frame  
+	get_tree().paused = true  # Pause the game.
+
+	# Wait for animation duration to finish.
+	await anim.animation_finished  
+
+	# Resume game.
+	get_tree().paused = false
+	anim.process_mode = Node.PROCESS_MODE_INHERIT 
+
+	is_invulnerable = false
+	current_state = States.idle
 
 # Updates animation based on player state.
 func animate_player():
@@ -150,3 +185,6 @@ func animate_player():
 			if anim.current_animation != "fall_shoot":
 				anim.play("fall_shoot")
 				anim.seek(current_frame, true)
+		States.hurt:
+			if anim.current_animation != "hurt":
+				anim.play("hurt")

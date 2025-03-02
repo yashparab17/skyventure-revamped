@@ -181,6 +181,7 @@ position = Vector2(0, -10)
 texture = ExtResource("1_piddw")
 hframes = 4
 vframes = 7
+frame = 20
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
