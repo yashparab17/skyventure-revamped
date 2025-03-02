@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var gravity = 600
 @export var speed: int = 50
 @export var acceleration: float = 600
-@export var chase_speed: int = 80  # Speed when chasing
+@export var chase_speed: int = 80 # Speed when chasing
 
 # Enemy health and damage variables.
 @export var health_amount: int = 3
@@ -27,8 +27,8 @@ var player_ref: Node2D = null
 @onready var sprite = $Sprite
 @onready var anim = $Animation
 @onready var patrol_timer = $PatrolTimer
-@onready var chase_timer = $ChaseTimer  # Timer for stopping chase
-@onready var detection_area = $DetectionArea  # Reference to the Area2D
+@onready var chase_timer = $ChaseTimer # Timer for stopping chase
+@onready var detection_area = $DetectionArea # Reference to the Area2D
 
 # Preloads the entity death effect.
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
@@ -47,7 +47,7 @@ func generate_patrol_points() -> void:
 	point_positions.append(spawn_position + Vector2(64, 0)) # First patrol point.
 	point_positions.append(spawn_position + Vector2(-64, 0)) # Second patrol point.
 	no_of_points = point_positions.size()
-	current_point_position = 0  # Reset patrol index
+	current_point_position = 0 # Reset patrol index.
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -98,13 +98,13 @@ func roach_alert():
 		sprite.flip_h = direction.x < 0
 		detection_area.position.x = -24 if sprite.flip_h else 24
 		
-		velocity.y = -150  # Jump force
+		velocity.y = -150 # Jump force.
 		current_state = States.alert
-		await anim.animation_finished  # Wait before starting chase.
+		await anim.animation_finished # Wait before starting chase.
 
-		# Now start chasing
+		# Now start chasing.
 		current_state = States.chase
-		can_walk = true  # Allow movement again
+		can_walk = true # Allow movement again.
 
 # Handles enemy chasing the player.
 func roach_chase(delta: float):
@@ -129,11 +129,11 @@ func _on_patrol_timer_timeout() -> void:
 
 # Handles player entering the detection area.
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player") and current_state not in [States.chase, States.alert]:  
-		# Only alert if not already chasing
+	if body.is_in_group("player") and current_state not in [States.chase, States.alert]:
+		# Only alert if not already chasing.
 		player_ref = body
 		chasing = true
-		can_walk = false  # Stop movement
+		can_walk = false # Stop movement.
 		velocity.x = 0
 		roach_alert()
 		
@@ -142,21 +142,31 @@ func _on_detection_area_body_entered(body: Node2D) -> void:
 # Handles player exiting the detection area.
 func _on_detection_area_body_exited(body: Node2D) -> void:
 	if body == player_ref:
-		chase_timer.start()  # Start the 2-second chase timer.
+		chase_timer.start() # Start the 2-second chase timer.
 
 # Stops chase after the cooldown period.
 func _on_chase_timer_timeout() -> void:
 	chasing = false
 	player_ref = null
 	
-	generate_patrol_points()  # Generate new patrol points at current position.
-	can_walk = true  # Resume patrolling.
+	generate_patrol_points() # Generate new patrol points at current position.
+	can_walk = true # Resume patrolling.
 
 # Handles enemy taking damage when hit by a bullet.
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.get_parent().has_method("get_damage_amount"):
-		var node = area.get_parent() as Node
-		health_amount -= node.damage_amount # Reduce health based on bullet damage.
+		var bullet = area.get_parent() as Node # Store the bullet reference safely.
+		
+		# Extract the damage and direction before the bullet is deleted.
+		var bullet_damage = bullet.damage_amount
+		var bullet_direction = bullet.direction
+		var bullet_shooter = bullet.shooter
+
+		health_amount -= bullet_damage # Reduce health based on bullet damage.
+		
+		if bullet_direction != 0:
+			sprite.flip_h = bullet_direction > 0
+			detection_area.position.x = -24 if sprite.flip_h else 24
 
 		current_state = States.hurt
 		can_walk = false # Stop movement.
@@ -165,17 +175,25 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		await get_tree().create_timer(0.2).timeout # Brief stun duration.
 		
 		if health_amount <= 0:
-			current_state = States.death
-			await anim.animation_finished # Wait for death animation to finish.
-			
-			# Spawn the death effect at the enemy's position.
-			var entity_death_instance = entity_death.instantiate() as Node2D
-			entity_death_instance.global_position = global_position + sprite.position
-			get_parent().add_child(entity_death_instance)
-			
-			queue_free() # Remove the enemy from the scene.
+			die()
 		else:
-			can_walk = true # Resume movement if still alive.
+			# If still alive, aggravate the roach and start chasing.
+			player_ref = bullet_shooter # Assuming player shot the bullet.
+			chasing = true
+			can_walk = true
+			current_state = States.chase
+
+# Death function.
+func die():
+	current_state = States.death
+	await anim.animation_finished # Wait for death animation to finish.
+			
+	# Spawn the death effect at the enemy's position.
+	var entity_death_instance = entity_death.instantiate() as Node2D
+	entity_death_instance.global_position = global_position + sprite.position
+	get_parent().add_child(entity_death_instance)
+			
+	queue_free() # Remove the enemy from the scene.
 
 # Updates animation based on current state.
 func animate_roach():

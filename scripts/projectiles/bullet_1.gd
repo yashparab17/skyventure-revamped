@@ -4,6 +4,7 @@ extends AnimatedSprite2D
 @export var speed: int = 500
 @export var direction: int
 @export var damage_amount: int = 1
+var shooter: Node2D # Store reference to the shooter (e.g., Player)
 
 # Preloads the bullet impact effect.
 var bullet_1_impact = preload("res://scenes/effects/bullet_1_impact.tscn")

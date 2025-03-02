@@ -7,6 +7,7 @@ extends Node2D
 @export var cooldown: float = 0.2
 @export var shoot_offset: Vector2 = Vector2(0, -2)
 @onready var muzzle = $Muzzle
+var shooter : CharacterBody2D = null
 var can_shoot = true
 var original_position: Vector2
 
@@ -24,6 +25,11 @@ func shoot(direction: float):
 			var bullet = bullet_scene.instantiate() as Node2D
 			bullet.global_position = muzzle.global_position
 			bullet.direction = direction
+			
+			# Set shooter reference to the gun's parent (should be the player)
+			if owner is CharacterBody2D:
+				bullet.shooter = owner
+				
 			get_tree().current_scene.add_child(bullet)
 
 		# Cooldown timer.
