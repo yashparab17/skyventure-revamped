@@ -18,7 +18,7 @@ var gun_instance = null
 @onready var gun_hold_position: Marker2D = $GunHoldPosition
 
 # State machine.
-enum States {idle, walk, jump, fall, idle_shoot, walk_shoot}
+enum States {idle, walk, jump, fall, idle_shoot, walk_shoot, jump_shoot, fall_shoot}
 var current_state: States = States.idle
 
 # Shooting properties.
@@ -77,8 +77,16 @@ func handle_ground_movement(direction: float, delta: float):
 # Handles movement while in the air.
 func handle_air_movement(direction: float, delta: float):
 	if velocity.y > 0:
-		current_state = States.fall
+		current_state = States.fall_shoot if shoot_timer > 0 else States.fall
+	else:
+		current_state = States.jump_shoot if shoot_timer > 0 else States.jump
 	velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta)
+	
+	# Shooting logic while airborne.
+	if gun_instance and Input.is_action_just_pressed("shoot") and shoot_timer <= 0:
+		shoot_bullet(1 if not sprite.flip_h else -1)
+		shoot_timer = shoot_cooldown
+		current_state = States.jump_shoot if velocity.y < 0 else States.fall_shoot
 
 # Spawns and shoots a bullet using the gun instance.
 func shoot_bullet(direction: float):
@@ -121,6 +129,13 @@ func animate_player():
 			if anim.current_animation != "walk":
 				anim.play("walk")
 				anim.seek(current_frame, true)
+		States.jump:
+			if anim.current_animation != "jump":
+				anim.play("jump")
+		States.fall:
+			if anim.current_animation != "fall":
+				anim.play("fall")
+				anim.seek(current_frame, true)
 		States.idle_shoot:
 			if anim.current_animation != "idle_shoot":
 				anim.play("idle_shoot")
@@ -128,9 +143,10 @@ func animate_player():
 			if anim.current_animation != "walk_shoot":
 				anim.play("walk_shoot")
 				anim.seek(current_frame, true)
-		States.jump:
-			if anim.current_animation != "jump":
-				anim.play("jump")
-		States.fall:
-			if anim.current_animation != "fall":
-				anim.play("fall")
+		States.jump_shoot:
+			if anim.current_animation != "jump_shoot":
+				anim.play("jump_shoot")
+		States.fall_shoot:
+			if anim.current_animation != "fall_shoot":
+				anim.play("fall_shoot")
+				anim.seek(current_frame, true)

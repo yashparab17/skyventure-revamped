@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://c2raa0glxgp56"]
+[gd_scene load_steps=13 format=4 uid="uid://c2raa0glxgp56"]
 
 [ext_resource type="Texture2D" uid="uid://bisqnnoydbf40" path="res://assets/tilesets/area_1/example_tileset.png" id="1_g4rlx"]
 [ext_resource type="PackedScene" uid="uid://qjnr80eka1o8" path="res://scenes/areas/backgrounds/sky_parallax_background.tscn" id="1_y41uj"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://s50fl3a4b3ib" path="res://scenes/characters/enemies/roach.tscn" id="3_cj633"]
 [ext_resource type="Texture2D" uid="uid://cxn8tf0w27mmp" path="res://assets/tilesets/area_1/floating_island.png" id="4_es0il"]
 [ext_resource type="PackedScene" uid="uid://benelgf3benh8" path="res://scenes/items/gun_1_pickup.tscn" id="5_f24j5"]
+[ext_resource type="PackedScene" uid="uid://b88cbbyujj8pj" path="res://scenes/ui/game_screen.tscn" id="7_ia5va"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e38ae"]
 texture = ExtResource("1_g4rlx")
@@ -600,3 +601,5 @@ position = Vector2(8, 176)
 
 [node name="Gun Pickup 1" parent="Items" instance=ExtResource("5_f24j5")]
 position = Vector2(-192, 632)
+
+[node name="GameScreen" parent="." instance=ExtResource("7_ia5va")]
