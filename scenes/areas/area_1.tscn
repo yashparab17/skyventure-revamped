@@ -408,13 +408,5 @@ position = Vector2(240, 120)
 [node name="Roach" parent="." instance=ExtResource("3_cj633")]
 position = Vector2(368, 208)
 
-[node name="PatrolPoints" type="Node2D" parent="Roach"]
-
-[node name="Point1" type="Marker2D" parent="Roach/PatrolPoints"]
-position = Vector2(64, 64)
-
-[node name="Point2" type="Marker2D" parent="Roach/PatrolPoints"]
-position = Vector2(-64, 64)
-
 [node name="Gun Pickup 1" parent="." instance=ExtResource("5_f24j5")]
 position = Vector2(296, 200)

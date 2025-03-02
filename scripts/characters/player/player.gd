@@ -68,6 +68,7 @@ func handle_ground_movement(direction: float, delta: float):
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 		current_state = States.idle_shoot if shoot_timer > 0 else States.idle
 
+	# Shooting logic.
 	if gun_instance and Input.is_action_just_pressed("shoot") and shoot_timer <= 0:
 		shoot_bullet(1 if not sprite.flip_h else -1)
 		shoot_timer = shoot_cooldown
@@ -102,6 +103,12 @@ func flip_gun(flip: bool):
 	if gun_instance:
 		gun_instance.flip_muzzle(flip)
 
+# Handles player taking damage when hit by an enemy.
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemy"):
+		print("Enemy entered. Damage: ", body.damage_amount)
+		HealthManager.decrease_health(body.damage_amount)
+
 # Updates animation based on player state.
 func animate_player():
 	var current_frame = anim.current_animation_position
@@ -127,8 +134,3 @@ func animate_player():
 		States.fall:
 			if anim.current_animation != "fall":
 				anim.play("fall")
-
-func _on_hurtbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("enemy"):
-		print("Enemy entered. Damage: ", body.damage_amount)
-		HealthManager.decrease_health(body.damage_amount)

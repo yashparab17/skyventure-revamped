@@ -1,53 +1,62 @@
 extends CharacterBody2D
 
-# Enemy movement properties.
+# Enemy movement variables.
 @export var gravity = 600
 @export var speed: int = 50
 @export var acceleration: float = 600
+@export var chase_speed: int = 80  # Speed when chasing
 
-# Enemy health and damage properties.
+# Enemy health and damage variables.
 @export var health_amount: int = 3
 @export var damage_amount: int = 1
-
-# Patrol system.
-@export var wait_time: int = 3 # Time to wait at each patrol point.
-var no_of_points: int = 2
-var point_positions: Array[Vector2] = []
-var current_point_position: int = 0
 
 # Direction and movement state.
 var direction: Vector2 = Vector2.LEFT
 var can_walk: bool = true
 
+# Patrol system.
+var no_of_points: int = 2
+var point_positions: Array[Vector2] = []
+var current_point_position: int = 0
+
+# Chase variables.
+var chasing: bool = false
+var player_ref: Node2D = null
+
 # Node references.
 @onready var sprite = $Sprite
 @onready var anim = $Animation
-@onready var timer = $Timer
+@onready var patrol_timer = $PatrolTimer
+@onready var chase_timer = $ChaseTimer  # Timer for stopping chase
+@onready var detection_area = $DetectionArea  # Reference to the Area2D
 
 # Preloads the entity death effect.
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 
 # State machine.
-enum States {idle, walk, hurt, death}
+enum States {idle, walk, chase, hurt, death}
 var current_state: States = States.idle
 
 func _ready() -> void:
 	generate_patrol_points()
-	
-	timer.wait_time = wait_time # Set timer wait duration.
 
 # Generates patrol points at fixed positions relative to the spawn position.
 func generate_patrol_points() -> void:
+	point_positions.clear()
 	var spawn_position = global_position
 	point_positions.append(spawn_position + Vector2(64, 0)) # First patrol point.
 	point_positions.append(spawn_position + Vector2(-64, 0)) # Second patrol point.
 	no_of_points = point_positions.size()
+	current_point_position = 0  # Reset patrol index
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	
 	if can_walk and current_state != States.death:
-		roach_patrol(delta)
+		if chasing and player_ref:
+			roach_chase(delta) # Chase player.
+		else:
+			roach_patrol(delta) # Patrol normally.
 	
 	move_and_slide()
 	animate_roach()
@@ -67,6 +76,7 @@ func roach_patrol(delta: float):
 	
 	# Flip sprite based on movement direction.
 	sprite.flip_h = direction.x < 0
+	detection_area.position.x = -24 if sprite.flip_h else 24
 	
 	# Move towards the patrol point.
 	velocity.x = move_toward(velocity.x, direction.x * speed, acceleration * delta)
@@ -78,14 +88,50 @@ func roach_patrol(delta: float):
 		can_walk = false
 		velocity.x = 0
 		current_state = States.idle
-		timer.stop()
-		timer.start()
+		patrol_timer.stop()
+		patrol_timer.start()
+
+# Handles enemy chasing the player.
+func roach_chase(delta: float):
+	if not player_ref or current_state == States.death:
+		return
+	
+	direction = (player_ref.global_position - global_position).normalized()
+	
+	# Flip sprite based on movement direction.
+	sprite.flip_h = direction.x < 0
+	detection_area.position.x = -24 if sprite.flip_h else 24
+	
+	# Move towards the player.
+	velocity.x = move_toward(velocity.x, direction.x * chase_speed, acceleration * delta)
+	current_state = States.chase
 
 # Resumes movement after waiting at a patrol point.
-func _on_timer_timeout() -> void:
-	if !can_walk:
+func _on_patrol_timer_timeout() -> void:
+	if !can_walk and not chasing:
 		can_walk = true
 		current_point_position = (current_point_position + 1) % no_of_points
+
+# Handles player entering the detection area.
+func _on_detection_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):  # Ensure it's the player.
+		chasing = true
+		player_ref = body
+		can_walk = true  # Allow movement immediately.
+		chase_timer.stop()  # Reset the cooldown timer.
+
+# Handles player exiting the detection area.
+func _on_detection_area_body_exited(body: Node2D) -> void:
+	if body == player_ref:
+		chase_timer.start()  # Start the 1-second chase timer.
+
+# Stops chase after the cooldown period.
+func _on_chase_timer_timeout() -> void:
+	chasing = false
+	player_ref = null
+	
+	generate_patrol_points()  # Generate new patrol points at current position.
+	can_walk = true  # Resume patrolling.
 
 # Handles enemy taking damage when hit by a bullet.
 func _on_hurtbox_area_entered(area: Area2D) -> void:
@@ -119,6 +165,9 @@ func animate_roach():
 			if anim.current_animation != "idle":
 				anim.play("idle")
 		States.walk:
+			if anim.current_animation != "walk":
+				anim.play("walk")
+		States.chase:
 			if anim.current_animation != "walk":
 				anim.play("walk")
 		States.hurt:
