@@ -52,8 +52,6 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 func die():
 	current_state = States.death
-	anim.play("death")
-	await anim.animation_finished
 	var entity_death_instance = entity_death.instantiate()
 	entity_death_instance.global_position = global_position + sprite.position
 	get_parent().add_child(entity_death_instance)

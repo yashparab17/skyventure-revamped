@@ -50,7 +50,8 @@ func generate_patrol_points() -> void:
 	current_point_position = 0 # Reset patrol index.
 
 func _physics_process(delta: float) -> void:
-	apply_gravity(delta)
+	if current_state != States.death:
+		apply_gravity(delta)
 	
 	if can_walk and current_state != States.death:
 		if chasing and player_ref:
@@ -189,7 +190,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 # Death function.
 func die():
 	current_state = States.death
-	await anim.animation_finished # Wait for death animation to finish.
+	velocity = Vector2(0, 0)
+	await anim.animation_finished # Wait for death animation to finish
 			
 	# Spawn the death effect at the enemy's position.
 	var entity_death_instance = entity_death.instantiate() as Node2D

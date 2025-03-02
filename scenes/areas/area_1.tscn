@@ -595,8 +595,14 @@ y_sort_origin = 1
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="Roach" parent="Enemies" instance=ExtResource("3_cj633")]
+[node name="Roach1" parent="Enemies" instance=ExtResource("3_cj633")]
 position = Vector2(8, 176)
+
+[node name="Roach2" parent="Enemies" instance=ExtResource("3_cj633")]
+position = Vector2(-200, 416)
+
+[node name="Roach3" parent="Enemies" instance=ExtResource("3_cj633")]
+position = Vector2(0, 512)
 
 [node name="Doorah" parent="Enemies" instance=ExtResource("6_63pgq")]
 position = Vector2(600, 128)
@@ -605,8 +611,5 @@ position = Vector2(600, 128)
 
 [node name="Gun Pickup 1" parent="Items" instance=ExtResource("5_f24j5")]
 position = Vector2(-192, 632)
-
-[node name="Gun Pickup 2" parent="Items" instance=ExtResource("5_f24j5")]
-position = Vector2(408, 148)
 
 [node name="GameScreen" parent="." instance=ExtResource("7_ia5va")]
