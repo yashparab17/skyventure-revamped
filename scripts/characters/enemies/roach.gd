@@ -11,7 +11,7 @@ extends CharacterBody2D
 @export var damage_amount: int = 1
 
 # Direction and movement state.
-var direction : Vector2
+var direction: Vector2
 var can_walk: bool = true
 
 # Patrol system.
@@ -169,7 +169,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		health_amount -= bullet_damage # Reduce health based on bullet damage.
 		
 		if bullet_direction != 0:
-			flip_direction(-bullet.global_position.direction_to(global_position).x)
+			flip_direction(- bullet.global_position.direction_to(global_position).x)
 
 		current_state = States.hurt
 		can_walk = false # Stop movement.
