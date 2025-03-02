@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://qjnr80eka1o8"]
+[gd_scene load_steps=6 format=3 uid="uid://qjnr80eka1o8"]
 
 [ext_resource type="Texture2D" uid="uid://es0kr3oirag" path="res://assets/backgrounds/sky/layer_0.png" id="1_adp8l"]
 [ext_resource type="Texture2D" uid="uid://dtm1oxgjtaj3q" path="res://assets/backgrounds/sky/layer_1.png" id="2_3oedm"]
 [ext_resource type="Texture2D" uid="uid://dtdk613src3bk" path="res://assets/backgrounds/sky/layer_2.png" id="3_n8gm6"]
 [ext_resource type="Texture2D" uid="uid://b86hap4xslxhe" path="res://assets/backgrounds/sky/layer_3.png" id="4_3s0is"]
+[ext_resource type="Texture2D" uid="uid://bnx5r40u5ma40" path="res://assets/backgrounds/sky/layer_4.png" id="5_c8elp"]
 
 [node name="SkyParallaxBackground" type="ParallaxBackground"]
 
@@ -15,43 +16,57 @@ scale = Vector2(1.5, 1)
 texture = ExtResource("1_adp8l")
 
 [node name="Layer1" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(0.9, 0.9)
+motion_scale = Vector2(0.9, 1)
 motion_mirroring = Vector2(640, 0)
 
 [node name="Clouds1" type="Sprite2D" parent="Layer1"]
 position = Vector2(160, 80)
 texture = ExtResource("2_3oedm")
-offset = Vector2(0, 40)
+offset = Vector2(0, 150)
 
 [node name="Clouds2" type="Sprite2D" parent="Layer1"]
 position = Vector2(480, 80)
 texture = ExtResource("2_3oedm")
-offset = Vector2(0, 40)
+offset = Vector2(0, 150)
 
 [node name="Layer2" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(0.85, 0.85)
+motion_scale = Vector2(0.85, 1)
 motion_mirroring = Vector2(640, 0)
 
 [node name="Clouds1" type="Sprite2D" parent="Layer2"]
 position = Vector2(160, 40)
 texture = ExtResource("3_n8gm6")
-offset = Vector2(0, 80)
+offset = Vector2(0, 180)
 
 [node name="Clouds2" type="Sprite2D" parent="Layer2"]
 position = Vector2(480, 40)
 texture = ExtResource("3_n8gm6")
-offset = Vector2(0, 80)
+offset = Vector2(0, 180)
 
 [node name="Layer3" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(0.8, 0.8)
+motion_scale = Vector2(0.8, 1)
 motion_mirroring = Vector2(640, 0)
 
 [node name="Clouds1" type="Sprite2D" parent="Layer3"]
 position = Vector2(160, 0)
 texture = ExtResource("4_3s0is")
-offset = Vector2(0, 120)
+offset = Vector2(0, 210)
 
 [node name="Clouds2" type="Sprite2D" parent="Layer3"]
 position = Vector2(480, 0)
 texture = ExtResource("4_3s0is")
-offset = Vector2(0, 120)
+offset = Vector2(0, 210)
+
+[node name="Layer4" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.75, 1)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Clouds1" type="Sprite2D" parent="Layer4"]
+position = Vector2(160, 0)
+texture = ExtResource("5_c8elp")
+offset = Vector2(0, 210)
+
+[node name="Clouds2" type="Sprite2D" parent="Layer4"]
+position = Vector2(480, 0)
+texture = ExtResource("5_c8elp")
+offset = Vector2(0, 210)

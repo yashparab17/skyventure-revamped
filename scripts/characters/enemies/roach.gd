@@ -159,9 +159,9 @@ func _on_chase_timer_timeout() -> void:
 # Handles enemy taking damage when hit by a bullet.
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.get_parent().has_method("get_damage_amount"):
-		var bullet = area.get_parent() as Node # Store the bullet reference safely.
+		var bullet = area.get_parent() as Node
 		
-		# Extract the damage and direction before the bullet is deleted.
+		# Extract the damage, direction, and shooter before the bullet is deleted.
 		var bullet_damage = bullet.damage_amount
 		var bullet_direction = bullet.direction
 		var bullet_shooter = bullet.shooter

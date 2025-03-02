@@ -2,12 +2,12 @@ extends Node2D
 
 # Node references.
 @export var bullet_scene: PackedScene = preload("res://scenes/projectiles/bullet_1.tscn")
+@onready var muzzle = $Muzzle
+var shooter : CharacterBody2D = null
 
 # Bullet variables.
 @export var cooldown: float = 0.2
-@export var shoot_offset: Vector2 = Vector2(0, -2)
-@onready var muzzle = $Muzzle
-var shooter : CharacterBody2D = null
+@export var shoot_offset: Vector2 = Vector2(2, -2)
 var can_shoot = true
 var original_position: Vector2
 
@@ -39,7 +39,8 @@ func shoot(direction: float):
 
 # Temporarily raises the gun when shooting.
 func raise_gun():
-	position += Vector2(0, shoot_offset.y)
+	var flip_multiplier = -1 if $Sprite.flip_h else 1
+	position += Vector2(shoot_offset.x * flip_multiplier, shoot_offset.y)
 
 # Resets the gun position.
 func lower_gun():

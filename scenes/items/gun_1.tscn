@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://scripts/items/gun_1.gd" id="1_tfh1l"]
 
 [node name="Gun 1" type="Node2D"]
-z_index = -1
 script = ExtResource("1_tfh1l")
 
 [node name="Sprite" type="Sprite2D" parent="."]
