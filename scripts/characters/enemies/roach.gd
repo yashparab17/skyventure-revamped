@@ -34,7 +34,7 @@ var player_ref: Node2D = null
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 
 # State machine.
-enum States {idle, walk, alert, chase, hurt, death}
+enum States {idle, walk, alert, chase, attack, hurt, death}
 var current_state: States = States.idle
 
 func _ready() -> void:
@@ -148,6 +148,14 @@ func _on_detection_area_body_entered(body: Node2D) -> void:
 func _on_detection_area_body_exited(body: Node2D) -> void:
 	if body == player_ref:
 		chase_timer.start() # Start the 2-second chase timer.
+		
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		current_state = States.attack
+		can_walk = false
+		velocity = Vector2.ZERO
+		await anim.animation_finished # Wait for animation to finish.
+		can_walk = true # Resume movement after attack.
 
 # Stops chase after the cooldown period.
 func _on_chase_timer_timeout() -> void:
@@ -215,6 +223,9 @@ func animate_roach():
 		States.chase:
 			if anim.current_animation != "chase":
 				anim.play("chase")
+		States.attack:
+			if anim.current_animation != "attack":
+				anim.play("attack")
 		States.hurt:
 			if anim.current_animation != "hurt":
 				anim.play("hurt")

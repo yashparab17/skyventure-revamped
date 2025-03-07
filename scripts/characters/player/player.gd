@@ -139,15 +139,15 @@ func take_damage(damage: int, enemy_x: float):
 	velocity = hurt_knockback * Vector2(knockback_direction, 1)
 
 	# Ensure animation starts before pausing.
-	await get_tree().process_frame  
-	get_tree().paused = true  # Pause the game.
+	await get_tree().process_frame
+	get_tree().paused = true # Pause the game.
 
 	# Wait for animation duration to finish.
-	await anim.animation_finished  
+	await anim.animation_finished
 
 	# Resume game.
 	get_tree().paused = false
-	anim.process_mode = Node.PROCESS_MODE_INHERIT 
+	anim.process_mode = Node.PROCESS_MODE_INHERIT
 
 	is_invulnerable = false
 	current_state = States.idle
