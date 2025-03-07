@@ -11,7 +11,7 @@ var gun_instance = null
 @export var jump_force: int = -300
 @export var acceleration: float = 600
 @export var friction: float = 800
-@export var hurt_knockback: Vector2 = Vector2(150, -200)
+@export var hurt_knockback: Vector2 = Vector2(200, -200)
 @export var hurt_duration: float = 0.5
 
 # Node references.

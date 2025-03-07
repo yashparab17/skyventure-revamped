@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxn8tf0w27mmp"
-path="res://.godot/imported/floating_island.png-22b05e2aad396f3cac3c8c7135a70088.ctex"
+uid="uid://dtm1oxgjtaj3q"
+path="res://.godot/imported/layer_1.png-91a33bb6f0fdfb4b424f4cf81d330d69.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/area_1/floating_island.png"
-dest_files=["res://.godot/imported/floating_island.png-22b05e2aad396f3cac3c8c7135a70088.ctex"]
+source_file="res://assets/backgrounds/area_1/layer_1.png"
+dest_files=["res://.godot/imported/layer_1.png-91a33bb6f0fdfb4b424f4cf81d330d69.ctex"]
 
 [params]
 

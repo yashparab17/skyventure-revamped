@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bisqnnoydbf40"
-path="res://.godot/imported/example_tileset.png-deecbf7eb943243ac155f65bb0a8c5d5.ctex"
+uid="uid://kl10obator0"
+path="res://.godot/imported/floating_rocks.png-d61ddeb39f61a9f0e49b145f072133df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/area_1/example_tileset.png"
-dest_files=["res://.godot/imported/example_tileset.png-deecbf7eb943243ac155f65bb0a8c5d5.ctex"]
+source_file="res://assets/tilesets/area_1/floating_rocks.png"
+dest_files=["res://.godot/imported/floating_rocks.png-d61ddeb39f61a9f0e49b145f072133df.ctex"]
 
 [params]
 

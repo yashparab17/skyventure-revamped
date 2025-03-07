@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://qjnr80eka1o8"]
 
-[ext_resource type="Texture2D" uid="uid://es0kr3oirag" path="res://assets/backgrounds/sky/layer_0.png" id="1_adp8l"]
-[ext_resource type="Texture2D" uid="uid://dtm1oxgjtaj3q" path="res://assets/backgrounds/sky/layer_1.png" id="2_3oedm"]
-[ext_resource type="Texture2D" uid="uid://dtdk613src3bk" path="res://assets/backgrounds/sky/layer_2.png" id="3_n8gm6"]
-[ext_resource type="Texture2D" uid="uid://b86hap4xslxhe" path="res://assets/backgrounds/sky/layer_3.png" id="4_3s0is"]
-[ext_resource type="Texture2D" uid="uid://bnx5r40u5ma40" path="res://assets/backgrounds/sky/layer_4.png" id="5_c8elp"]
+[ext_resource type="Texture2D" uid="uid://es0kr3oirag" path="res://assets/backgrounds/area_1/layer_0.png" id="1_adp8l"]
+[ext_resource type="Texture2D" uid="uid://dtm1oxgjtaj3q" path="res://assets/backgrounds/area_1/layer_1.png" id="2_3oedm"]
+[ext_resource type="Texture2D" uid="uid://dtdk613src3bk" path="res://assets/backgrounds/area_1/layer_2.png" id="3_n8gm6"]
+[ext_resource type="Texture2D" uid="uid://b86hap4xslxhe" path="res://assets/backgrounds/area_1/layer_3.png" id="4_3s0is"]
+[ext_resource type="Texture2D" uid="uid://bnx5r40u5ma40" path="res://assets/backgrounds/area_1/layer_4.png" id="5_c8elp"]
 
 [node name="SkyParallaxBackground" type="ParallaxBackground"]
 

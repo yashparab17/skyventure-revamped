@@ -185,6 +185,10 @@ height = 20.0
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_4jjpf")
+speed = 150
+jump_force = -275
+acceleration = 400.0
+friction = 600.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
@@ -204,6 +208,9 @@ libraries = {
 autoplay = "idle"
 
 [node name="Camera" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
 
 [node name="GunHoldPosition" type="Marker2D" parent="."]
 position = Vector2(3, -6)
