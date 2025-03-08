@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+# Preloads the entity death effect.
+var entity_death = preload("res://scenes/effects/entity_death.tscn")
+
 # Enemy movement variables.
 @export var gravity = 600
 @export var speed: int = 50
@@ -29,9 +32,6 @@ var player_ref: Node2D = null
 @onready var patrol_timer = $PatrolTimer
 @onready var chase_timer = $ChaseTimer # Timer for stopping chase
 @onready var detection_area = $DetectionArea # Reference to the Area2D
-
-# Preloads the entity death effect.
-var entity_death = preload("res://scenes/effects/entity_death.tscn")
 
 # State machine.
 enum States {idle, walk, alert, chase, attack, hurt, death}
@@ -199,7 +199,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 func die():
 	current_state = States.death
 	velocity = Vector2(0, 0)
-	await anim.animation_finished # Wait for death animation to finish
+	await anim.animation_finished # Wait for death animation to finish.
 			
 	# Spawn the death effect at the enemy's position.
 	var entity_death_instance = entity_death.instantiate() as Node2D

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dm2gstauhcofm"]
+[gd_scene load_steps=20 format=3 uid="uid://dm2gstauhcofm"]
 
 [ext_resource type="Script" path="res://scripts/characters/player/player.gd" id="1_4jjpf"]
 [ext_resource type="Texture2D" uid="uid://c8xkk7pjpcho3" path="res://assets/sprites/characters/player/player.png" id="1_epty3"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://dcoffttp0ota0" path="res://assets/sounds/player/jump.wav" id="3_xym5y"]
 [ext_resource type="AudioStream" uid="uid://be14gicwkj0dx" path="res://assets/sounds/player/bonk.wav" id="5_04y62"]
 [ext_resource type="AudioStream" uid="uid://dsf6idrcom8ud" path="res://assets/sounds/player/hurt.wav" id="5_rgom0"]
+[ext_resource type="AudioStream" uid="uid://dmh4fpgpkdnl4" path="res://assets/sounds/player/death.wav" id="7_w6xla"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fc3fl"]
 radius = 6.0
@@ -203,18 +204,13 @@ position = Vector2(0, -8)
 texture = ExtResource("1_epty3")
 hframes = 4
 vframes = 9
-frame = 12
+frame = 32
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_hyf1q")
 }
 autoplay = "idle"
-
-[node name="Camera" type="Camera2D" parent="."]
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
 
 [node name="GunHoldPosition" type="Marker2D" parent="."]
 position = Vector2(3, -6)
@@ -244,5 +240,8 @@ volume_db = -10.0
 
 [node name="Hurt" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("5_rgom0")
+
+[node name="Death" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("7_w6xla")
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
-# Preload bullet and gun scenes.
+# Preload scenes.
 var bullet_1 = preload("res://scenes/projectiles/bullet_1.tscn")
 var gun_scene = preload("res://scenes/items/gun_1.tscn")
 var gun_instance = null
+var entity_death = preload("res://scenes/effects/entity_death.tscn")
 
 # Player movement properties.
 @export var gravity = 600
@@ -24,6 +25,7 @@ var gun_instance = null
 @onready var snd_jump = $Sounds/Jump
 @onready var snd_bonk = $Sounds/Bonk
 @onready var snd_hurt = $Sounds/Hurt
+@onready var snd_death = $Sounds/Death
 
 # Sound properties.
 var walk_snd_timer = 0.0
@@ -58,12 +60,13 @@ func apply_gravity(delta: float):
 	if !is_on_floor():
 		velocity.y += gravity * delta
 	
+	# Shorter jump if the player releases the jump button.
 	if velocity.y < 0 and !Input.is_action_pressed("jump"):
 		velocity.y += gravity * 2 * delta
 		
+	# Plays the bonk sound effect and applies gravity if the player hits a ceiling.
 	if is_on_ceiling():
 		snd_bonk.play()
-		velocity.y += gravity * delta
 
 # Handles movement, jumping, and shooting logic.
 func handle_movement_and_shooting(delta: float):
@@ -152,31 +155,62 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 func take_damage(damage: int, enemy_x: float):
 	is_invulnerable = true
 	HealthManager.decrease_health(damage)
+	
 	current_state = States.hurt
 	
-	# Allow animation to play while paused.
-	anim.process_mode = Node.PROCESS_MODE_ALWAYS
-	snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
+	if HealthManager.current_health == 0:
+		die()
+	else:
+		# Allow animation and sound to play while paused.
+		anim.process_mode = Node.PROCESS_MODE_ALWAYS
+		snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
+		anim.play("hurt")
+		snd_hurt.play()
+		
+		# Apply knockback direction.
+		var knockback_direction = 1 if enemy_x < global_position.x else -1
+		velocity = hurt_knockback * Vector2(knockback_direction, 1)
+
+		# Ensure animation starts before pausing.
+		await get_tree().process_frame
+		get_tree().paused = true # Pause the game.
+
+		# Wait for animation duration to finish.
+		await anim.animation_finished
+
+		# Resume game.
+		get_tree().paused = false
+		anim.process_mode = Node.PROCESS_MODE_INHERIT
+
+		is_invulnerable = false
+		current_state = States.idle
+
+# Handles the player's death.
+func die():
+	# Unpause the game if it was paused in take_damage().
+	get_tree().paused = false  
+	
+	# Play the hurt animation before anything else.
 	anim.play("hurt")
 	snd_hurt.play()
+	await anim.animation_finished  # Wait for the hurt animation to complete.
 
-	# Apply knockback direction.
-	var knockback_direction = 1 if enemy_x < global_position.x else -1
-	velocity = hurt_knockback * Vector2(knockback_direction, 1)
+	# Hide the player immediately.
+	visible = false
+	set_physics_process(false)  # Disable physics so they don’t move.
+	set_process(false)          # Disable normal processing too.
+	snd_death.play()
 
-	# Ensure animation starts before pausing.
-	await get_tree().process_frame
-	get_tree().paused = true # Pause the game.
+	# Spawn the death effect at the player's position.
+	var entity_death_instance = entity_death.instantiate() as Node2D
+	entity_death_instance.global_position = global_position + sprite.position
+	get_parent().add_child(entity_death_instance)
 
-	# Wait for animation duration to finish.
-	await anim.animation_finished
+	# Wait for the death sound to finish playing.
+	await snd_death.finished
 
-	# Resume game.
-	get_tree().paused = false
-	anim.process_mode = Node.PROCESS_MODE_INHERIT
-
-	is_invulnerable = false
-	current_state = States.idle
+	# Remove the player from the scene.
+	queue_free()
 
 # Updates animation based on player state.
 func animate_player():
