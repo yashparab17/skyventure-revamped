@@ -204,7 +204,6 @@ position = Vector2(0, -8)
 texture = ExtResource("1_epty3")
 hframes = 4
 vframes = 9
-frame = 32
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -226,22 +225,22 @@ debug_color = Color(0.982472, 0, 0.361879, 0.42)
 
 [node name="Sounds" type="Node" parent="."]
 
-[node name="Walk" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="Walk" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("3_81bep")
-volume_db = -5.0
+volume_db = -10.0
 
-[node name="Jump" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("3_xym5y")
 volume_db = -10.0
 
-[node name="Bonk" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="Bonk" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("5_04y62")
 volume_db = -10.0
 
-[node name="Hurt" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="Hurt" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("5_rgom0")
 
-[node name="Death" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="Death" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("7_w6xla")
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

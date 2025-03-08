@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://c2raa0glxgp56"]
+[gd_scene load_steps=7 format=4 uid="uid://c2raa0glxgp56"]
 
-[ext_resource type="PackedScene" uid="uid://qjnr80eka1o8" path="res://scenes/backgrounds/sky_parallax_background.tscn" id="1_y41uj"]
+[ext_resource type="PackedScene" uid="uid://qjnr80eka1o8" path="res://scenes/backgrounds/area_1/sky_background.tscn" id="1_y41uj"]
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="2_natpb"]
 [ext_resource type="Script" path="res://scenes/characters/player/player_camera.gd" id="2_o4418"]
 [ext_resource type="TileSet" uid="uid://brgew8e405nkq" path="res://scenes/areas/area_1.tres" id="4_vi3ny"]
 [ext_resource type="AudioStream" uid="uid://cmjr5k7ixi8q5" path="res://assets/music/area_1/duvet.mp3" id="5_4lo7y"]
-[ext_resource type="PackedScene" uid="uid://s50fl3a4b3ib" path="res://scenes/characters/enemies/roach.tscn" id="6_cqnbt"]
 [ext_resource type="PackedScene" uid="uid://b88cbbyujj8pj" path="res://scenes/ui/game_screen.tscn" id="7_ia5va"]
 
 [node name="Area 1" type="Node2D"]
@@ -16,6 +15,10 @@
 position = Vector2(240, 128)
 
 [node name="PlayerCamera" type="Camera2D" parent="Player Stuff" node_paths=PackedStringArray("player")]
+position = Vector2(240, 120)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
 script = ExtResource("2_o4418")
 player = NodePath("../Player")
 
@@ -23,10 +26,10 @@ player = NodePath("../Player")
 
 [node name="Tiles" type="Node" parent="."]
 
-[node name="SkyParallaxBackground" parent="Tiles" instance=ExtResource("1_y41uj")]
+[node name="SkyBackground" parent="Tiles" instance=ExtResource("1_y41uj")]
 
 [node name="GroundBlocks" type="TileMapLayer" parent="Tiles"]
-tile_map_data = PackedByteArray("AAAOAAgAAAABAAAAAAAPAAgAAAABAAAAAAANAAgAAAABAAAAAAAMAAgAAAABAAAAAAALAAgAAAAFAAAAAAAKAAgAAAABAAMAAAAJAAgAAAAAAAMAAAAQAAgAAAABAAAAAAARAAgAAAABAAAAAAASAAgAAAAGAAAAAAATAAgAAAABAAMAAAAUAAgAAAACAAMAAAALAAkAAAAAAAIAAAAMAAkAAAABAAIAAAANAAkAAAAFAAIAAAAOAAkAAAABAAEAAAAPAAkAAAABAAEAAAAQAAkAAAAGAAIAAAARAAkAAAABAAIAAAASAAkAAAACAAIAAAAPAAoAAAAGAAIAAAAOAAoAAAAFAAIAAAAQAAoAAAACAAIAAAAOAAsAAAAAAAIAAAANAAoAAAAAAAIAAAAPAAsAAAACAAIAAAAMAAQAAAAAAAMAAAANAAQAAAABAAMAAAAOAAQAAAABAAMAAAAPAAQAAAABAAMAAAAQAAQAAAABAAMAAAARAAQAAAACAAMAAAAYAAwAAAAAAAAAAAAZAAwAAAABAAAAAAAbAAwAAAABAAAAAAAaAAwAAAABAAAAAAAcAAwAAAABAAAAAAAdAAwAAAABAAAAAAAeAAwAAAABAAAAAAAfAAwAAAABAAAAAAAgAAwAAAABAAAAAAAhAAwAAAABAAAAAAAiAAwAAAABAAAAAAAjAAwAAAABAAAAAAAkAA0AAAABAAEAAAAlAA0AAAABAAEAAAAmAA0AAAABAAEAAAAnAAwAAAABAAAAAAAoAAwAAAABAAAAAAApAAwAAAABAAAAAAApAA0AAAABAAEAAAAoAA0AAAABAAEAAAAnAA0AAAABAAEAAAAjAA0AAAABAAEAAAAiAA0AAAABAAEAAAAmAAwAAAABAAAAAAAlAAwAAAABAAAAAAAkAAwAAAABAAAAAAAgAA0AAAABAAEAAAAhAA0AAAABAAEAAAAfAA0AAAABAAEAAAAeAA0AAAABAAEAAAAdAA4AAAABAAIAAAAcAA4AAAABAAIAAAAbAA4AAAABAAIAAAAbAA0AAAABAAEAAAAaAA0AAAABAAEAAAAZAA0AAAABAAEAAAAYAA0AAAAAAAEAAAAYAA4AAAAAAAIAAAAZAA4AAAABAAIAAAAaAA4AAAABAAIAAAAeAA4AAAABAAIAAAAdAA0AAAABAAEAAAAcAA0AAAABAAEAAAAiAA4AAAABAAIAAAAhAA4AAAABAAIAAAAgAA4AAAABAAIAAAAfAA4AAAABAAIAAAAjAA4AAAABAAIAAAAkAA4AAAABAAIAAAAlAA4AAAABAAIAAAAmAA4AAAABAAIAAAAnAA4AAAABAAIAAAAoAA4AAAABAAIAAAApAA4AAAABAAIAAAAqAA4AAAABAAIAAAArAA4AAAABAAIAAAAsAA4AAAABAAIAAAAtAA4AAAABAAIAAAAuAA4AAAABAAIAAAAvAA0AAAACAAEAAAAvAAwAAAACAAAAAAAuAAwAAAABAAAAAAAtAAwAAAABAAAAAAAsAAwAAAABAAAAAAArAAwAAAABAAAAAAAqAAwAAAABAAAAAAAtAA0AAAABAAEAAAAsAA0AAAABAAEAAAArAA0AAAABAAEAAAAqAA0AAAABAAEAAAAuAA0AAAABAAEAAAAvAA4AAAACAAIAAAA=")
+tile_map_data = PackedByteArray("AAAOAAgAAAABAAAAAAAPAAgAAAABAAAAAAANAAgAAAABAAAAAAAMAAgAAAABAAAAAAALAAgAAAAFAAAAAAAKAAgAAAABAAMAAAAJAAgAAAAAAAMAAAAQAAgAAAABAAAAAAARAAgAAAABAAAAAAASAAgAAAAGAAAAAAATAAgAAAABAAMAAAAUAAgAAAACAAMAAAALAAkAAAAAAAIAAAAMAAkAAAABAAIAAAANAAkAAAAFAAIAAAAOAAkAAAABAAEAAAAPAAkAAAABAAEAAAAQAAkAAAAGAAIAAAARAAkAAAABAAIAAAASAAkAAAACAAIAAAAPAAoAAAAGAAIAAAAOAAoAAAAFAAIAAAAQAAoAAAACAAIAAAAOAAsAAAAAAAIAAAANAAoAAAAAAAIAAAAPAAsAAAACAAIAAAAMAAQAAAAAAAMAAAANAAQAAAABAAMAAAAOAAQAAAABAAMAAAAPAAQAAAABAAMAAAAQAAQAAAABAAMAAAARAAQAAAACAAMAAAA=")
 tile_set = ExtResource("4_vi3ny")
 
 [node name="BackgroundObjects" type="TileMapLayer" parent="Tiles"]
@@ -39,13 +42,10 @@ tile_set = ExtResource("4_vi3ny")
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="Roach" parent="Enemies" instance=ExtResource("6_cqnbt")]
-position = Vector2(576, 192)
-
 [node name="Music" type="Node" parent="."]
 
-[node name="Duvet" type="AudioStreamPlayer2D" parent="Music"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music"]
 process_mode = 3
 stream = ExtResource("5_4lo7y")
-volume_db = -10.0
+volume_db = -20.0
 autoplay = true
