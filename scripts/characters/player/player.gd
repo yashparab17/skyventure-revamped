@@ -19,6 +19,16 @@ var gun_instance = null
 @onready var anim: AnimationPlayer = $Animation
 @onready var gun_hold_position: Marker2D = $GunHoldPosition
 
+# Sound references.
+@onready var snd_walk = $Sounds/Walk
+@onready var snd_jump = $Sounds/Jump
+@onready var snd_bonk = $Sounds/Bonk
+@onready var snd_hurt = $Sounds/Hurt
+
+# Sound properties.
+var walk_snd_timer = 0.0
+@export var walk_snd_interval = 0.3
+
 # State machine.
 enum States {idle, walk, jump, fall, idle_shoot, walk_shoot, jump_shoot, fall_shoot, hurt}
 var current_state: States = States.idle
@@ -36,6 +46,7 @@ func _physics_process(delta: float) -> void:
 	
 	apply_gravity(delta)
 	shoot_timer -= delta
+	walk_snd_timer -= delta
 
 	handle_movement_and_shooting(delta)
 
@@ -45,6 +56,13 @@ func _physics_process(delta: float) -> void:
 # Applies gravity if the player is not on the floor.
 func apply_gravity(delta: float):
 	if !is_on_floor():
+		velocity.y += gravity * delta
+	
+	if velocity.y < 0 and !Input.is_action_pressed("jump"):
+		velocity.y += gravity * 2 * delta
+		
+	if is_on_ceiling():
+		snd_bonk.play()
 		velocity.y += gravity * delta
 
 # Handles movement, jumping, and shooting logic.
@@ -62,6 +80,7 @@ func handle_movement_and_shooting(delta: float):
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = jump_force
 			current_state = States.jump
+			snd_jump.play()
 		else:
 			handle_ground_movement(direction, delta)
 	else:
@@ -72,9 +91,14 @@ func handle_ground_movement(direction: float, delta: float):
 	if direction:
 		velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta)
 		current_state = States.walk_shoot if shoot_timer > 0 else States.walk
+		
+		if walk_snd_timer <= 0:
+			snd_walk.play()
+			walk_snd_timer = walk_snd_interval
 	else:
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 		current_state = States.idle_shoot if shoot_timer > 0 else States.idle
+		walk_snd_timer = 0
 
 	# Shooting logic.
 	if gun_instance and Input.is_action_just_pressed("shoot") and shoot_timer <= 0:
@@ -132,7 +156,9 @@ func take_damage(damage: int, enemy_x: float):
 	
 	# Allow animation to play while paused.
 	anim.process_mode = Node.PROCESS_MODE_ALWAYS
+	snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
 	anim.play("hurt")
+	snd_hurt.play()
 
 	# Apply knockback direction.
 	var knockback_direction = 1 if enemy_x < global_position.x else -1
