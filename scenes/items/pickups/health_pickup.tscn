@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://bqqdgr1xsbr3g"]
+
+[ext_resource type="Texture2D" uid="uid://dvop4we2ipbdx" path="res://assets/sprites/items/pickups/health_pickup.png" id="1_srfbu"]
+[ext_resource type="Script" path="res://scripts/items/pickups/health_pickup.gd" id="2_h0lmg"]
+[ext_resource type="AudioStream" uid="uid://ca7yabwj4foru" path="res://assets/sounds/items/pickups/health_pickup.wav" id="3_pbbd4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffpy6"]
+atlas = ExtResource("1_srfbu")
+region = Rect2(0, 0, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kd8dn"]
+atlas = ExtResource("1_srfbu")
+region = Rect2(9, 0, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j40wm"]
+atlas = ExtResource("1_srfbu")
+region = Rect2(18, 0, 9, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v161u"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffpy6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffpy6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffpy6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kd8dn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j40wm")
+}],
+"loop": true,
+"name": &"pulsate",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_acxta"]
+
+[node name="HealthPickup" type="AnimatedSprite2D"]
+z_index = -1
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_v161u")
+animation = &"pulsate"
+autoplay = "pulsate"
+script = ExtResource("2_h0lmg")
+
+[node name="Area" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Area"]
+shape = SubResource("CircleShape2D_acxta")
+debug_color = Color(1, 0.0142734, 0.00203054, 0.42)
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Pickup" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("3_pbbd4")
+volume_db = -20.0
+
+[connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]

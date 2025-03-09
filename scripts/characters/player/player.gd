@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 # Preload scenes.
 var bullet_1 = preload("res://scenes/projectiles/bullet_1.tscn")
-var gun_scene = preload("res://scenes/items/gun_1.tscn")
+var gun_scene = preload("res://scenes/items/guns/gun_1.tscn")
 var gun_instance = null
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 

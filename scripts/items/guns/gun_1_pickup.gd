@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var gun_scene: PackedScene = preload("res://scenes/items/gun_1.tscn")
+@export var gun_scene: PackedScene = preload("res://scenes/items/guns/gun_1.tscn")
 
 # Checks if player has entered the body. If they have, then collect the gun.
 func _on_body_entered(body):
