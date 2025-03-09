@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://byareqxo20gbk"]
+[gd_scene load_steps=10 format=3 uid="uid://byareqxo20gbk"]
 
 [ext_resource type="Texture2D" uid="uid://dgea2durmyb4l" path="res://assets/sprites/effects/entity_death.png" id="1_l4tte"]
 [ext_resource type="Script" path="res://scripts/effects/entity_death.gd" id="2_kyvwc"]
+[ext_resource type="AudioStream" uid="uid://er87iwjq1lsb" path="res://assets/sounds/effects/entity_death.wav" id="3_fy30n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uj0wi"]
 atlas = ExtResource("1_l4tte")
@@ -41,7 +42,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cyad1")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 20.0
 }, {
@@ -58,9 +59,9 @@ autoplay = "death"
 frame_progress = 0.397655
 script = ExtResource("2_kyvwc")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.2
-one_shot = true
-autostart = true
+[node name="Sounds" type="Node" parent="."]
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="EntityDeath" type="AudioStreamPlayer2D" parent="Sounds"]
+process_mode = 3
+stream = ExtResource("3_fy30n")
+volume_db = -20.0

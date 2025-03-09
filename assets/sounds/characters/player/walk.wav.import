@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://be14gicwkj0dx"
-path="res://.godot/imported/bonk.wav-8574a417ede32832f6d3fcf08fc67532.sample"
+uid="uid://bf8eql2psixm3"
+path="res://.godot/imported/walk.wav-d5b303076a11795a689de11b586749d1.sample"
 
 [deps]
 
-source_file="res://assets/sounds/player/bonk.wav"
-dest_files=["res://.godot/imported/bonk.wav-8574a417ede32832f6d3fcf08fc67532.sample"]
+source_file="res://assets/sounds/characters/player/walk.wav"
+dest_files=["res://.godot/imported/walk.wav-d5b303076a11795a689de11b586749d1.sample"]
 
 [params]
 

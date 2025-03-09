@@ -30,8 +30,13 @@ var player_ref: Node2D = null
 @onready var sprite = $Sprite
 @onready var anim = $Animation
 @onready var patrol_timer = $PatrolTimer
-@onready var chase_timer = $ChaseTimer # Timer for stopping chase
-@onready var detection_area = $DetectionArea # Reference to the Area2D
+@onready var chase_timer = $ChaseTimer
+@onready var detection_area = $DetectionArea
+
+# Sound references.
+@onready var snd_alert = $Sounds/Alert
+@onready var snd_hurt = $Sounds/Hurt
+@onready var snd_death = $Sounds/Death
 
 # State machine.
 enum States {idle, walk, alert, chase, attack, hurt, death}
@@ -106,6 +111,7 @@ func roach_alert():
 		
 		velocity.y = -150 # Jump force.
 		current_state = States.alert
+		snd_alert.play()
 		await anim.animation_finished # Wait before starting chase.
 
 		# Now start chasing.
@@ -125,7 +131,7 @@ func roach_chase(delta: float):
 	# Move towards the player.
 	velocity.x = move_toward(velocity.x, direction.x * chase_speed, acceleration * delta)
 	current_state = States.chase
-
+		
 # Resumes movement after waiting at a patrol point.
 func _on_patrol_timer_timeout() -> void:
 	if !can_walk and not chasing:
@@ -181,6 +187,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			flip_direction(- bullet.global_position.direction_to(global_position).x)
 
 		current_state = States.hurt
+		snd_hurt.play()
 		can_walk = false # Stop movement.
 		velocity.x = 0
 		velocity.y = 0
@@ -198,6 +205,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 # Death function.
 func die():
 	current_state = States.death
+	snd_death.play()
 	velocity = Vector2(0, 0)
 	await anim.animation_finished # Wait for death animation to finish.
 			
