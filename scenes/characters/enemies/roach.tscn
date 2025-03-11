@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://s50fl3a4b3ib"]
 
 [ext_resource type="Texture2D" uid="uid://ba8m6ipp26est" path="res://assets/sprites/characters/enemies/roach.png" id="1_piddw"]
-[ext_resource type="Script" path="res://scripts/characters/enemies/roach.gd" id="1_uh4oa"]
+[ext_resource type="Script" uid="uid://d1h8lrp02bjwl" path="res://scripts/characters/enemies/roach.gd" id="1_uh4oa"]
 [ext_resource type="AudioStream" uid="uid://bvn81bfqdjtc3" path="res://assets/sounds/characters/enemies/roach/alert.wav" id="3_ikv1e"]
 [ext_resource type="AudioStream" uid="uid://cs1yc7b6n5hcp" path="res://assets/sounds/characters/enemies/roach/hurt.wav" id="5_4cboh"]
 [ext_resource type="AudioStream" uid="uid://thcnkra1yvna" path="res://assets/sounds/characters/enemies/roach/death.wav" id="5_cdsox"]
@@ -100,6 +100,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackArea/AttackCollision:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_v7rxn"]
 resource_name = "hurt"
@@ -155,13 +167,13 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w2pvh"]
 _data = {
-"alert": SubResource("Animation_1rixp"),
-"attack": SubResource("Animation_bv5it"),
-"chase": SubResource("Animation_dnxw3"),
-"death": SubResource("Animation_kiuqo"),
-"hurt": SubResource("Animation_v7rxn"),
-"idle": SubResource("Animation_7exw2"),
-"walk": SubResource("Animation_y8mie")
+&"alert": SubResource("Animation_1rixp"),
+&"attack": SubResource("Animation_bv5it"),
+&"chase": SubResource("Animation_dnxw3"),
+&"death": SubResource("Animation_kiuqo"),
+&"hurt": SubResource("Animation_v7rxn"),
+&"idle": SubResource("Animation_7exw2"),
+&"walk": SubResource("Animation_y8mie")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mfqj3"]
@@ -192,7 +204,7 @@ frame = 8
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_w2pvh")
+&"": SubResource("AnimationLibrary_w2pvh")
 }
 
 [node name="PatrolTimer" type="Timer" parent="."]
@@ -222,7 +234,7 @@ shape = SubResource("RectangleShape2D_uo84q")
 debug_color = Color(0.775963, 0.440196, 0.0144619, 0.42)
 
 [node name="AttackArea" type="Area2D" parent="."]
-collision_layer = 4
+collision_layer = 0
 collision_mask = 2
 
 [node name="AttackCollision" type="CollisionShape2D" parent="AttackArea"]

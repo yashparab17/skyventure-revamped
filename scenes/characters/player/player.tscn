@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://dm2gstauhcofm"]
 
-[ext_resource type="Script" path="res://scripts/characters/player/player.gd" id="1_4jjpf"]
+[ext_resource type="Script" uid="uid://bvytmrl784wuv" path="res://scripts/characters/player/player.gd" id="1_4jjpf"]
 [ext_resource type="Texture2D" uid="uid://c8xkk7pjpcho3" path="res://assets/sprites/characters/player/player.png" id="1_epty3"]
 [ext_resource type="AudioStream" uid="uid://bf8eql2psixm3" path="res://assets/sounds/characters/player/walk.wav" id="3_81bep"]
 [ext_resource type="AudioStream" uid="uid://dcoffttp0ota0" path="res://assets/sounds/characters/player/jump.wav" id="3_xym5y"]
@@ -171,15 +171,15 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hyf1q"]
 _data = {
-"fall": SubResource("Animation_v8oog"),
-"fall_shoot": SubResource("Animation_glhiw"),
-"hurt": SubResource("Animation_t0t1w"),
-"idle": SubResource("Animation_pnqu3"),
-"idle_shoot": SubResource("Animation_tm7cr"),
-"jump": SubResource("Animation_l5ora"),
-"jump_shoot": SubResource("Animation_kih40"),
-"walk": SubResource("Animation_kos2q"),
-"walk_shoot": SubResource("Animation_0h2kq")
+&"fall": SubResource("Animation_v8oog"),
+&"fall_shoot": SubResource("Animation_glhiw"),
+&"hurt": SubResource("Animation_t0t1w"),
+&"idle": SubResource("Animation_pnqu3"),
+&"idle_shoot": SubResource("Animation_tm7cr"),
+&"jump": SubResource("Animation_l5ora"),
+&"jump_shoot": SubResource("Animation_kih40"),
+&"walk": SubResource("Animation_kos2q"),
+&"walk_shoot": SubResource("Animation_0h2kq")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_otcs5"]

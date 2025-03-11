@@ -56,9 +56,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sid3r"]
 _data = {
-"RESET": SubResource("Animation_v1nkl"),
-"idle": SubResource("Animation_qayxh"),
-"walk": SubResource("Animation_jkonk")
+&"RESET": SubResource("Animation_v1nkl"),
+&"idle": SubResource("Animation_qayxh"),
+&"walk": SubResource("Animation_jkonk")
 }
 
 [node name="Swordbob" type="CharacterBody2D"]

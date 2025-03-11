@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c1yyp1akxg2xw"]
 
-[ext_resource type="Script" path="res://scripts/characters/enemies/doorah.gd" id="1_5i843"]
+[ext_resource type="Script" uid="uid://b8mn3e60rnc8e" path="res://scripts/characters/enemies/doorah.gd" id="1_5i843"]
 [ext_resource type="Texture2D" uid="uid://ba8m6ipp26est" path="res://assets/sprites/characters/enemies/roach.png" id="1_y5e5d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vt0cg"]
@@ -23,7 +23,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sf0vi"]
 _data = {
-"idle": SubResource("Animation_obgl5")
+&"idle": SubResource("Animation_obgl5")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_alf82"]

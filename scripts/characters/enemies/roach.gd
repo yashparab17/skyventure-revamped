@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
-# Preloads the entity death effect.
+# Preloads the entity death effect and health pickup.
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
+var health_pickup = preload("res://scenes/items/pickups/health_pickup.tscn")
 
 # Enemy movement variables.
 @export var gravity = 600
@@ -79,6 +80,11 @@ func roach_patrol(delta: float):
 	
 	var target_point = point_positions[current_point_position]
 	direction = (target_point - global_position).normalized()
+	
+	if is_on_wall():
+		# Reverse direction if colliding with a wall.
+		current_point_position = (current_point_position + 1) % no_of_points
+		return
 	
 	# Flip sprite based on movement direction.
 	flip_direction(direction.x)
@@ -208,12 +214,18 @@ func die():
 	snd_death.play()
 	velocity = Vector2(0, 0)
 	await anim.animation_finished # Wait for death animation to finish.
-			
+	
 	# Spawn the death effect at the enemy's position.
 	var entity_death_instance = entity_death.instantiate() as Node2D
 	entity_death_instance.global_position = global_position + sprite.position
 	get_parent().add_child(entity_death_instance)
-			
+	
+	# 75% chance to drop a health pickup.
+	if randf() < 0.75:
+		var health_pickup_instance = health_pickup.instantiate() as Node2D
+		health_pickup_instance.global_position = global_position + sprite.position
+		get_parent().add_child(health_pickup_instance)
+	
 	queue_free() # Remove the enemy from the scene.
 
 # Updates animation based on current state.

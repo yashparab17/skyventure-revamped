@@ -191,9 +191,13 @@ func die():
 	get_tree().paused = false  
 	
 	# Play the hurt animation before anything else.
+	anim.process_mode = Node.PROCESS_MODE_ALWAYS
+	snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
 	anim.play("hurt")
 	snd_hurt.play()
+	get_tree().paused = true
 	await anim.animation_finished  # Wait for the hurt animation to complete.
+	get_tree().paused = false  # Resume the game.
 
 	# Hide the player immediately.
 	visible = false

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://ckq32nl7vk503"]
 
 [ext_resource type="Texture2D" uid="uid://litsq0v1ug6l" path="res://assets/sprites/projectiles/bullet_1.png" id="1_svfqq"]
-[ext_resource type="Script" path="res://scripts/projectiles/bullet_1.gd" id="2_ngnpv"]
+[ext_resource type="Script" uid="uid://dbtcm2w6exjrs" path="res://scripts/projectiles/bullet_1.gd" id="2_ngnpv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o3uab"]
 atlas = ExtResource("1_svfqq")
@@ -47,7 +47,7 @@ autostart = true
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="Collision" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_reqvq")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -11,6 +11,9 @@ var shooter : CharacterBody2D = null
 var can_shoot = true
 var original_position: Vector2
 
+# Sound references.
+@onready var snd_shoot = $Sounds/Shoot 
+
 func _ready():
 	original_position = position
 
@@ -19,6 +22,7 @@ func shoot(direction: float):
 	if can_shoot:
 		can_shoot = false
 		raise_gun()
+		snd_shoot.play()
 
 		# Instantiates the bullet and adds it to the scene.
 		if bullet_scene != null:

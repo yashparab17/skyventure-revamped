@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://benelgf3benh8"]
 
-[ext_resource type="Script" path="res://scripts/items/guns/gun_1_pickup.gd" id="1_en4on"]
+[ext_resource type="Script" uid="uid://cj57q84haa022" path="res://scripts/items/guns/gun_1_pickup.gd" id="1_en4on"]
 [ext_resource type="Texture2D" uid="uid://do3qoorekm0ls" path="res://assets/sprites/items/guns/gun_1.png" id="1_r8ksb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hlx2"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bqqdgr1xsbr3g"]
 
 [ext_resource type="Texture2D" uid="uid://dvop4we2ipbdx" path="res://assets/sprites/items/pickups/health_pickup.png" id="1_srfbu"]
-[ext_resource type="Script" path="res://scripts/items/pickups/health_pickup.gd" id="2_h0lmg"]
+[ext_resource type="Script" uid="uid://33qp0vmfuqd5" path="res://scripts/items/pickups/health_pickup.gd" id="2_h0lmg"]
 [ext_resource type="AudioStream" uid="uid://ca7yabwj4foru" path="res://assets/sounds/items/pickups/health_pickup.wav" id="3_pbbd4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ffpy6"]
@@ -48,7 +48,6 @@ animations = [{
 
 [node name="HealthPickup" type="AnimatedSprite2D"]
 z_index = -1
-position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_v161u")
 animation = &"pulsate"
 autoplay = "pulsate"
