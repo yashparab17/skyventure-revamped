@@ -204,10 +204,11 @@ position = Vector2(0, -8)
 texture = ExtResource("1_epty3")
 hframes = 4
 vframes = 9
+frame = 24
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_hyf1q")
+&"": SubResource("AnimationLibrary_hyf1q")
 }
 autoplay = "idle"
 
@@ -243,6 +244,6 @@ volume_db = -20.0
 
 [node name="Death" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("7_w6xla")
-volume_db = -20.0
+volume_db = -30.0
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
