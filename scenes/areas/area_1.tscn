@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://c2raa0glxgp56"]
+[gd_scene load_steps=8 format=4 uid="uid://c2raa0glxgp56"]
 
 [ext_resource type="PackedScene" uid="uid://qjnr80eka1o8" path="res://scenes/backgrounds/area_1/sky_background.tscn" id="1_y41uj"]
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="2_natpb"]
@@ -7,7 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://cmjr5k7ixi8q5" path="res://assets/music/area_1/duvet.mp3" id="5_4lo7y"]
 [ext_resource type="PackedScene" uid="uid://s50fl3a4b3ib" path="res://scenes/characters/enemies/roach.tscn" id="6_nyyba"]
 [ext_resource type="PackedScene" uid="uid://b88cbbyujj8pj" path="res://scenes/ui/hud.tscn" id="7_ia5va"]
-[ext_resource type="PackedScene" uid="uid://benelgf3benh8" path="res://scenes/items/guns/gun_1_pickup.tscn" id="7_vq5v6"]
 
 [node name="Area 1" type="Node2D"]
 
@@ -53,9 +52,6 @@ z_index = -1
 position = Vector2(-128, 176)
 
 [node name="Items" type="Node" parent="."]
-
-[node name="Gun 1 Pickup" parent="Items" instance=ExtResource("7_vq5v6")]
-position = Vector2(160, 96)
 
 [node name="Music" type="Node" parent="."]
 
