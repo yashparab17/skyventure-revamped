@@ -34,6 +34,10 @@ var walk_snd_timer: float = 0.0
 enum States {IDLE, WALK, JUMP, FALL, IDLE_SHOOT, WALK_SHOOT, JUMP_SHOOT, FALL_SHOOT, HURT}
 var current_state: States = States.IDLE
 
+# Facing properties.
+enum FacingDirection {RIGHT, LEFT}
+var facing_direction: FacingDirection = FacingDirection.RIGHT
+
 # Aiming properties.
 enum AimDirection {RIGHT, UP, LEFT, DOWN}
 var current_aim_direction: AimDirection = AimDirection.RIGHT
@@ -77,9 +81,9 @@ func update_timers(delta: float) -> void:
 func handle_movement_and_shooting(delta: float) -> void:
 	var direction = Input.get_axis("move_left", "move_right")
 
-	# Flip sprite when changing direction.
+	# Update facing direction based on movement input.
 	if direction:
-		sprite.flip_h = direction < 0
+		facing_direction = FacingDirection.LEFT if direction < 0 else FacingDirection.RIGHT
 
 	# Handle movement based on whether the player is on the ground or in the air.
 	if is_on_floor():
@@ -138,7 +142,7 @@ func handle_aiming() -> void:
 		aim_node.position = Vector2(0, 16) # Adjust position for aiming down.
 	else:
 		# Default to facing direction (left or right).
-		if sprite.flip_h:
+		if facing_direction == FacingDirection.LEFT:
 			# Facing left.
 			current_aim_direction = AimDirection.LEFT
 			aim_node.rotation_degrees = 180
@@ -224,37 +228,53 @@ func die() -> void:
 
 # Updates the player's animation based on the current state.
 func animate_player() -> void:
-	var current_frame = anim.current_animation_position
+	var animation_name = get_animation_name()
+	if anim.current_animation != animation_name:
+		var current_frame = anim.current_animation_position
+		anim.play(animation_name)
+		
+	# Smoothly transition between walk and walk_shoot, fall and fall_shoot.
+		if (current_state == States.WALK and animation_name.begins_with("walk_shoot")) or \
+		(current_state == States.WALK_SHOOT and animation_name.begins_with("walk")) or \
+		(current_state == States.FALL and animation_name.begins_with("fall_shoot")) or \
+		(current_state == States.FALL_SHOOT and animation_name.begins_with("fall")):
+			anim.seek(current_frame)
 
+# Constructs the animation name based on the player's state, facing direction, and aiming direction.
+func get_animation_name() -> String:
+	var base_animation = ""
 	match current_state:
 		States.IDLE:
-			if anim.current_animation != "idle":
-				anim.play("idle")
+			base_animation = "idle"
 		States.WALK:
-			if anim.current_animation != "walk":
-				anim.play("walk")
-				anim.seek(current_frame, true)
+			base_animation = "walk"
 		States.JUMP:
-			if anim.current_animation != "jump":
-				anim.play("jump")
+			base_animation = "jump"
 		States.FALL:
-			if anim.current_animation != "fall":
-				anim.play("fall")
-				anim.seek(current_frame, true)
+			base_animation = "fall"
 		States.IDLE_SHOOT:
-			if anim.current_animation != "idle_shoot":
-				anim.play("idle_shoot")
+			base_animation = "idle_shoot"
 		States.WALK_SHOOT:
-			if anim.current_animation != "walk_shoot":
-				anim.play("walk_shoot")
-				anim.seek(current_frame, true)
+			base_animation = "walk_shoot"
 		States.JUMP_SHOOT:
-			if anim.current_animation != "jump_shoot":
-				anim.play("jump_shoot")
+			base_animation = "jump_shoot"
 		States.FALL_SHOOT:
-			if anim.current_animation != "fall_shoot":
-				anim.play("fall_shoot")
-				anim.seek(current_frame, true)
+			base_animation = "fall_shoot"
 		States.HURT:
-			if anim.current_animation != "hurt":
-				anim.play("hurt")
+			return "hurt" # Hurt animation doesn't depend on aiming or facing direction.
+
+	# Determine the facing direction.
+	var facing = "right" if facing_direction == FacingDirection.RIGHT else "left"
+
+	# Append the aiming direction to the base animation name.
+	match current_aim_direction:
+		AimDirection.UP:
+			return base_animation + "_" + facing + "_up"
+		AimDirection.DOWN:
+			return base_animation + "_" + facing + "_down"
+		AimDirection.LEFT:
+			return base_animation + "_" + facing + "_left"
+		AimDirection.RIGHT:
+			return base_animation + "_" + facing + "_right"
+
+	return base_animation + "_" + facing
