@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://dm2gstauhcofm"]
+[gd_scene load_steps=53 format=3 uid="uid://dm2gstauhcofm"]
 
 [ext_resource type="Script" uid="uid://bvytmrl784wuv" path="res://scripts/characters/player/player.gd" id="1_4jjpf"]
 [ext_resource type="Texture2D" uid="uid://dfcdan45g0rer" path="res://assets/sprites/characters/player/player_new.png" id="2_xuses"]
@@ -227,6 +227,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2i(0, 15), Vector2i(1, 15)]
+}
+
+[sub_resource type="Animation" id="Animation_t0t1w"]
+resource_name = "hurt"
+length = 0.4
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 8), Vector2i(1, 8), Vector2i(0, 8), Vector2i(1, 8)]
 }
 
 [sub_resource type="Animation" id="Animation_djydg"]
@@ -713,40 +730,6 @@ tracks/0/keys = {
 "values": [Vector2i(0, 13), Vector2i(1, 13), Vector2i(2, 13), Vector2i(3, 13)]
 }
 
-[sub_resource type="Animation" id="Animation_t0t1w"]
-resource_name = "hurt_right"
-length = 0.4
-step = 0.02
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [Vector2i(0, 24), Vector2i(1, 24), Vector2i(0, 24), Vector2i(1, 24)]
-}
-
-[sub_resource type="Animation" id="Animation_ejaeo"]
-resource_name = "hurt_left"
-length = 0.4
-step = 0.02
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [Vector2i(7, 24), Vector2i(6, 24), Vector2i(7, 24), Vector2i(6, 24)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hyf1q"]
 _data = {
 &"fall_left_down": SubResource("Animation_2v4cy"),
@@ -761,8 +744,7 @@ _data = {
 &"fall_shoot_right_down": SubResource("Animation_omk8d"),
 &"fall_shoot_right_right": SubResource("Animation_s4se6"),
 &"fall_shoot_right_up": SubResource("Animation_4c5ab"),
-&"hurt_left": SubResource("Animation_ejaeo"),
-&"hurt_right": SubResource("Animation_t0t1w"),
+&"hurt": SubResource("Animation_t0t1w"),
 &"idle_left_left": SubResource("Animation_djydg"),
 &"idle_left_up": SubResource("Animation_bsn6e"),
 &"idle_right_right": SubResource("Animation_42irl"),
@@ -815,7 +797,7 @@ position = Vector2(0, -8)
 texture = ExtResource("2_xuses")
 hframes = 8
 vframes = 25
-frame = 199
+frame = 127
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {

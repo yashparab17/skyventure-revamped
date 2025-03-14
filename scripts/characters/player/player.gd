@@ -49,6 +49,11 @@ var shoot_timer: float = 0.0
 # Invulnerability properties.
 var is_invulnerable: bool = false
 
+# Animation tracking.
+var previous_animation: String = ""
+var previous_facing: FacingDirection = FacingDirection.RIGHT
+var previous_aim: AimDirection = AimDirection.RIGHT
+
 func _physics_process(delta: float) -> void:
 	if current_state == States.HURT:
 		return # Skip processing if the player is hurt.
@@ -134,7 +139,7 @@ func handle_aiming() -> void:
 		# Aim up.
 		current_aim_direction = AimDirection.UP
 		aim_node.rotation_degrees = 270
-		aim_node.position = Vector2(0, -16) # Adjust position for aiming up.
+		aim_node.position = Vector2(0, -24) # Adjust position for aiming up.
 	elif Input.is_action_pressed("aim_down") and !is_on_floor():
 		# Aim down (only allowed in the air).
 		current_aim_direction = AimDirection.DOWN
@@ -146,12 +151,12 @@ func handle_aiming() -> void:
 			# Facing left.
 			current_aim_direction = AimDirection.LEFT
 			aim_node.rotation_degrees = 180
-			aim_node.position = Vector2(-8, -8) # Adjust position for facing left.
+			aim_node.position = Vector2(-16, -8) # Adjust position for facing left.
 		else:
 			# Facing right.
 			current_aim_direction = AimDirection.RIGHT
 			aim_node.rotation_degrees = 0
-			aim_node.position = Vector2(8, -8) # Adjust position for facing right.
+			aim_node.position = Vector2(16, -8) # Adjust position for facing right.
 
 # Shoots a bullet in the specified direction.
 func shoot_bullet() -> void:
@@ -187,7 +192,6 @@ func take_damage(damage: int, enemy_x: float) -> void:
 		current_state = States.HURT
 		anim.process_mode = Node.PROCESS_MODE_ALWAYS
 		snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
-		anim.play("hurt")
 		snd_hurt.play()
 
 		# Apply knockback based on enemy position.
@@ -195,9 +199,12 @@ func take_damage(damage: int, enemy_x: float) -> void:
 		velocity = hurt_knockback * Vector2(knockback_direction, 1)
 
 		await get_tree().process_frame
+		
 		get_tree().paused = true
+		animate_hurt()
 		await anim.animation_finished
 		get_tree().paused = false
+		
 		anim.process_mode = Node.PROCESS_MODE_INHERIT
 
 		is_invulnerable = false
@@ -208,9 +215,10 @@ func die() -> void:
 	get_tree().paused = false
 	anim.process_mode = Node.PROCESS_MODE_ALWAYS
 	snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
-	anim.play("hurt")
 	snd_hurt.play()
+	
 	get_tree().paused = true
+	animate_hurt()
 	await anim.animation_finished
 	get_tree().paused = false
 
@@ -232,13 +240,25 @@ func animate_player() -> void:
 	if anim.current_animation != animation_name:
 		var current_frame = anim.current_animation_position
 		anim.play(animation_name)
-		
-	# Smoothly transition between walk and walk_shoot, fall and fall_shoot.
-		if (current_state == States.WALK and animation_name.begins_with("walk_shoot")) or \
-		(current_state == States.WALK_SHOOT and animation_name.begins_with("walk")) or \
-		(current_state == States.FALL and animation_name.begins_with("fall_shoot")) or \
-		(current_state == States.FALL_SHOOT and animation_name.begins_with("fall")):
+
+		# Check if the new animation has the same facing and aiming directions as the previous one.
+		if facing_direction == previous_facing and current_aim_direction == previous_aim:
+			anim.play(animation_name)
 			anim.seek(current_frame)
+		else:
+			anim.play(animation_name)
+
+		# Update the previous animation tracking.
+		previous_animation = animation_name
+		previous_facing = facing_direction
+		previous_aim = current_aim_direction
+
+# Seperate function for the hurt animation.
+func animate_hurt() -> void:
+	if facing_direction == FacingDirection.RIGHT:
+		anim.play("hurt_right")
+	else:
+		anim.play("hurt_left")
 
 # Constructs the animation name based on the player's state, facing direction, and aiming direction.
 func get_animation_name() -> String:
@@ -260,8 +280,6 @@ func get_animation_name() -> String:
 			base_animation = "jump_shoot"
 		States.FALL_SHOOT:
 			base_animation = "fall_shoot"
-		States.HURT:
-			return "hurt" # Hurt animation doesn't depend on aiming or facing direction.
 
 	# Determine the facing direction.
 	var facing = "right" if facing_direction == FacingDirection.RIGHT else "left"
