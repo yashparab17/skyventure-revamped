@@ -7,7 +7,7 @@ extends AnimatedSprite2D
 var shooter: Node2D # Reference to the shooter (e.g., Player).
 
 # Preloads the bullet impact effect.
-var bullet_1_impact = preload("res://scenes/effects/bullet_1_impact.tscn")
+var star_bullet_impact = preload("res://scenes/effects/star_bullet_impact.tscn")
 
 func _ready() -> void:
 	# Rotate the bullet to match its direction.
@@ -43,6 +43,6 @@ func handle_collision() -> void:
 
 # Spawns the bullet impact effect at the bullet's position.
 func spawn_impact_effect() -> void:
-	var bullet_1_impact_instance = bullet_1_impact.instantiate() as Node2D
-	bullet_1_impact_instance.global_position = global_position
-	get_parent().add_child(bullet_1_impact_instance)
+	var star_bullet_impact_instance = star_bullet_impact.instantiate() as Node2D
+	star_bullet_impact_instance.global_position = global_position
+	get_parent().add_child(star_bullet_impact_instance)

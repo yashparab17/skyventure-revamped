@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bry74v0vqorsq"
-path="res://.godot/imported/bullet_1_impact.png-085d055da8ea46004e5a3b329f2b8f88.ctex"
+uid="uid://bqctr1lo83j5w"
+path="res://.godot/imported/empty.png-ebdae0a59a6b64b2bbcd0f9bb2ad6b73.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/effects/bullet_1_impact.png"
-dest_files=["res://.godot/imported/bullet_1_impact.png-085d055da8ea46004e5a3b329f2b8f88.ctex"]
+source_file="res://assets/sprites/ui/weapon_display/empty.png"
+dest_files=["res://.godot/imported/empty.png-ebdae0a59a6b64b2bbcd0f9bb2ad6b73.ctex"]
 
 [params]
 

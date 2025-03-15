@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://d2g7g7ctkk8ak"]
 
-[ext_resource type="Texture2D" uid="uid://bry74v0vqorsq" path="res://assets/sprites/effects/bullet_1_impact.png" id="1_w87l3"]
-[ext_resource type="Script" uid="uid://de0qb57yso0q5" path="res://scripts/effects/bullet_1_impact.gd" id="2_avjyc"]
+[ext_resource type="Texture2D" uid="uid://bry74v0vqorsq" path="res://assets/sprites/effects/star_bullet_impact.png" id="1_w87l3"]
+[ext_resource type="Script" uid="uid://de0qb57yso0q5" path="res://scripts/effects/star_bullet_impact.gd" id="2_avjyc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kdtxy"]
 atlas = ExtResource("1_w87l3")
@@ -51,7 +51,7 @@ animations = [{
 "speed": 20.0
 }]
 
-[node name="Bullet 1 Impact" type="AnimatedSprite2D"]
+[node name="Star Bullet Impact" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_0qd1l")
 animation = &"impact"
 autoplay = "impact"

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://litsq0v1ug6l"
-path="res://.godot/imported/bullet_1.png-2c67e53b1d9cd548bd917a9d9b943346.ctex"
+uid="uid://bry74v0vqorsq"
+path="res://.godot/imported/star_bullet_impact.png-8da85963e2f42e77c5a0a1d814c5fe9b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/projectiles/bullet_1.png"
-dest_files=["res://.godot/imported/bullet_1.png-2c67e53b1d9cd548bd917a9d9b943346.ctex"]
+source_file="res://assets/sprites/effects/star_bullet_impact.png"
+dest_files=["res://.godot/imported/star_bullet_impact.png-8da85963e2f42e77c5a0a1d814c5fe9b.ctex"]
 
 [params]
 

@@ -6,7 +6,7 @@
 [ext_resource type="TileSet" uid="uid://brgew8e405nkq" path="res://scenes/areas/area_1.tres" id="4_vi3ny"]
 [ext_resource type="AudioStream" uid="uid://cmjr5k7ixi8q5" path="res://assets/music/area_1/duvet.mp3" id="5_4lo7y"]
 [ext_resource type="PackedScene" uid="uid://s50fl3a4b3ib" path="res://scenes/characters/enemies/roach.tscn" id="6_nyyba"]
-[ext_resource type="PackedScene" uid="uid://b88cbbyujj8pj" path="res://scenes/ui/hud.tscn" id="7_ia5va"]
+[ext_resource type="PackedScene" uid="uid://s4lyiv5ovl16" path="res://scenes/items/modules/weapons/star_bullet_module.tscn" id="7_vq5v6"]
 
 [node name="Area 1" type="Node2D"]
 
@@ -23,8 +23,6 @@ drag_vertical_enabled = true
 script = ExtResource("2_o4418")
 player = NodePath("../Player")
 area = NodePath("../..")
-
-[node name="HUD" parent="Player Stuff" instance=ExtResource("7_ia5va")]
 
 [node name="Tiles" type="Node2D" parent="."]
 
@@ -52,6 +50,9 @@ z_index = -1
 position = Vector2(-128, 176)
 
 [node name="Items" type="Node2D" parent="."]
+
+[node name="Star Bullet Module" parent="Items" instance=ExtResource("7_vq5v6")]
+position = Vector2(144, 120)
 
 [node name="Music" type="Node2D" parent="."]
 

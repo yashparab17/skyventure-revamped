@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # Preload scenes for projectiles and effects.
-var bullet_1 = preload("res://scenes/projectiles/bullet_1.tscn")
+var star_bullet = preload("res://scenes/projectiles/star_bullet.tscn")
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 
 # Player movement properties.
@@ -30,6 +30,11 @@ var entity_death = preload("res://scenes/effects/entity_death.tscn")
 var walk_snd_timer: float = 0.0
 @export var walk_snd_interval: float = 0.3
 
+# Player's weapon inventory.
+var weapons: Array[Weapon] = [] # Stores all weapons.
+var current_weapon_index: int = -1 # Tracks the currently equipped weapon.
+var current_weapon: Weapon = null # Reference to the current weapon.
+
 # State machine.
 enum States {IDLE, WALK, JUMP, FALL, IDLE_SHOOT, WALK_SHOOT, JUMP_SHOOT, FALL_SHOOT, HURT}
 var current_state: States = States.IDLE
@@ -54,6 +59,14 @@ var previous_animation: String = ""
 var previous_facing: FacingDirection = FacingDirection.RIGHT
 var previous_aim: AimDirection = AimDirection.RIGHT
 
+func _ready() -> void:
+	# Add weapons to the inventory (initially locked).
+	weapons.append(Weapon.new("Star Bullet", preload("res://scenes/projectiles/star_bullet.tscn"), 0.2, preload("res://assets/sprites/ui/weapon_display/star_bullet.png")))
+	# Add more weapons here as needed.
+
+	## Unlock the first weapon for testing (optional).
+	#unlock_weapon(0)
+
 func _physics_process(delta: float) -> void:
 	if current_state == States.HURT:
 		return # Skip processing if the player is hurt.
@@ -61,6 +74,7 @@ func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	update_timers(delta)
 	handle_movement_and_shooting(delta)
+	handle_weapon_switching()
 	move_and_slide()
 	animate_player()
 
@@ -99,7 +113,7 @@ func handle_movement_and_shooting(delta: float) -> void:
 	handle_aiming()
 
 	# Handle shooting.
-	if Input.is_action_just_pressed("shoot") and shoot_timer <= 0:
+	if Input.is_action_just_pressed("shoot") and shoot_timer <= 0 and current_weapon:
 		shoot_bullet()
 		shoot_timer = shoot_cooldown
 		update_shooting_state(direction)
@@ -158,16 +172,61 @@ func handle_aiming() -> void:
 			aim_node.rotation_degrees = 0
 			aim_node.position = Vector2(16, -8) # Adjust position for facing right.
 
+func collect_module(module_type: String) -> void:
+	match module_type:
+		"star_bullet":
+			unlock_weapon(0) # Unlock the first weapon.
+		# Add more cases for other weapons.
+
+# Unlocks a weapon by index.
+func unlock_weapon(index: int) -> void:
+	if index >= 0 and index < weapons.size():
+		weapons[index].unlocked = true
+		if current_weapon_index == -1: # Equip the first unlocked weapon.
+			switch_weapon(index)
+
+# Switches to a weapon by index.
+func switch_weapon(index: int) -> void:
+	if index >= 0 and index < weapons.size() and weapons[index].unlocked:
+		current_weapon_index = index
+		current_weapon = weapons[index]
+		shoot_timer = 0.0 # Reset shoot timer when switching weapons.
+
+# Handles weapon switching input.
+func handle_weapon_switching() -> void:
+	if Input.is_action_just_pressed("next_weapon"):
+		switch_to_next_weapon()
+	elif Input.is_action_just_pressed("previous_weapon"):
+		switch_to_previous_weapon()
+
+# Switches to the next unlocked weapon.
+func switch_to_next_weapon() -> void:
+	var next_index = current_weapon_index
+	for i in range(1, weapons.size()):
+		next_index = (current_weapon_index + i) % weapons.size()
+		if weapons[next_index].unlocked:
+			switch_weapon(next_index)
+			break
+
+# Switches to the previous unlocked weapon.
+func switch_to_previous_weapon() -> void:
+	var prev_index = current_weapon_index
+	for i in range(1, weapons.size()):
+		prev_index = (current_weapon_index - i + weapons.size()) % weapons.size()
+		if weapons[prev_index].unlocked:
+			switch_weapon(prev_index)
+			break
+
 # Shoots a bullet in the specified direction.
 func shoot_bullet() -> void:
-	if shoot_timer <= 0:
-		var bullet = bullet_1.instantiate() as Node2D
-		bullet.global_position = aim_node.global_position # Use AimNode's position.
-		bullet.direction = Vector2.RIGHT.rotated(aim_node.rotation) # Use AimNode's rotation.
+	if current_weapon and shoot_timer <= 0:
+		var bullet = current_weapon.projectile_scene.instantiate() as Node2D
+		bullet.global_position = aim_node.global_position
+		bullet.direction = Vector2.RIGHT.rotated(aim_node.rotation)
 		bullet.shooter = self
 		snd_proj_bull.play()
 		get_tree().current_scene.add_child(bullet)
-		shoot_timer = shoot_cooldown
+		shoot_timer = current_weapon.cooldown
 
 # Updates the player's state when shooting.
 func update_shooting_state(direction: float) -> void:

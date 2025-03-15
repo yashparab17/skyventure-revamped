@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://clwss3qa34jfo"
-path="res://.godot/imported/bullet_1_shoot.wav-60630146df38afdc8c5bf4dccb4b0cd9.sample"
+path="res://.godot/imported/star_bullet_shoot.wav-9c0c5f44c74aef8de493390604c1de56.sample"
 
 [deps]
 
-source_file="res://assets/sounds/projectiles/bullet_1_shoot.wav"
-dest_files=["res://.godot/imported/bullet_1_shoot.wav-60630146df38afdc8c5bf4dccb4b0cd9.sample"]
+source_file="res://assets/sounds/projectiles/star_bullet_shoot.wav"
+dest_files=["res://.godot/imported/star_bullet_shoot.wav-9c0c5f44c74aef8de493390604c1de56.sample"]
 
 [params]
 
