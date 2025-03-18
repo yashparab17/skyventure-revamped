@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://c2raa0glxgp56"]
+[gd_scene load_steps=9 format=4 uid="uid://c2raa0glxgp56"]
 
 [ext_resource type="PackedScene" uid="uid://qjnr80eka1o8" path="res://scenes/backgrounds/area_1/sky_background.tscn" id="1_y41uj"]
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="2_natpb"]
@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://brgew8e405nkq" path="res://scenes/areas/area_1.tres" id="4_vi3ny"]
 [ext_resource type="AudioStream" uid="uid://cmjr5k7ixi8q5" path="res://assets/music/area_1/duvet.mp3" id="5_4lo7y"]
 [ext_resource type="PackedScene" uid="uid://s50fl3a4b3ib" path="res://scenes/characters/enemies/roach.tscn" id="6_nyyba"]
+[ext_resource type="PackedScene" uid="uid://bo6xr5bcsut1g" path="res://scenes/characters/enemies/flying_roach.tscn" id="6_vq5v6"]
 [ext_resource type="PackedScene" uid="uid://s4lyiv5ovl16" path="res://scenes/items/modules/weapons/star_bullet_module.tscn" id="7_vq5v6"]
 
 [node name="Area 1" type="Node2D"]
@@ -48,6 +49,9 @@ tile_set = ExtResource("4_vi3ny")
 [node name="Roach1" parent="Enemies" instance=ExtResource("6_nyyba")]
 z_index = -1
 position = Vector2(-128, 176)
+
+[node name="FlyingRoach1" parent="Enemies" instance=ExtResource("6_vq5v6")]
+position = Vector2(368, 72)
 
 [node name="Items" type="Node2D" parent="."]
 

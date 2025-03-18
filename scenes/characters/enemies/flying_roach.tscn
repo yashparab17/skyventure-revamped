@@ -1,0 +1,137 @@
+[gd_scene load_steps=11 format=3 uid="uid://bo6xr5bcsut1g"]
+
+[ext_resource type="Texture2D" uid="uid://b4i86je6eajx4" path="res://assets/sprites/characters/enemies/flying_roach.png" id="1_c30qp"]
+[ext_resource type="Script" uid="uid://doh38osdsao2p" path="res://scripts/characters/enemies/flying_roach.gd" id="1_ma4d0"]
+[ext_resource type="AudioStream" uid="uid://cs1yc7b6n5hcp" path="res://assets/sounds/characters/enemies/roach/hurt.wav" id="3_yp3q5"]
+[ext_resource type="AudioStream" uid="uid://thcnkra1yvna" path="res://assets/sounds/characters/enemies/roach/death.wav" id="4_1mby0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ykdf"]
+radius = 8.0
+height = 20.0
+
+[sub_resource type="Animation" id="Animation_yp3q5"]
+resource_name = "death"
+length = 0.5
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.19, 0.27, 0.34, 0.4, 0.45, 0.8, 0.9, 0.95),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 2), Vector2i(1, 2), Vector2i(0, 2), Vector2i(1, 2), Vector2i(0, 2), Vector2i(1, 2), Vector2i(0, 2), Vector2i(1, 2), Vector2i(0, 2), Vector2i(1, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hurtbox/HurtboxCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Collision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_c30qp"]
+resource_name = "fly"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ma4d0"]
+resource_name = "hurt"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(0, 1), Vector2i(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yp3q5"]
+_data = {
+&"death": SubResource("Animation_yp3q5"),
+&"fly": SubResource("Animation_c30qp"),
+&"hurt": SubResource("Animation_ma4d0")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ma4d0"]
+height = 24.0
+
+[node name="Flying Roach" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_ma4d0")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_8ykdf")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-1, -10)
+texture = ExtResource("1_c30qp")
+hframes = 2
+vframes = 3
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_yp3q5")
+}
+autoplay = "fly"
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_ma4d0")
+debug_color = Color(0.994119, 0, 0.22716, 0.42)
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("3_yp3q5")
+volume_db = -20.0
+
+[node name="Death" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("4_1mby0")
+volume_db = -20.0
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
