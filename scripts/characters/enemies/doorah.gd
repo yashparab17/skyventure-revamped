@@ -18,8 +18,8 @@ func _ready():
 	# Try to find the player in the scene.
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
-		player_ref = players[0]  # Assign the first player found
-		face_player()  # Face the player immediately
+		player_ref = players[0] # Assign the first player found
+		face_player() # Face the player immediately
 			
 func _physics_process(delta: float) -> void:
 	if player_ref:
@@ -34,7 +34,7 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 		body.take_damage(damage_amount, global_position.x)
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	print("Hit detected with:", area.get_parent().name)  # Debugging line
+	print("Hit detected with:", area.get_parent().name) # Debugging line
 	
 	if area.get_parent().has_method("get_damage_amount"):
 		var bullet = area.get_parent() as Node

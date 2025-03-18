@@ -7,7 +7,7 @@ var health_pickup = preload("res://scenes/items/pickups/health_pickup.tscn")
 # Enemy movement properties.
 @export var speed: int = 50
 @export var acceleration: float = 600
-@export var friction: float = 600  # Friction for smooth deceleration.
+@export var friction: float = 600 # Friction for smooth deceleration.
 
 # Enemy health and damage properties.
 @export var health_amount: int = 3
@@ -46,14 +46,14 @@ func _ready() -> void:
 func generate_patrol_points() -> void:
 	point_positions.clear()
 	var spawn_position = global_position
-	point_positions.append(spawn_position + Vector2(0, 32))  # First patrol point (down).
+	point_positions.append(spawn_position + Vector2(0, 32)) # First patrol point (down).
 	point_positions.append(spawn_position + Vector2(0, -32)) # Second patrol point (up).
 	no_of_points = point_positions.size()
-	current_point_position = 0  # Reset patrol index.
+	current_point_position = 0 # Reset patrol index.
 
 func _physics_process(delta: float) -> void:
 	if can_move and current_state != States.DEATH:
-		patrol(delta)  # Patrol between points.
+		patrol(delta) # Patrol between points.
 
 	# Constantly face the player.
 	if player_ref:
@@ -81,9 +81,9 @@ func patrol(delta: float) -> void:
 	if global_position.distance_to(target_point) < 2:
 		global_position = target_point
 		can_move = false
-		velocity = Vector2.ZERO  # Ensure velocity is fully reset.
+		velocity = Vector2.ZERO # Ensure velocity is fully reset.
 		current_state = States.FLY
-		await get_tree().create_timer(1.0).timeout  # Wait for 1 second before moving to the next point.
+		await get_tree().create_timer(1.0).timeout # Wait for 1 second before moving to the next point.
 		current_point_position = (current_point_position + 1) % no_of_points
 		can_move = true
 
@@ -91,7 +91,7 @@ func patrol(delta: float) -> void:
 func face_player() -> void:
 	if player_ref:
 		var player_direction = (player_ref.global_position - global_position).normalized()
-		sprite.flip_h = player_direction.x < 0  # Flip sprite based on player's position.
+		sprite.flip_h = player_direction.x < 0 # Flip sprite based on player's position.
 
 # Handles enemy taking damage when hit by a bullet.
 func _on_hurtbox_area_entered(area: Area2D) -> void:
@@ -99,12 +99,12 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		var bullet = area.get_parent() as Node
 		var bullet_damage = bullet.damage_amount
 
-		health_amount -= bullet_damage  # Reduce health based on bullet damage.
+		health_amount -= bullet_damage # Reduce health based on bullet damage.
 		current_state = States.HURT
 		snd_hurt.play()
-		can_move = false  # Stop movement.
+		can_move = false # Stop movement.
 		velocity = Vector2.ZERO
-		await get_tree().create_timer(0.2).timeout  # Brief stun duration.
+		await get_tree().create_timer(0.2).timeout # Brief stun duration.
 
 		if health_amount <= 0:
 			die()
@@ -117,7 +117,7 @@ func die() -> void:
 	current_state = States.DEATH
 	snd_death.play()
 	velocity = Vector2.ZERO
-	await anim.animation_finished  # Wait for death animation to finish.
+	await anim.animation_finished # Wait for death animation to finish.
 
 	# Spawn death effect.
 	var entity_death_instance = entity_death.instantiate() as Node2D
@@ -130,7 +130,7 @@ func die() -> void:
 		health_pickup_instance.global_position = global_position + sprite.position
 		get_parent().add_child(health_pickup_instance)
 
-	queue_free()  # Remove the enemy from the scene.
+	queue_free() # Remove the enemy from the scene.
 
 # Updates animation based on current state.
 func update_animation() -> void:
@@ -143,4 +143,4 @@ func update_animation() -> void:
 				anim.play("hurt")
 		States.DEATH:
 			if anim.current_animation != "death":
-				anim.play("death", -1, 1, false)  # Play death animation once without looping.
+				anim.play("death", -1, 1, false) # Play death animation once without looping.
