@@ -49,9 +49,13 @@ tile_set = ExtResource("4_vi3ny")
 [node name="Roach1" parent="Enemies" instance=ExtResource("6_nyyba")]
 z_index = -1
 position = Vector2(-128, 176)
+first_patrol_point = Vector2(64, 0)
+second_patrol_point = Vector2(-64, 0)
 
 [node name="FlyingRoach1" parent="Enemies" instance=ExtResource("6_vq5v6")]
-position = Vector2(368, 72)
+position = Vector2(358, 88)
+first_patrol_point = Vector2(0, 32)
+second_patrol_point = Vector2(0, -32)
 
 [node name="Items" type="Node2D" parent="."]
 

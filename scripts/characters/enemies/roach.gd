@@ -19,6 +19,10 @@ var no_of_points: int = 2
 var point_positions: Array[Vector2] = []
 var current_point_position: int = 0
 
+# Export patrol variables.
+@export var first_patrol_point: Vector2
+@export var second_patrol_point: Vector2
+
 # Chase system variables.
 var chasing: bool = false
 var player_ref: Node2D = null
@@ -50,8 +54,8 @@ func _ready() -> void:
 func generate_patrol_points() -> void:
 	point_positions.clear()
 	var spawn_position = global_position
-	point_positions.append(spawn_position + Vector2(64, 0)) # First patrol point.
-	point_positions.append(spawn_position + Vector2(-64, 0)) # Second patrol point.
+	point_positions.append(spawn_position + first_patrol_point)
+	point_positions.append(spawn_position + second_patrol_point)
 	no_of_points = point_positions.size()
 	current_point_position = 0 # Reset patrol index.
 
