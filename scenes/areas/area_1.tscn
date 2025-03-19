@@ -15,21 +15,19 @@
 [node name="Area 1" type="Node2D"]
 script = ExtResource("1_aribk")
 
-[node name="Player Stuff" type="Node2D" parent="."]
-
-[node name="Player" parent="Player Stuff" instance=ExtResource("2_natpb")]
+[node name="Player" parent="." instance=ExtResource("2_natpb")]
 position = Vector2(240, 128)
 
-[node name="PlayerCamera" type="Camera2D" parent="Player Stuff" node_paths=PackedStringArray("player", "area")]
+[node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player", "area")]
 position = Vector2(240, 120)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 script = ExtResource("2_o4418")
 player = NodePath("../Player")
-area = NodePath("../..")
+area = NodePath("..")
 
-[node name="HUD" parent="Player Stuff" instance=ExtResource("3_ksqmx")]
+[node name="HUD" parent="." instance=ExtResource("3_ksqmx")]
 
 [node name="Tiles" type="Node2D" parent="."]
 
@@ -78,10 +76,10 @@ second_patrol_point = Vector2(0, -32)
 [node name="Items" type="Node2D" parent="."]
 
 [node name="Star Bullet Module" parent="Items" instance=ExtResource("7_vq5v6")]
-position = Vector2(144, 120)
+position = Vector2(-136, 376)
 
 [node name="Fireball Module" parent="Items" instance=ExtResource("9_aribk")]
-position = Vector2(320, 120)
+position = Vector2(480, 120)
 
 [node name="Music" type="Node2D" parent="."]
 

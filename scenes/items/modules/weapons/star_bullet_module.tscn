@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://s4lyiv5ovl16"]
+[gd_scene load_steps=9 format=3 uid="uid://s4lyiv5ovl16"]
 
 [ext_resource type="Script" uid="uid://bssw707154sup" path="res://scripts/items/modules/weapons/star_bullet_module.gd" id="1_jv1wh"]
 [ext_resource type="Texture2D" uid="uid://dl08dyi2vsh3i" path="res://assets/sprites/items/modules/weapons/star_bullet_module.png" id="1_ktjft"]
+[ext_resource type="AudioStream" uid="uid://s2u362nrra63" path="res://assets/sounds/items/modules/get_module.wav" id="3_e6jrc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jv1wh"]
 atlas = ExtResource("1_ktjft")
@@ -55,5 +56,11 @@ collision_mask = 2
 
 [node name="Collision" type="CollisionShape2D" parent="Pickup Area"]
 shape = SubResource("RectangleShape2D_e6jrc")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Pickup" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("3_e6jrc")
+volume_db = -20.0
 
 [connection signal="body_entered" from="Pickup Area" to="." method="_on_pickup_area_body_entered"]

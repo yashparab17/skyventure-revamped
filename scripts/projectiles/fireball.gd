@@ -7,8 +7,8 @@ extends CharacterBody2D
 @export var speed: int = 150
 @export var direction: Vector2
 @export var damage_amount: int = 2
-@export var gravity: float = 600.0
-@export var bounce_velocity: float = -100.0
+@export var gravity: float = 600
+@export var bounce_velocity: float = -100
 var shooter: Node2D # Reference to the shooter (e.g., Player).
 
 # Preloads the fireball impact effect.

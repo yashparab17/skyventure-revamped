@@ -29,7 +29,11 @@ signal weapon_switched(weapon_name: String)
 @onready var snd_bonk = $Sounds/Bonk
 @onready var snd_hurt = $Sounds/Hurt
 @onready var snd_death = $Sounds/Death
+@onready var snd_switch_weapon = $Sounds/SwitchWeapon
+
+# Projectile sound references.
 @onready var snd_proj_star_bullet = $Sounds/ProjectileStarBullet
+@onready var snd_proj_fireball = $Sounds/ProjectileFireball
 
 # Sound properties.
 var walk_snd_timer: float = 0.0
@@ -196,6 +200,7 @@ func switch_weapon(index: int) -> void:
 		current_weapon = weapons[index]
 		shoot_timer = 0.0 # Reset shoot timer when switching weapons.
 		emit_signal("weapon_switched", current_weapon.name)
+		snd_switch_weapon.play()
 
 # Handles weapon switching input.
 func handle_weapon_switching() -> void:
@@ -229,8 +234,13 @@ func shoot_bullet() -> void:
 		bullet.global_position = aim_node.global_position
 		bullet.direction = Vector2.RIGHT.rotated(aim_node.rotation)
 		bullet.shooter = self
+		
+		# Play appropriate sounds.
 		if current_weapon_index == 0:
 			snd_proj_star_bullet.play()
+		elif current_weapon_index == 1:
+			snd_proj_fireball.play()
+		
 		get_tree().current_scene.add_child(bullet)
 		shoot_timer = current_weapon.cooldown
 
