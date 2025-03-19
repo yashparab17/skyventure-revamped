@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://dm2gstauhcofm"]
+[gd_scene load_steps=54 format=3 uid="uid://dm2gstauhcofm"]
 
 [ext_resource type="Script" uid="uid://bvytmrl784wuv" path="res://scripts/characters/player/player.gd" id="1_4jjpf"]
 [ext_resource type="Texture2D" uid="uid://dfcdan45g0rer" path="res://assets/sprites/characters/player/player_new.png" id="2_xuses"]
@@ -8,7 +8,6 @@
 [ext_resource type="AudioStream" uid="uid://dsf6idrcom8ud" path="res://assets/sounds/characters/player/hurt.wav" id="5_rgom0"]
 [ext_resource type="AudioStream" uid="uid://dmh4fpgpkdnl4" path="res://assets/sounds/characters/player/death.wav" id="7_w6xla"]
 [ext_resource type="AudioStream" uid="uid://clwss3qa34jfo" path="res://assets/sounds/projectiles/star_bullet_shoot.wav" id="8_xuses"]
-[ext_resource type="PackedScene" uid="uid://b88cbbyujj8pj" path="res://scenes/ui/hud.tscn" id="9_42irl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fc3fl"]
 radius = 6.0
@@ -836,6 +835,12 @@ position = Vector2(0, -8)
 shape = SubResource("CapsuleShape2D_otcs5")
 debug_color = Color(0.982472, 0, 0.361879, 0.42)
 
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="BlinkTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [node name="Sounds" type="Node" parent="."]
 
 [node name="Walk" type="AudioStreamPlayer" parent="Sounds"]
@@ -862,6 +867,5 @@ volume_db = -30.0
 stream = ExtResource("8_xuses")
 volume_db = -20.0
 
-[node name="HUD" parent="." instance=ExtResource("9_42irl")]
-
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="timeout" from="BlinkTimer" to="." method="_on_blink_timer_timeout"]

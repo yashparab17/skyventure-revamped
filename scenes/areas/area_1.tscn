@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=4 uid="uid://c2raa0glxgp56"]
+[gd_scene load_steps=10 format=4 uid="uid://c2raa0glxgp56"]
 
 [ext_resource type="PackedScene" uid="uid://qjnr80eka1o8" path="res://scenes/backgrounds/area_1/sky_background.tscn" id="1_y41uj"]
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="2_natpb"]
 [ext_resource type="Script" uid="uid://bfhdnyp616acc" path="res://scenes/characters/player/player_camera.gd" id="2_o4418"]
+[ext_resource type="PackedScene" uid="uid://b88cbbyujj8pj" path="res://scenes/ui/hud.tscn" id="3_ksqmx"]
 [ext_resource type="TileSet" uid="uid://brgew8e405nkq" path="res://scenes/areas/area_1.tres" id="4_vi3ny"]
 [ext_resource type="AudioStream" uid="uid://cmjr5k7ixi8q5" path="res://assets/music/area_1/duvet.mp3" id="5_4lo7y"]
 [ext_resource type="PackedScene" uid="uid://s50fl3a4b3ib" path="res://scenes/characters/enemies/roach.tscn" id="6_nyyba"]
@@ -24,6 +25,8 @@ drag_vertical_enabled = true
 script = ExtResource("2_o4418")
 player = NodePath("../Player")
 area = NodePath("../..")
+
+[node name="HUD" parent="Player Stuff" instance=ExtResource("3_ksqmx")]
 
 [node name="Tiles" type="Node2D" parent="."]
 

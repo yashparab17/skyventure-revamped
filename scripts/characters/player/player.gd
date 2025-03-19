@@ -17,6 +17,8 @@ var entity_death = preload("res://scenes/effects/entity_death.tscn")
 @onready var sprite: Sprite2D = $Sprite
 @onready var anim: AnimationPlayer = $Animation
 @onready var aim_node: Node2D = $AimNode
+@onready var invuln_timer: Timer = $InvulnerabilityTimer
+@onready var blink_timer: Timer = $BlinkTimer
 
 # Sound references.
 @onready var snd_walk = $Sounds/Walk
@@ -270,9 +272,35 @@ func take_damage(damage: int, enemy_x: float) -> void:
 		
 		anim.process_mode = Node.PROCESS_MODE_INHERIT
 
-		is_invulnerable = false
+		# Start blinking and invulnerability timer.
+		start_blinking()
+		set_collision_layer_value(2, false)
+		set_collision_mask_value(3, false)
 		current_state = States.IDLE
+		invuln_timer.start()
+
+		# Wait for the invulnerability timer to finish.
+		await invuln_timer.timeout
+
+		# Stop blinking and reset invulnerability.
+		stop_blinking()
+		set_collision_layer_value(2, true)
+		set_collision_mask_value(3, true)
+		is_invulnerable = false
 		sprite.visible = true # Ensure the sprite is visible after blinking ends.
+
+# Starts a timer to toggle visibility every 0.1 seconds.
+func start_blinking() -> void:
+	blink_timer.start()
+
+# Stops the blink timer and ensures the sprite is visible.
+func stop_blinking() -> void:
+	blink_timer.stop()
+	sprite.visible = true
+
+# Toggles sprite visibility.
+func _on_blink_timer_timeout() -> void:
+	sprite.visible = !sprite.visible
 
 # Handles player death.
 func die() -> void:
