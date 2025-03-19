@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=4 uid="uid://c2raa0glxgp56"]
+[gd_scene load_steps=12 format=4 uid="uid://c2raa0glxgp56"]
 
+[ext_resource type="Script" uid="uid://b3r363vsmj2lw" path="res://scripts/areas/area_1.gd" id="1_aribk"]
 [ext_resource type="PackedScene" uid="uid://qjnr80eka1o8" path="res://scenes/backgrounds/area_1/sky_background.tscn" id="1_y41uj"]
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="2_natpb"]
 [ext_resource type="Script" uid="uid://bfhdnyp616acc" path="res://scenes/characters/player/player_camera.gd" id="2_o4418"]
@@ -12,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cchu86rc1g61g" path="res://scenes/items/modules/weapons/fireball_module.tscn" id="9_aribk"]
 
 [node name="Area 1" type="Node2D"]
+script = ExtResource("1_aribk")
 
 [node name="Player Stuff" type="Node2D" parent="."]
 
