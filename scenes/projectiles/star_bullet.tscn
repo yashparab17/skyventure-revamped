@@ -3,13 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://litsq0v1ug6l" path="res://assets/sprites/projectiles/star_bullet.png" id="1_r8wcl"]
 [ext_resource type="Script" uid="uid://dbtcm2w6exjrs" path="res://scripts/projectiles/star_bullet.gd" id="2_r8wcl"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o3uab"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8wcl"]
 atlas = ExtResource("1_r8wcl")
-region = Rect2(0, 0, 16, 16)
+region = Rect2(0, 0, 16, 4)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oy56l"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdghq"]
 atlas = ExtResource("1_r8wcl")
-region = Rect2(16, 0, 16, 16)
+region = Rect2(16, 0, 16, 4)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_05h55"]
 animations = [{
@@ -20,13 +20,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_o3uab")
+"texture": SubResource("AtlasTexture_r8wcl")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oy56l")
+"texture": SubResource("AtlasTexture_mdghq")
 }],
 "loop": true,
-"name": &"shot",
+"name": &"star_bullet",
 "speed": 5.0
 }]
 
@@ -35,7 +35,8 @@ size = Vector2(20, 6)
 
 [node name="Star Bullet" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_05h55")
-animation = &"shot"
+animation = &"star_bullet"
+autoplay = "star_bullet"
 script = ExtResource("2_r8wcl")
 
 [node name="Timer" type="Timer" parent="."]
@@ -47,7 +48,7 @@ autostart = true
 collision_layer = 2
 collision_mask = 5
 
-[node name="Collision" type="CollisionShape2D" parent="Hitbox"]
+[node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_reqvq")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

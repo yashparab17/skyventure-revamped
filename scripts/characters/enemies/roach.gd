@@ -60,8 +60,7 @@ func generate_patrol_points() -> void:
 	current_point_position = 0 # Reset patrol index.
 
 func _physics_process(delta: float) -> void:
-	if current_state != States.DEATH:
-		apply_gravity(delta)
+	apply_gravity(delta)
 
 	if can_walk and current_state != States.DEATH:
 		if chasing and player_ref:
@@ -150,7 +149,7 @@ func _on_detection_area_body_entered(body: Node2D) -> void:
 		can_walk = false # Stop movement.
 		velocity.x = 0
 		alert()
-		chase_timer.stop()
+		chase_timer.stop() # Stop the timer when the player is detected (reset it).
 
 # Handles player exiting the detection area.
 func _on_detection_area_body_exited(body: Node2D) -> void:
@@ -168,10 +167,12 @@ func _on_attack_area_body_entered(body: Node2D) -> void:
 
 # Stops chase after the cooldown period.
 func _on_chase_timer_timeout() -> void:
-	chasing = false
-	player_ref = null
-	generate_patrol_points() # Generate new patrol points at current position.
-	can_walk = true # Resume patrolling.
+	# Only stop chasing if the player is still outside the detection area.
+	if not detection_area.has_overlapping_bodies() or player_ref == null:
+		chasing = false
+		player_ref = null
+		generate_patrol_points() # Generate new patrol points at current position.
+		can_walk = true # Resume patrolling.
 
 # Handles enemy taking damage when hit by a bullet.
 func _on_hurtbox_area_entered(area: Area2D) -> void:

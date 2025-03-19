@@ -863,7 +863,7 @@ volume_db = -20.0
 stream = ExtResource("7_w6xla")
 volume_db = -30.0
 
-[node name="ProjBullet" type="AudioStreamPlayer" parent="Sounds"]
+[node name="ProjectileStarBullet" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_xuses")
 volume_db = -20.0
 

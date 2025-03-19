@@ -26,7 +26,7 @@ var entity_death = preload("res://scenes/effects/entity_death.tscn")
 @onready var snd_bonk = $Sounds/Bonk
 @onready var snd_hurt = $Sounds/Hurt
 @onready var snd_death = $Sounds/Death
-@onready var snd_proj_bull = $Sounds/ProjBullet
+@onready var snd_proj_star_bullet = $Sounds/ProjectileStarBullet
 
 # Sound properties.
 var walk_snd_timer: float = 0.0
@@ -63,11 +63,10 @@ var previous_aim: AimDirection = AimDirection.RIGHT
 
 func _ready() -> void:
 	# Add weapons to the inventory (initially locked).
-	weapons.append(Weapon.new("Star Bullet", preload("res://scenes/projectiles/star_bullet.tscn"), 0.2, preload("res://assets/sprites/ui/weapon_display/star_bullet.png")))
-	# Add more weapons here as needed.
-
-	## Unlock the first weapon for testing (optional).
-	#unlock_weapon(0)
+	weapons.append(Weapon.new("Star Bullet", preload("res://scenes/projectiles/star_bullet.tscn"), 0.3))
+	weapons.append(Weapon.new("Fireball", preload("res://scenes/projectiles/fireball.tscn"), 0.5))
+	
+	unlock_weapon(1)
 
 func _physics_process(delta: float) -> void:
 	if current_state == States.HURT:
@@ -117,7 +116,7 @@ func handle_movement_and_shooting(delta: float) -> void:
 	# Handle shooting.
 	if Input.is_action_just_pressed("shoot") and shoot_timer <= 0 and current_weapon:
 		shoot_bullet()
-		shoot_timer = shoot_cooldown
+		shoot_timer = current_weapon.cooldown
 		update_shooting_state(direction)
 
 # Handles movement while on the ground.
@@ -174,11 +173,13 @@ func handle_aiming() -> void:
 			aim_node.rotation_degrees = 0
 			aim_node.position = Vector2(16, -8) # Adjust position for facing right.
 
+# Allows the player to collect the various modules.
 func collect_module(module_type: String) -> void:
 	match module_type:
 		"star_bullet":
-			unlock_weapon(0) # Unlock the first weapon.
-		# Add more cases for other weapons.
+			unlock_weapon(0)
+		"fireball":
+			unlock_weapon(1)
 
 # Unlocks a weapon by index.
 func unlock_weapon(index: int) -> void:
@@ -226,7 +227,8 @@ func shoot_bullet() -> void:
 		bullet.global_position = aim_node.global_position
 		bullet.direction = Vector2.RIGHT.rotated(aim_node.rotation)
 		bullet.shooter = self
-		snd_proj_bull.play()
+		if current_weapon_index == 0:
+			snd_proj_star_bullet.play()
 		get_tree().current_scene.add_child(bullet)
 		shoot_timer = current_weapon.cooldown
 
