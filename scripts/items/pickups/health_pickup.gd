@@ -4,7 +4,7 @@ extends AnimatedSprite2D
 @onready var snd_health_pickup = $Sounds/Pickup
 
 # Handles collision when the health pickup hits a body.
-func _on_area_body_entered(body: Node2D) -> void:
+func _on_pickup_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		if HealthManager.current_health == 3:
 			pass

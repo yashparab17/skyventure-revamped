@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://by012kid0li1w"]
+
+[ext_resource type="Texture2D" uid="uid://ildcnp1r1m8i" path="res://assets/sprites/effects/item_pickup.png" id="1_rui46"]
+[ext_resource type="Script" uid="uid://b7gp8xp0u5roo" path="res://scripts/effects/item_pickup.gd" id="2_ep5tn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ep5tn"]
+atlas = ExtResource("1_rui46")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77i5o"]
+atlas = ExtResource("1_rui46")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_luww1"]
+atlas = ExtResource("1_rui46")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stp05"]
+atlas = ExtResource("1_rui46")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b36us"]
+atlas = ExtResource("1_rui46")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j7nup"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ep5tn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_77i5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_luww1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stp05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b36us")
+}],
+"loop": false,
+"name": &"pickup",
+"speed": 20.0
+}]
+
+[node name="Item Pickup" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_j7nup")
+animation = &"pickup"
+autoplay = "pickup"
+frame = 4
+frame_progress = 1.0
+script = ExtResource("2_ep5tn")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

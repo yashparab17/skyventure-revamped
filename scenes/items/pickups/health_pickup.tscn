@@ -53,11 +53,11 @@ animation = &"pulsate"
 autoplay = "pulsate"
 script = ExtResource("2_h0lmg")
 
-[node name="Area" type="Area2D" parent="."]
+[node name="Pickup Area" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 2
 
-[node name="Collision" type="CollisionShape2D" parent="Area"]
+[node name="Collision" type="CollisionShape2D" parent="Pickup Area"]
 shape = SubResource("CircleShape2D_acxta")
 debug_color = Color(1, 0.0142734, 0.00203054, 0.42)
 
@@ -67,4 +67,4 @@ debug_color = Color(1, 0.0142734, 0.00203054, 0.42)
 stream = ExtResource("3_pbbd4")
 volume_db = -20.0
 
-[connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]
+[connection signal="body_entered" from="Pickup Area" to="." method="_on_pickup_area_body_entered"]

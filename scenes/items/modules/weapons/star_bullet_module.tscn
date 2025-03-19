@@ -1,16 +1,59 @@
-[gd_scene load_steps=4 format=3 uid="uid://s4lyiv5ovl16"]
+[gd_scene load_steps=8 format=3 uid="uid://s4lyiv5ovl16"]
 
 [ext_resource type="Script" uid="uid://bssw707154sup" path="res://scripts/items/modules/weapons/star_bullet_module.gd" id="1_jv1wh"]
 [ext_resource type="Texture2D" uid="uid://dl08dyi2vsh3i" path="res://assets/sprites/items/modules/weapons/star_bullet_module.png" id="1_ktjft"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jv1wh"]
+atlas = ExtResource("1_ktjft")
+region = Rect2(0, 0, 20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6jrc"]
+atlas = ExtResource("1_ktjft")
+region = Rect2(20, 0, 20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eg65r"]
+atlas = ExtResource("1_ktjft")
+region = Rect2(40, 0, 20, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ktjft"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jv1wh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jv1wh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jv1wh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6jrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eg65r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6jrc")
+}],
+"loop": true,
+"name": &"flash",
+"speed": 10.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e6jrc"]
 size = Vector2(22, 14)
 
-[node name="Star Bullet Module" type="Node2D"]
+[node name="Star Bullet Module" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_ktjft")
+animation = &"flash"
+autoplay = "flash"
 script = ExtResource("1_jv1wh")
-
-[node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_ktjft")
 
 [node name="Pickup Area" type="Area2D" parent="."]
 collision_layer = 8
