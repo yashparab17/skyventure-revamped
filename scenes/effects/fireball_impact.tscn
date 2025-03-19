@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://dm1h2g366mky8"]
+
+[ext_resource type="Texture2D" uid="uid://0pasrnw4bw30" path="res://assets/sprites/effects/fireball_impact.png" id="1_jv324"]
+[ext_resource type="Script" uid="uid://boqhnnygpblvd" path="res://scripts/effects/fireball_impact.gd" id="2_vy3ol"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vy3ol"]
+atlas = ExtResource("1_jv324")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehnk2"]
+atlas = ExtResource("1_jv324")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88fl6"]
+atlas = ExtResource("1_jv324")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oj8h2"]
+atlas = ExtResource("1_jv324")
+region = Rect2(36, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjyn4"]
+atlas = ExtResource("1_jv324")
+region = Rect2(48, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yl110"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vy3ol")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ehnk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_88fl6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oj8h2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rjyn4")
+}],
+"loop": false,
+"name": &"impact",
+"speed": 20.0
+}]
+
+[node name="Fireball Impact" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_yl110")
+animation = &"impact"
+autoplay = "impact"
+frame = 4
+frame_progress = 1.0
+script = ExtResource("2_vy3ol")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

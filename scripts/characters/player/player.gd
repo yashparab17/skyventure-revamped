@@ -64,9 +64,7 @@ var previous_aim: AimDirection = AimDirection.RIGHT
 func _ready() -> void:
 	# Add weapons to the inventory (initially locked).
 	weapons.append(Weapon.new("Star Bullet", preload("res://scenes/projectiles/star_bullet.tscn"), 0.3))
-	weapons.append(Weapon.new("Fireball", preload("res://scenes/projectiles/fireball.tscn"), 0.5))
-	
-	unlock_weapon(1)
+	weapons.append(Weapon.new("Fireball", preload("res://scenes/projectiles/fireball.tscn"), 0.8))
 
 func _physics_process(delta: float) -> void:
 	if current_state == States.HURT:

@@ -1,7 +1,7 @@
 extends AnimatedSprite2D
 
 # The type of module.
-@export var module_type: String = "star_bullet"
+@export var module_type: String = "fireball"
 
 # Item pickup effect.
 @onready var item_pickup = preload("res://scenes/effects/item_pickup.tscn")

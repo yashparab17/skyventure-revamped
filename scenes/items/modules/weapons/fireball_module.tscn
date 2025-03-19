@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://cchu86rc1g61g"]
+
+[ext_resource type="Texture2D" uid="uid://bam3thi526hlw" path="res://assets/sprites/items/modules/weapons/fireball_module.png" id="1_0yq4i"]
+[ext_resource type="Script" uid="uid://2ejofcangnn" path="res://scripts/items/modules/weapons/fireball_module.gd" id="2_unqap"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_unqap"]
+atlas = ExtResource("1_0yq4i")
+region = Rect2(0, 0, 20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmkeu"]
+atlas = ExtResource("1_0yq4i")
+region = Rect2(20, 0, 20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkypx"]
+atlas = ExtResource("1_0yq4i")
+region = Rect2(40, 0, 20, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lih8b"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 10.0,
+"texture": SubResource("AtlasTexture_unqap")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmkeu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkypx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmkeu")
+}],
+"loop": true,
+"name": &"flash",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0yq4i"]
+size = Vector2(22, 14)
+
+[node name="Fireball Module" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_lih8b")
+animation = &"flash"
+autoplay = "flash"
+frame_progress = 0.114212
+script = ExtResource("2_unqap")
+
+[node name="Pickup Area" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Pickup Area"]
+shape = SubResource("RectangleShape2D_0yq4i")
+
+[connection signal="body_entered" from="Pickup Area" to="." method="_on_pickup_area_body_entered"]
