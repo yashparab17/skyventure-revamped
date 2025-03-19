@@ -242,7 +242,11 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 # Handles player taking damage.
 func take_damage(damage: int, enemy_x: float) -> void:
+	if is_invulnerable:
+		return # Skip if already invulnerable.
+
 	is_invulnerable = true
+
 	HealthManager.decrease_health(damage)
 
 	if HealthManager.current_health == 0:
@@ -268,6 +272,7 @@ func take_damage(damage: int, enemy_x: float) -> void:
 
 		is_invulnerable = false
 		current_state = States.IDLE
+		sprite.visible = true # Ensure the sprite is visible after blinking ends.
 
 # Handles player death.
 func die() -> void:
@@ -275,7 +280,7 @@ func die() -> void:
 	anim.process_mode = Node.PROCESS_MODE_ALWAYS
 	snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
 	snd_hurt.play()
-	
+
 	get_tree().paused = true
 	animate_hurt()
 	await anim.animation_finished
