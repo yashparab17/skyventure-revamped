@@ -37,8 +37,10 @@ ground="The ground."
 
 [gui]
 
-theme/custom_font="uid://bxpxjv3m634ay"
+theme/custom_font="uid://u61uo87lcvwe"
 theme/default_font_antialiasing=0
+theme/default_font_hinting=0
+theme/default_font_subpixel_positioning=0
 
 [input]
 

@@ -503,6 +503,23 @@ tracks/0/keys = {
 "values": [Vector2i(0, 10)]
 }
 
+[sub_resource type="Animation" id="Animation_qe74o"]
+resource_name = "jump_shoot_left_down"
+length = 0.001
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(7, 13)]
+}
+
 [sub_resource type="Animation" id="Animation_71adu"]
 resource_name = "jump_shoot_left_left"
 length = 0.001
@@ -730,23 +747,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [Vector2i(0, 9), Vector2i(1, 9), Vector2i(2, 9), Vector2i(3, 9)]
-}
-
-[sub_resource type="Animation" id="Animation_qe74o"]
-resource_name = "jump_shoot_left_down"
-length = 0.001
-step = 0.02
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(7, 13)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hyf1q"]

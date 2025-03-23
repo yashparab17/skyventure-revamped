@@ -26,10 +26,12 @@ texture = ExtResource("1_upowb")
 z_index = 1
 layout_mode = 0
 offset_left = 8.0
-offset_top = 8.0
+offset_top = 20.0
 offset_right = 312.0
-offset_bottom = 31.0
-theme_override_font_sizes/font_size = 22
+offset_bottom = 43.0
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="ModuleDescriptionLabel" type="Label" parent="CutsceneUI/Textbox"]
@@ -39,7 +41,8 @@ offset_left = 8.0
 offset_top = 8.0
 offset_right = 312.0
 offset_bottom = 56.0
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 16
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Sounds" type="Node" parent="CutsceneUI"]
