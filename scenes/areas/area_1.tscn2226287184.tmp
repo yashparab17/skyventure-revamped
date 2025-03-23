@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://c2raa0glxgp56"]
+[gd_scene load_steps=12 format=4 uid="uid://c2raa0glxgp56"]
 
 [ext_resource type="Script" uid="uid://b3r363vsmj2lw" path="res://scripts/areas/area_1.gd" id="1_aribk"]
 [ext_resource type="PackedScene" uid="uid://qjnr80eka1o8" path="res://scenes/backgrounds/area_1/sky_background.tscn" id="1_y41uj"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bfhdnyp616acc" path="res://scenes/characters/player/player_camera.gd" id="2_o4418"]
 [ext_resource type="PackedScene" uid="uid://b88cbbyujj8pj" path="res://scenes/ui/hud.tscn" id="3_ksqmx"]
 [ext_resource type="TileSet" uid="uid://brgew8e405nkq" path="res://scenes/areas/area_1.tres" id="4_vi3ny"]
+[ext_resource type="AudioStream" uid="uid://cmjr5k7ixi8q5" path="res://assets/music/area_1/duvet.mp3" id="5_4lo7y"]
 [ext_resource type="PackedScene" uid="uid://s50fl3a4b3ib" path="res://scenes/characters/enemies/roach.tscn" id="6_nyyba"]
 [ext_resource type="PackedScene" uid="uid://bo6xr5bcsut1g" path="res://scenes/characters/enemies/flying_roach.tscn" id="6_vq5v6"]
 [ext_resource type="PackedScene" uid="uid://s4lyiv5ovl16" path="res://scenes/items/modules/weapons/star_bullet_module.tscn" id="7_vq5v6"]
@@ -79,3 +80,12 @@ position = Vector2(-136, 376)
 
 [node name="Fireball Module" parent="Items" instance=ExtResource("9_aribk")]
 position = Vector2(480, 120)
+
+[node name="Music" type="Node2D" parent="."]
+
+[node name="Duvet" type="AudioStreamPlayer" parent="Music"]
+process_mode = 3
+stream = ExtResource("5_4lo7y")
+volume_db = -20.0
+autoplay = true
+parameters/looping = true

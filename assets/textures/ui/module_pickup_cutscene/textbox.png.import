@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://o08odrqxq0dp"
-path="res://.godot/imported/container.png-f810d9bf6a257e96d7891c84d9ca4435.ctex"
+uid="uid://c3u5rf63wb73x"
+path="res://.godot/imported/textbox.png-9a8aa8648b5dca31f0ed754735de5348.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/health_bar/container.png"
-dest_files=["res://.godot/imported/container.png-f810d9bf6a257e96d7891c84d9ca4435.ctex"]
+source_file="res://assets/textures/ui/module_pickup_cutscene/textbox.png"
+dest_files=["res://.godot/imported/textbox.png-9a8aa8648b5dca31f0ed754735de5348.ctex"]
 
 [params]
 

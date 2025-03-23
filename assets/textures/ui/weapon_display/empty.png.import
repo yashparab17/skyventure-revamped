@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuu2jykyc1og7"
-path="res://.godot/imported/number_1.png-55205e9aa57c96a3bb075fea946077a0.ctex"
+uid="uid://bqctr1lo83j5w"
+path="res://.godot/imported/empty.png-202729fda23a6fe409ed60cc8b22da78.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/health_bar/number_1.png"
-dest_files=["res://.godot/imported/number_1.png-55205e9aa57c96a3bb075fea946077a0.ctex"]
+source_file="res://assets/textures/ui/weapon_display/empty.png"
+dest_files=["res://.godot/imported/empty.png-202729fda23a6fe409ed60cc8b22da78.ctex"]
 
 [params]
 
