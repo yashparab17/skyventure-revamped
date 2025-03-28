@@ -65,6 +65,5 @@ debug_color = Color(1, 0.0142734, 0.00203054, 0.42)
 
 [node name="Pickup" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("3_pbbd4")
-volume_db = -20.0
 
 [connection signal="body_entered" from="Pickup Area" to="." method="_on_pickup_area_body_entered"]

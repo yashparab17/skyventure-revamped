@@ -246,15 +246,12 @@ debug_color = Color(3.1285e-07, 0.650777, 0.0680363, 0.42)
 
 [node name="Alert" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("3_ikv1e")
-volume_db = -20.0
 
 [node name="Hurt" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("5_4cboh")
-volume_db = -20.0
 
 [node name="Death" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("5_cdsox")
-volume_db = -20.0
 
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]
 [connection signal="timeout" from="ChaseTimer" to="." method="_on_chase_timer_timeout"]

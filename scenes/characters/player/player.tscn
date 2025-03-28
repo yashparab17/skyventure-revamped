@@ -847,35 +847,27 @@ wait_time = 0.1
 
 [node name="Walk" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("3_81bep")
-volume_db = -20.0
 
 [node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("3_xym5y")
-volume_db = -20.0
 
 [node name="Bonk" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("5_04y62")
-volume_db = -20.0
 
 [node name="Hurt" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("5_rgom0")
-volume_db = -20.0
 
 [node name="Death" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("7_w6xla")
-volume_db = -30.0
 
 [node name="SwitchWeapon" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_3xnwo")
-volume_db = -20.0
 
 [node name="ProjectileStarBullet" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_xuses")
-volume_db = -20.0
 
 [node name="ProjectileFireball" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("9_42irl")
-volume_db = -20.0
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="timeout" from="BlinkTimer" to="." method="_on_blink_timer_timeout"]

@@ -128,10 +128,8 @@ debug_color = Color(0.994119, 0, 0.22716, 0.42)
 
 [node name="Hurt" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("3_yp3q5")
-volume_db = -20.0
 
 [node name="Death" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("4_1mby0")
-volume_db = -20.0
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

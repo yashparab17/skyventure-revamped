@@ -13,7 +13,6 @@ config_version=5
 config/name="skyventure-revamped"
 run/main_scene="res://scenes/areas/area_1.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
 
 [autoload]
 

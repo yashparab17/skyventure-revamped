@@ -11,4 +11,4 @@ func _ready() -> void:
 	
 	# Plays the music.
 	var area_music = preload("res://assets/music/area_1/duvet.mp3")
-	MusicManager.play_music(area_music, -20.0)
+	MusicManager.play_music(area_music)

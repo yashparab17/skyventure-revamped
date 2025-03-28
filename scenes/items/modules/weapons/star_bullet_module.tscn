@@ -61,6 +61,5 @@ shape = SubResource("RectangleShape2D_e6jrc")
 
 [node name="Pickup" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("3_e6jrc")
-volume_db = -20.0
 
 [connection signal="body_entered" from="Pickup Area" to="." method="_on_pickup_area_body_entered"]

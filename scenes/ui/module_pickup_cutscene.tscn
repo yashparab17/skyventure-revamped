@@ -49,4 +49,3 @@ autowrap_mode = 2
 
 [node name="Pickup" type="AudioStreamPlayer" parent="CutsceneUI/Sounds"]
 stream = ExtResource("2_y7kdy")
-volume_db = -20.0
