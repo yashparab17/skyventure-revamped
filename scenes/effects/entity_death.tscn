@@ -64,4 +64,3 @@ script = ExtResource("2_kyvwc")
 [node name="EntityDeath" type="AudioStreamPlayer2D" parent="Sounds"]
 process_mode = 3
 stream = ExtResource("3_fy30n")
-volume_db = -20.0

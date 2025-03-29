@@ -4,10 +4,14 @@ extends Control
 var module_name: String = "Module Name"
 var module_description: String = "Module Description"
 
-# References to UI elements.
+# Node references.
 @onready var module_name_label: Label = $Textbox/ModuleNameLabel
 @onready var module_description_label: Label = $Textbox/ModuleDescriptionLabel
+@onready var next_arrow: AnimatedSprite2D = $Textbox/NextArrow
+
+# Sound references.
 @onready var snd_pickup: AudioStreamPlayer = $Sounds/Pickup
+@onready var snd_next: AudioStreamPlayer = $Sounds/Next
 
 # State variables.
 var current_page: int = 0
@@ -19,6 +23,7 @@ func start_cutscene():
 	module_name_label.text = module_name
 	module_description_label.text = module_description
 	module_description_label.hide()
+	next_arrow.hide()
 	
 	# Pauses the music.
 	MusicManager.pause_music()
@@ -30,6 +35,7 @@ func start_cutscene():
 	
 	# Waits for the sound to finish, then allows input.
 	await snd_pickup.finished
+	next_arrow.show()
 	input_allowed = true
 
 # Checks the input.
@@ -37,11 +43,13 @@ func _input(event):
 	if input_allowed and event.is_action_pressed("jump") and is_visible_in_tree():
 		if current_page == 0:
 			# Move to the description page.
+			snd_next.play()
 			module_name_label.hide()
 			module_description_label.show()
 			current_page += 1
 		elif current_page == 1:
 			# End the cutscene.
+			snd_next.play()
 			end_cutscene()
 
 # Hides the cutscene and unpauses the game.

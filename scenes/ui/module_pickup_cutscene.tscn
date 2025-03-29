@@ -1,8 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://dlticrc5cfeuq"]
+[gd_scene load_steps=9 format=3 uid="uid://dlticrc5cfeuq"]
 
-[ext_resource type="Script" uid="uid://c6j33yl128gn5" path="res://scripts/ui/cutscene_ui.gd" id="1_qfu6k"]
-[ext_resource type="Texture2D" uid="uid://c3u5rf63wb73x" path="res://assets/textures/ui/module_pickup_cutscene/textbox.png" id="1_upowb"]
-[ext_resource type="AudioStream" uid="uid://50yaja0tfdoq" path="res://assets/sounds/ui/module_pickup.wav" id="2_y7kdy"]
+[ext_resource type="Script" uid="uid://c6j33yl128gn5" path="res://scripts/ui/module_pickup_cutscene.gd" id="1_qfu6k"]
+[ext_resource type="Texture2D" uid="uid://c3u5rf63wb73x" path="res://assets/textures/ui/cutscene/textbox.png" id="1_upowb"]
+[ext_resource type="AudioStream" uid="uid://50yaja0tfdoq" path="res://assets/sounds/ui/cutscene/module_pickup.wav" id="2_y7kdy"]
+[ext_resource type="Texture2D" uid="uid://dsb1f6orogj57" path="res://assets/textures/ui/cutscene/next_arrow.png" id="3_2b56m"]
+[ext_resource type="AudioStream" uid="uid://mc3ulmnq50j0" path="res://assets/sounds/ui/cutscene/next.wav" id="5_l4rgu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4rgu"]
+atlas = ExtResource("3_2b56m")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2i5a"]
+atlas = ExtResource("3_2b56m")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_722xw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4rgu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2i5a")
+}],
+"loop": true,
+"name": &"blink",
+"speed": 2.5
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Module Pickup Cutscene" type="CanvasLayer"]
 
@@ -45,7 +74,17 @@ theme_override_font_sizes/font_size = 16
 vertical_alignment = 1
 autowrap_mode = 2
 
+[node name="NextArrow" type="AnimatedSprite2D" parent="CutsceneUI/Textbox"]
+position = Vector2(304, 48)
+sprite_frames = SubResource("SpriteFrames_722xw")
+animation = &"blink"
+autoplay = "blink"
+frame_progress = 0.343199
+
 [node name="Sounds" type="Node" parent="CutsceneUI"]
 
 [node name="Pickup" type="AudioStreamPlayer" parent="CutsceneUI/Sounds"]
 stream = ExtResource("2_y7kdy")
+
+[node name="Next" type="AudioStreamPlayer" parent="CutsceneUI/Sounds"]
+stream = ExtResource("5_l4rgu")

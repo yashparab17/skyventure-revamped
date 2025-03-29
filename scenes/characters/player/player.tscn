@@ -847,6 +847,7 @@ wait_time = 0.1
 
 [node name="Walk" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("3_81bep")
+volume_db = 2.5
 
 [node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("3_xym5y")
