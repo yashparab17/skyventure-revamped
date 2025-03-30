@@ -66,7 +66,7 @@ func bounce() -> void:
 
 # Reverses the fireball's horizontal direction when it hits a wall.
 func reverse_direction() -> void:
-	velocity.x = -velocity.x
+	velocity.x = - velocity.x
 
 # Spawns the fireball impact effect at the fireball's position.
 func spawn_impact_effect() -> void:

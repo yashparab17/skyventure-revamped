@@ -60,7 +60,7 @@ func end_cutscene():
 	Input.action_release("jump")
 	
 	snd_next.play()
-	await snd_next.finished  # Wait for sound to finish.
+	await snd_next.finished # Wait for sound to finish.
 	
 	MusicManager.resume_music()
 	hide()

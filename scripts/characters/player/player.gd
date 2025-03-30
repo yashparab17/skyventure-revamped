@@ -111,9 +111,9 @@ func update_timers(delta: float) -> void:
 # Handles player interaction.
 func handle_interaction() -> void:
 	# Only interact if completely idle (no movement input) and on ground.
-	if (is_on_floor() and 
-		Input.is_action_pressed("aim_down") and 
-		!Input.is_action_pressed("move_left") and 
+	if (is_on_floor() and
+		Input.is_action_pressed("aim_down") and
+		!Input.is_action_pressed("move_left") and
 		!Input.is_action_pressed("move_right") and
 		abs(velocity.x) < 10):
 		current_state = States.INTERACT
