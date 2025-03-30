@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var player: CharacterBody2D = $Player
 @onready var hud: CanvasLayer = $HUD
+@onready var cutscene_1_trigger = $Triggers/Cutscene1Trigger
 
 func _ready() -> void:
 	# HUD signals.
@@ -33,4 +34,7 @@ func _on_cutscene_1_trigger_body_entered(body: Node2D) -> void:
 		
 		var cutscene = preload("res://scenes/ui/cutscene.tscn").instantiate()
 		get_tree().root.add_child(cutscene)
-		cutscene.start_cutscene(cutscene_pages)
+		cutscene.start_cutscene(cutscene_pages, Callable(self, "_on_cutscene_1_finished"))
+
+func _on_cutscene_1_finished():
+	cutscene_1_trigger.queue_free()

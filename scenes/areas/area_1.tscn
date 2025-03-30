@@ -18,6 +18,7 @@ script = ExtResource("1_aribk")
 
 [node name="Player" parent="." instance=ExtResource("2_natpb")]
 position = Vector2(240, 130)
+speed = 125
 
 [node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player", "area")]
 position = Vector2(240, 120)
@@ -25,6 +26,10 @@ position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
 script = ExtResource("2_o4418")
 player = NodePath("../Player")
 area = NodePath("..")
