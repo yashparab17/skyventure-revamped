@@ -63,3 +63,4 @@ shape = SubResource("RectangleShape2D_e6jrc")
 stream = ExtResource("3_e6jrc")
 
 [connection signal="body_entered" from="Pickup Area" to="." method="_on_pickup_area_body_entered"]
+[connection signal="body_exited" from="Pickup Area" to="." method="_on_pickup_area_body_exited"]

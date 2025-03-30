@@ -20,6 +20,7 @@ position = Vector2(240, 130)
 [node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player", "area")]
 position = Vector2(240, 120)
 position_smoothing_enabled = true
+position_smoothing_speed = 4.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 script = ExtResource("2_o4418")
@@ -75,7 +76,9 @@ second_patrol_point = Vector2(0, -32)
 [node name="Items" type="Node2D" parent="."]
 
 [node name="Star Bullet Module" parent="Items" instance=ExtResource("7_vq5v6")]
-position = Vector2(-136, 376)
+z_index = -1
+position = Vector2(32, 472)
 
 [node name="Fireball Module" parent="Items" instance=ExtResource("9_aribk")]
+z_index = -1
 position = Vector2(480, 120)

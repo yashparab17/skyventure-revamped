@@ -34,6 +34,7 @@ animations = [{
 }]
 
 [node name="Module Pickup Cutscene" type="CanvasLayer"]
+script = ExtResource("1_qfu6k")
 
 [node name="CutsceneUI" type="Control" parent="."]
 process_mode = 3
@@ -41,7 +42,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_qfu6k")
 
 [node name="Textbox" type="TextureRect" parent="CutsceneUI"]
 layout_mode = 0
@@ -51,7 +51,7 @@ offset_right = 408.0
 offset_bottom = 224.0
 texture = ExtResource("1_upowb")
 
-[node name="ModuleNameLabel" type="Label" parent="CutsceneUI/Textbox"]
+[node name="ModuleName" type="Label" parent="CutsceneUI/Textbox"]
 z_index = 1
 layout_mode = 0
 offset_left = 8.0
@@ -63,7 +63,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="ModuleDescriptionLabel" type="Label" parent="CutsceneUI/Textbox"]
+[node name="ModuleDescription" type="Label" parent="CutsceneUI/Textbox"]
 z_index = 1
 layout_mode = 0
 offset_left = 8.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://dm2gstauhcofm"]
+[gd_scene load_steps=58 format=3 uid="uid://dm2gstauhcofm"]
 
 [ext_resource type="Script" uid="uid://bvytmrl784wuv" path="res://scripts/characters/player/player.gd" id="1_4jjpf"]
 [ext_resource type="Texture2D" uid="uid://c8xkk7pjpcho3" path="res://assets/sprites/characters/player/player.png" id="2_3xnwo"]
@@ -30,7 +30,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2i(7, 14), Vector2i(6, 14)]
+"values": [Vector2i(7, 15), Vector2i(6, 15)]
 }
 
 [sub_resource type="Animation" id="Animation_3hnlq"]
@@ -84,7 +84,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2i(0, 14), Vector2i(1, 14)]
+"values": [Vector2i(0, 15), Vector2i(1, 15)]
 }
 
 [sub_resource type="Animation" id="Animation_xuses"]
@@ -138,7 +138,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2i(7, 14), Vector2i(6, 14)]
+"values": [Vector2i(7, 15), Vector2i(6, 15)]
 }
 
 [sub_resource type="Animation" id="Animation_kghjy"]
@@ -192,7 +192,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2i(0, 14), Vector2i(1, 14)]
+"values": [Vector2i(0, 15), Vector2i(1, 15)]
 }
 
 [sub_resource type="Animation" id="Animation_s4se6"]
@@ -245,7 +245,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [Vector2i(7, 15), Vector2i(6, 15), Vector2i(7, 15), Vector2i(6, 15)]
+"values": [Vector2i(7, 16), Vector2i(6, 16), Vector2i(7, 16), Vector2i(6, 16)]
 }
 
 [sub_resource type="Animation" id="Animation_t0t1w"]
@@ -262,7 +262,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [Vector2i(0, 15), Vector2i(1, 15), Vector2i(0, 15), Vector2i(1, 15)]
+"values": [Vector2i(0, 16), Vector2i(1, 16), Vector2i(0, 16), Vector2i(1, 16)]
 }
 
 [sub_resource type="Animation" id="Animation_djydg"]
@@ -415,7 +415,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2i(7, 13)]
+"values": [Vector2i(7, 14)]
 }
 
 [sub_resource type="Animation" id="Animation_8y75b"]
@@ -466,7 +466,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2i(0, 13)]
+"values": [Vector2i(0, 14)]
 }
 
 [sub_resource type="Animation" id="Animation_4kqyw"]
@@ -517,7 +517,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2i(7, 13)]
+"values": [Vector2i(7, 14)]
 }
 
 [sub_resource type="Animation" id="Animation_71adu"]
@@ -568,7 +568,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2i(0, 13)]
+"values": [Vector2i(0, 14)]
 }
 
 [sub_resource type="Animation" id="Animation_kxlma"]
@@ -749,6 +749,40 @@ tracks/0/keys = {
 "values": [Vector2i(0, 9), Vector2i(1, 9), Vector2i(2, 9), Vector2i(3, 9)]
 }
 
+[sub_resource type="Animation" id="Animation_kbkvr"]
+resource_name = "interact_right"
+length = 0.001
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 13)]
+}
+
+[sub_resource type="Animation" id="Animation_ofe5m"]
+resource_name = "interact_left"
+length = 0.001
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(7, 13)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hyf1q"]
 _data = {
 &"fall_left_down": SubResource("Animation_2v4cy"),
@@ -773,6 +807,8 @@ _data = {
 &"idle_shoot_left_up": SubResource("Animation_pbtrp"),
 &"idle_shoot_right_right": SubResource("Animation_gpigg"),
 &"idle_shoot_right_up": SubResource("Animation_nt8su"),
+&"interact_left": SubResource("Animation_ofe5m"),
+&"interact_right": SubResource("Animation_kbkvr"),
 &"jump_left_down": SubResource("Animation_6nfx3"),
 &"jump_left_left": SubResource("Animation_8y75b"),
 &"jump_left_up": SubResource("Animation_tebod"),
@@ -816,8 +852,8 @@ shape = SubResource("CapsuleShape2D_fc3fl")
 position = Vector2(0, -8)
 texture = ExtResource("2_3xnwo")
 hframes = 8
-vframes = 16
-frame = 32
+vframes = 17
+frame = 128
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {

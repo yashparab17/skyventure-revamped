@@ -10,28 +10,36 @@ extends AnimatedSprite2D
 # Sound references.
 @onready var snd_pickup = $Sounds/Pickup
 
+# Checks if the player is in the pickup area.
+var player_in_area: bool = false
+
 func _on_pickup_area_body_entered(body: Node2D) -> void:
-	# Check if the body that entered is the player.
 	if body.is_in_group("player"):
-		# Call the player's method to collect the module.
-		body.collect_module(module_type)
+		player_in_area = true
+
+func _on_pickup_area_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player_in_area = false
+
+func _process(delta: float) -> void:
+	if player_in_area and Input.is_action_pressed("aim_down"):
+		pickup_module()
+
+func pickup_module() -> void:
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		player.collect_module(module_type)
 		snd_pickup.play()
 		visible = false
 		
-		# Instantiate the cutscene and add it to the scene tree.
 		var cutscene_instance = cutscene_scene.instantiate()
 		get_tree().root.add_child(cutscene_instance)
+		cutscene_instance.module_name = "Picked up the Star Bullet module!"
+		cutscene_instance.module_description = "Allows for the shooting of a star bullet that deals 1 damage."
+		cutscene_instance.start_cutscene()
 		
-		# Access the CutsceneUI node and set its properties.
-		var cutscene_ui = cutscene_instance.get_node("CutsceneUI")
-		cutscene_ui.module_name = "Picked up the Star Bullet module!"
-		cutscene_ui.module_description = "Allows for the shooting of a star bullet that deals 1 damage."
-		cutscene_ui.start_cutscene()
-		
-		# Spawn the item pickup effect.
 		var item_pickup_instance = item_pickup.instantiate() as Node2D
 		item_pickup_instance.global_position = global_position
 		get_parent().add_child(item_pickup_instance)
 		
-		# Remove the module from the scene.
 		queue_free()

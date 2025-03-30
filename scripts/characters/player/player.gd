@@ -45,7 +45,7 @@ var current_weapon_index: int = -1 # Tracks the currently equipped weapon.
 var current_weapon: Weapon = null # Reference to the current weapon.
 
 # State machine.
-enum States {IDLE, WALK, JUMP, FALL, IDLE_SHOOT, WALK_SHOOT, JUMP_SHOOT, FALL_SHOOT, HURT}
+enum States {IDLE, WALK, JUMP, FALL, IDLE_SHOOT, WALK_SHOOT, JUMP_SHOOT, FALL_SHOOT, INTERACT, HURT}
 var current_state: States = States.IDLE
 
 # Facing properties.
@@ -79,8 +79,14 @@ func _physics_process(delta: float) -> void:
 
 	apply_gravity(delta)
 	update_timers(delta)
+	
 	handle_movement_and_shooting(delta)
 	handle_weapon_switching()
+	
+	# Check for interaction.
+	if (current_state == States.IDLE and Input.is_action_pressed("aim_down") and is_on_floor()):
+		handle_interaction()
+		
 	move_and_slide()
 	animate_player()
 
@@ -102,8 +108,23 @@ func update_timers(delta: float) -> void:
 	shoot_timer -= delta
 	walk_snd_timer -= delta
 
+# Handles player interaction.
+func handle_interaction() -> void:
+	# Only interact if completely idle (no movement input) and on ground.
+	if (is_on_floor() and 
+		Input.is_action_pressed("aim_down") and 
+		!Input.is_action_pressed("move_left") and 
+		!Input.is_action_pressed("move_right") and
+		abs(velocity.x) < 10):
+		current_state = States.INTERACT
+		velocity.x = 0
+
 # Handles player movement, jumping, and shooting.
 func handle_movement_and_shooting(delta: float) -> void:
+	# Reset from interact state if no longer pressing down
+	if current_state == States.INTERACT and !Input.is_action_pressed("aim_down"):
+		current_state = States.IDLE
+
 	var direction = Input.get_axis("move_left", "move_right")
 
 	# Update facing direction based on movement input.
@@ -229,6 +250,9 @@ func switch_to_previous_weapon() -> void:
 
 # Shoots a bullet in the specified direction.
 func shoot_bullet() -> void:
+	if current_state == States.INTERACT or current_state == States.HURT:
+		return
+
 	if current_weapon and shoot_timer <= 0:
 		var bullet = current_weapon.projectile_scene.instantiate() as Node2D
 		bullet.global_position = aim_node.global_position
@@ -342,6 +366,12 @@ func die() -> void:
 
 # Updates the player's animation based on the current state.
 func animate_player() -> void:
+	# Handle interact animation separately since it should lock other animations.
+	if current_state == States.INTERACT:
+		var animation_name = "interact_right" if facing_direction == FacingDirection.RIGHT else "interact_left"
+		if anim.current_animation != animation_name:
+			anim.play(animation_name)
+			
 	var animation_name = get_animation_name()
 	if anim.current_animation != animation_name:
 		var current_frame = anim.current_animation_position
@@ -386,6 +416,8 @@ func get_animation_name() -> String:
 			base_animation = "jump_shoot"
 		States.FALL_SHOOT:
 			base_animation = "fall_shoot"
+		States.INTERACT:
+			base_animation = "interact"
 
 	# Determine the facing direction.
 	var facing = "right" if facing_direction == FacingDirection.RIGHT else "left"
