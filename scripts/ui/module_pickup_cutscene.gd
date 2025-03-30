@@ -17,9 +17,6 @@ var module_description: String = "Module Description"
 var current_page: int = 0
 var input_allowed: bool = false
 
-func _ready():
-	process_mode = Node.PROCESS_MODE_ALWAYS  # Works even when game is paused.
-
 # Shows the cutscene and plays the pickup sound effect.
 func start_cutscene():
 	# Assigns the module details.
@@ -53,12 +50,18 @@ func _input(event):
 			get_viewport().set_input_as_handled() # Prevent other nodes from receiving this input.
 		elif current_page == 1:
 			# End the cutscene.
-			snd_next.play()
-			end_cutscene()
 			get_viewport().set_input_as_handled()
+			end_cutscene()
 
 # Hides the cutscene and unpauses the game.
 func end_cutscene():
+	# Immediately block further input.
+	input_allowed = false
+	Input.action_release("jump")
+	
+	snd_next.play()
+	await snd_next.finished  # Wait for sound to finish.
+	
 	MusicManager.resume_music()
 	hide()
 	get_tree().paused = false

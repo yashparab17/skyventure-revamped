@@ -1,0 +1,92 @@
+[gd_scene load_steps=9 format=3 uid="uid://cyaojm1hsraau"]
+
+[ext_resource type="Texture2D" uid="uid://dapcwlsxnpnu" path="res://assets/textures/ui/cutscene/portraits/player/neutral.png" id="1_k6ee8"]
+[ext_resource type="Script" uid="uid://dyw64kto8fftu" path="res://scripts/ui/cutscene.gd" id="1_qqqc4"]
+[ext_resource type="Texture2D" uid="uid://c3u5rf63wb73x" path="res://assets/textures/ui/cutscene/textbox.png" id="1_rn7xi"]
+[ext_resource type="Texture2D" uid="uid://dsb1f6orogj57" path="res://assets/textures/ui/cutscene/next_arrow.png" id="2_k2les"]
+[ext_resource type="AudioStream" uid="uid://mc3ulmnq50j0" path="res://assets/sounds/ui/cutscene/next.wav" id="5_m4mjy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4rgu"]
+atlas = ExtResource("2_k2les")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2i5a"]
+atlas = ExtResource("2_k2les")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k6ee8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4rgu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2i5a")
+}],
+"loop": true,
+"name": &"blink",
+"speed": 2.5
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Cutscene" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_qqqc4")
+
+[node name="CutsceneUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Portrait" type="TextureRect" parent="CutsceneUI"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 160.0
+offset_right = 88.0
+offset_bottom = 224.0
+texture = ExtResource("1_k6ee8")
+
+[node name="Textbox" type="TextureRect" parent="CutsceneUI"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 160.0
+offset_right = 408.0
+offset_bottom = 224.0
+texture = ExtResource("1_rn7xi")
+
+[node name="Name" type="Label" parent="CutsceneUI/Textbox"]
+z_index = 1
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 312.0
+offset_bottom = 24.0
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 2
+
+[node name="Text" type="Label" parent="CutsceneUI/Textbox"]
+z_index = 1
+layout_mode = 0
+offset_left = 8.0
+offset_top = 24.0
+offset_right = 312.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 2
+
+[node name="NextArrow" type="AnimatedSprite2D" parent="CutsceneUI/Textbox"]
+position = Vector2(304, 48)
+sprite_frames = SubResource("SpriteFrames_k6ee8")
+animation = &"blink"
+autoplay = "blink"
+
+[node name="Sounds" type="Node" parent="CutsceneUI"]
+
+[node name="Next" type="AudioStreamPlayer" parent="CutsceneUI/Sounds"]
+stream = ExtResource("5_m4mjy")
+volume_db = 10.0

@@ -52,6 +52,7 @@ animations = [{
 }]
 
 [node name="Item Pickup" type="AnimatedSprite2D"]
+z_index = -1
 sprite_frames = SubResource("SpriteFrames_j7nup")
 animation = &"pickup"
 autoplay = "pickup"

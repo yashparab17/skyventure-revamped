@@ -6,6 +6,10 @@ var music_player: AudioStreamPlayer = null
 # Current music stream.
 var current_music: AudioStream = null
 
+func _ready():
+	# Set the process mode to always process
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
 # Plays music with a specified volume.
 func play_music(music: AudioStream, volume_db: float = 0.0):
 	# Stop any existing music.

@@ -34,6 +34,7 @@ animations = [{
 }]
 
 [node name="Module Pickup Cutscene" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_qfu6k")
 
 [node name="CutsceneUI" type="Control" parent="."]
@@ -88,3 +89,4 @@ stream = ExtResource("2_y7kdy")
 
 [node name="Next" type="AudioStreamPlayer" parent="CutsceneUI/Sounds"]
 stream = ExtResource("5_l4rgu")
+volume_db = 10.0
