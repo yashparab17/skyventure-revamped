@@ -33,7 +33,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Cutscene" type="CanvasLayer"]
+[node name="Cutscene" type="CanvasLayer" groups=["unpausable"]]
 process_mode = 3
 script = ExtResource("1_qqqc4")
 

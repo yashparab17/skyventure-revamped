@@ -1,3 +1,69 @@
-[gd_scene format=3 uid="uid://dwbtm6p4a8ye"]
+[gd_scene load_steps=5 format=3 uid="uid://dwbtm6p4a8ye"]
 
-[node name="Main Menu" type="CanvasLayer"]
+[ext_resource type="Texture2D" uid="uid://es0kr3oirag" path="res://assets/backgrounds/area_1/layer_0.png" id="1_38o7l"]
+[ext_resource type="Script" uid="uid://bi2ohkygaft86" path="res://scripts/ui/screens/main_menu.gd" id="1_sjck8"]
+[ext_resource type="Theme" uid="uid://beyey7lcgi7mq" path="res://assets/themes/default.tres" id="2_nee2d"]
+[ext_resource type="Texture2D" uid="uid://i0m4fo3w8jc4" path="res://assets/textures/ui/screens/main_menu/title.png" id="3_j84ir"]
+
+[node name="Main Menu" type="CanvasLayer" groups=["unpausable"]]
+script = ExtResource("1_sjck8")
+
+[node name="MainMargin" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_nee2d")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_38o7l")
+
+[node name="Title" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -88.0
+offset_right = 88.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_j84ir")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = 192.0
+offset_top = 104.0
+offset_right = 286.0
+offset_bottom = 191.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_nee2d")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="NewAdventureButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "New Adventure"
+
+[node name="ContinueButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+
+[node name="QuitButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/NewAdventureButton" to="." method="_on_new_adventure_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

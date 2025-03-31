@@ -1,0 +1,44 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://beyey7lcgi7mq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ecif"]
+bg_color = Color(1, 0, 0, 0.501961)
+expand_margin_left = 8.0
+expand_margin_top = 4.0
+expand_margin_right = 8.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oa4jb"]
+bg_color = Color(0, 0, 0, 0.752941)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+expand_margin_left = 8.0
+expand_margin_top = 4.0
+expand_margin_right = 8.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qby0n"]
+bg_color = Color(0, 0, 0, 0.376471)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+expand_margin_left = 8.0
+expand_margin_top = 4.0
+expand_margin_right = 8.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x0tin"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[resource]
+Button/styles/focus = SubResource("StyleBoxFlat_0ecif")
+Button/styles/hover = SubResource("StyleBoxFlat_oa4jb")
+Button/styles/normal = SubResource("StyleBoxFlat_qby0n")
+MarginContainer/constants/margin_bottom = 8
+MarginContainer/constants/margin_left = 8
+MarginContainer/constants/margin_right = 8
+MarginContainer/constants/margin_top = 8
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_x0tin")
+VBoxContainer/constants/separation = 16
