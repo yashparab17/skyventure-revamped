@@ -366,24 +366,24 @@ func die() -> void:
 
 # Updates the player's animation based on the current state.
 func animate_player() -> void:
+	var animation_name = get_animation_name()
 	# Handle interact animation separately since it should lock other animations.
 	if current_state == States.INTERACT:
-		var animation_name = "interact_right" if facing_direction == FacingDirection.RIGHT else "interact_left"
+		animation_name = "interact_right" if facing_direction == FacingDirection.RIGHT else "interact_left"
 		if anim.current_animation != animation_name:
 			anim.play(animation_name)
-			
-	var animation_name = get_animation_name()
-	if anim.current_animation != animation_name:
+	
+	elif anim.current_animation != animation_name:
 		var current_frame = anim.current_animation_position
 		anim.play(animation_name)
-
+	
 		# Check if the new animation has the same facing and aiming directions as the previous one.
 		if facing_direction == previous_facing and current_aim_direction == previous_aim:
 			anim.play(animation_name)
 			anim.seek(current_frame)
 		else:
 			anim.play(animation_name)
-
+		
 		# Update the previous animation tracking.
 		previous_animation = animation_name
 		previous_facing = facing_direction

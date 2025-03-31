@@ -32,7 +32,7 @@ func _on_cutscene_1_trigger_body_entered(body: Node2D) -> void:
 			}
 		]
 		
-		var cutscene = preload("res://scenes/ui/cutscene.tscn").instantiate()
+		var cutscene = preload("res://scenes/ui/cutscenes/cutscene.tscn").instantiate()
 		get_tree().root.add_child(cutscene)
 		cutscene.start_cutscene(cutscene_pages, Callable(self, "_on_cutscene_1_finished"))
 

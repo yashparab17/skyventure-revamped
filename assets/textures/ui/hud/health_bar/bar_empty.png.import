@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmck0b1plmi4m"
-path="res://.godot/imported/star_bullet.png-11455061124ee9b7b1c850af2fee71ee.ctex"
+uid="uid://c76mn7cpjdgio"
+path="res://.godot/imported/bar_empty.png-fd51289958b11c9947b18803931f35b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/ui/weapon_display/star_bullet.png"
-dest_files=["res://.godot/imported/star_bullet.png-11455061124ee9b7b1c850af2fee71ee.ctex"]
+source_file="res://assets/textures/ui/hud/health_bar/bar_empty.png"
+dest_files=["res://.godot/imported/bar_empty.png-fd51289958b11c9947b18803931f35b3.ctex"]
 
 [params]
 

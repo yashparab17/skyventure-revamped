@@ -5,7 +5,7 @@ extends AnimatedSprite2D
 
 # Item pickup effect.
 @onready var item_pickup = preload("res://scenes/effects/item_pickup.tscn")
-@onready var cutscene_scene = preload("res://scenes/ui/module_pickup_cutscene.tscn")
+@onready var cutscene_scene = preload("res://scenes/ui/cutscenes/module_pickup_cutscene.tscn")
 
 # Sound references.
 @onready var snd_pickup = $Sounds/Pickup

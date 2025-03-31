@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cn0qbxpqa707"]
 
-[ext_resource type="Script" uid="uid://1s4iuo01pr1w" path="res://scripts/ui/weapon_display.gd" id="1_hrv28"]
+[ext_resource type="Script" uid="uid://1s4iuo01pr1w" path="res://scripts/ui/hud/weapon_display.gd" id="1_hrv28"]
 
 [node name="Weapon Display" type="TextureRect"]
 script = ExtResource("1_hrv28")
