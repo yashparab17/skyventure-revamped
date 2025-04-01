@@ -2,6 +2,7 @@ extends Node
 
 # Scene variables - UI
 var main_menu = preload("res://scenes/ui/screens/main_menu.tscn")
+var game_over = preload("res://scenes/ui/screens/game_over.tscn")
 var cutscene = preload("res://scenes/ui/cutscenes/cutscene.tscn")
 var module_pickup_cutscene = preload("res://scenes/ui/cutscenes/module_pickup_cutscene.tscn")
 
@@ -45,6 +46,10 @@ func pause_game() -> void:
 	else:
 		get_tree().paused = true
 		MusicManager.pause_music()
+
+# Displays game over screen.
+func to_game_over() -> void:
+	transition_to_scene(game_over.resource_path)
 
 # Quits the game.
 func quit_game() -> void:

@@ -339,27 +339,35 @@ func _on_blink_timer_timeout() -> void:
 
 # Handles player death.
 func die() -> void:
+	# Unpauses the game and plays the hurt sound effect.
 	get_tree().paused = false
 	anim.process_mode = Node.PROCESS_MODE_ALWAYS
 	snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
 	snd_hurt.play()
 
+	# Pauses the game and plays the hurt animation.
 	get_tree().paused = true
 	animate_hurt()
 	await anim.animation_finished
 	get_tree().paused = false
 
+	# Sets visibility and disables processes.
 	visible = false
 	set_physics_process(false)
 	set_process(false)
+	
+	# Stops current music and plays the death sound effect.
+	MusicManager.stop_music()
 	snd_death.play()
 
+	# Instantiates the entity death effect.
 	var entity_death_instance = entity_death.instantiate() as Node2D
 	entity_death_instance.global_position = global_position + sprite.position
 	get_parent().add_child(entity_death_instance)
 
 	await snd_death.finished
 	queue_free()
+	GameManager.to_game_over()
 
 # Updates the player's animation based on the current state.
 func animate_player() -> void:
