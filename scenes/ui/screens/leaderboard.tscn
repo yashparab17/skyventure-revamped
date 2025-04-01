@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://cb4prdc8vmylx"]
+
+[ext_resource type="Theme" uid="uid://beyey7lcgi7mq" path="res://assets/themes/default.tres" id="1_fkwam"]
+[ext_resource type="Script" uid="uid://drfpfihw26iwi" path="res://scripts/ui/screens/leaderboard.gd" id="1_v0sau"]
+[ext_resource type="Texture2D" uid="uid://42nkly27wule" path="res://assets/textures/ui/screens/game_over/background.png" id="2_v0sau"]
+
+[node name="Leaderboard" type="CanvasLayer"]
+script = ExtResource("1_v0sau")
+
+[node name="MainMargin" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_fkwam")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_v0sau")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -92.0
+offset_right = 64.0
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
