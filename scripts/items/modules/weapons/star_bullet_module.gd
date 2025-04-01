@@ -28,6 +28,7 @@ func _process(delta: float) -> void:
 func pickup_module() -> void:
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
+		await get_tree().create_timer(0.2)
 		player.collect_module(module_type)
 		snd_pickup.play()
 		visible = false

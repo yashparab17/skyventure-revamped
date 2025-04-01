@@ -47,6 +47,9 @@ var can_walk: bool = true
 enum States {IDLE, WALK, ALERT, CHASE, ATTACK, HURT, DEATH}
 var current_state: States = States.IDLE
 
+# Enemy score.
+@export var score: int = 100
+
 func _ready() -> void:
 	generate_patrol_points()
 
@@ -217,6 +220,7 @@ func die() -> void:
 		health_pickup_instance.global_position = global_position + sprite.position
 		get_parent().add_child(health_pickup_instance)
 
+	ScoreManager.increment_score(score)
 	queue_free() # Remove the enemy from the scene.
 
 # Updates animation based on current state.

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b88cbbyujj8pj"]
+[gd_scene load_steps=6 format=3 uid="uid://b88cbbyujj8pj"]
 
 [ext_resource type="Script" uid="uid://bkg8vydcpf8fh" path="res://scripts/ui/hud/hud.gd" id="1_bo48s"]
 [ext_resource type="PackedScene" uid="uid://cr7pdpu15slxc" path="res://scenes/ui/hud/health_bar.tscn" id="1_i7hs2"]
 [ext_resource type="PackedScene" uid="uid://cn0qbxpqa707" path="res://scenes/ui/hud/weapon_display.tscn" id="2_oo0fn"]
 [ext_resource type="Texture2D" uid="uid://bqctr1lo83j5w" path="res://assets/textures/ui/hud/weapon_display/empty.png" id="4_8qguk"]
+[ext_resource type="PackedScene" uid="uid://cmf5xawf1t8uy" path="res://scenes/ui/hud/score_display.tscn" id="5_2wu1p"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_bo48s")
@@ -17,3 +18,13 @@ offset_top = 8.0
 offset_right = 8.0
 offset_bottom = 8.0
 texture = ExtResource("4_8qguk")
+
+[node name="Score Display" parent="." instance=ExtResource("5_2wu1p")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_top = 12.0
+offset_right = 60.0
+offset_bottom = 24.0
+grow_horizontal = 2
