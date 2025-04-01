@@ -4,9 +4,6 @@ extends CharacterBody2D
 var star_bullet = preload("res://scenes/projectiles/star_bullet.tscn")
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 
-# Signals.
-signal weapon_switched(weapon_name: String)
-
 # Player movement properties.
 @export var gravity: float = 600
 @export var speed: int = 200
@@ -220,7 +217,7 @@ func switch_weapon(index: int) -> void:
 		current_weapon_index = index
 		current_weapon = weapons[index]
 		shoot_timer = 0.0 # Reset shoot timer when switching weapons.
-		emit_signal("weapon_switched", current_weapon.name)
+		Signals.emit_signal("weapon_switched", current_weapon.name)
 		snd_switch_weapon.play()
 
 # Handles weapon switching input.

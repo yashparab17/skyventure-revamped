@@ -16,7 +16,7 @@ extends Node2D
 
 func _ready() -> void:
 	# Connect the health bar to the player's health changed signal.
-	HealthManager.on_health_changed.connect(on_player_health_changed)
+	Signals.on_health_changed.connect(on_player_health_changed)
 
 # Updates the health bar and number display based on the player's current health.
 func on_player_health_changed(player_current_health: int) -> void:

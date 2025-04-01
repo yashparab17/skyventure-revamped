@@ -21,6 +21,7 @@ ScoreManager="*res://scripts/global/score_manager.gd"
 HealthManager="*res://scripts/global/health_manager.gd"
 MusicManager="*res://scripts/global/music_manager.gd"
 Global="*res://scripts/global/global.gd"
+Signals="*res://scripts/global/signals.gd"
 
 [display]
 
