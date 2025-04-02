@@ -18,6 +18,7 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 
 GameManager="*res://scripts/global/game_manager.gd"
 ScoreManager="*res://scripts/global/score_manager.gd"
+SupabaseLeaderboard="*res://scripts/global/supabase_leaderboard.gd"
 ScoreAccess="*res://scripts/global/score_access.gd"
 HealthManager="*res://scripts/global/health_manager.gd"
 MusicManager="*res://scripts/global/music_manager.gd"
