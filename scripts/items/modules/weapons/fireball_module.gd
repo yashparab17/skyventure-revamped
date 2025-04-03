@@ -12,20 +12,31 @@ extends AnimatedSprite2D
 
 # Checks if the player is in the pickup area.
 var player_in_area: bool = false
+var player_ref: Node2D = null
 
+# Called when the player enters the area.
 func _on_pickup_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player_in_area = true
+		player_ref = body
 
+# Called when the player exits the area.
 func _on_pickup_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player_in_area = false
+		player_ref = null
 
+# Checks for interact state.
 func _process(delta: float) -> void:
-	if player_in_area and Input.is_action_pressed("aim_down"):
-		pickup_module()
+	if player_in_area:
+		if player_ref and player_ref.current_state == player_ref.States.INTERACT:
+			pickup_module()
 
+# Picks the module up and adds it to the player.
 func pickup_module() -> void:
+	if !player_ref:
+		return
+	
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		await get_tree().create_timer(0.2)
@@ -36,7 +47,7 @@ func pickup_module() -> void:
 		var cutscene_instance = cutscene_scene.instantiate()
 		get_tree().root.add_child(cutscene_instance)
 		cutscene_instance.module_name = "Picked up the Fireball module!"
-		cutscene_instance.module_description = "Allows for the shooting of a bouncing fireball that deals 2 damage."
+		cutscene_instance.module_description = "Allows for the shooting of a fireball that deals 2 damage."
 		cutscene_instance.start_cutscene()
 		
 		var item_pickup_instance = item_pickup.instantiate() as Node2D
