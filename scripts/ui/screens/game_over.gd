@@ -28,8 +28,8 @@ func _on_submit_button_pressed() -> void:
 	status_label.text = "Submitting score..."
 	status_label.show()
 	
-	# Save the score to the scoreboard (both locally and online).
-	ScoreAccess.save_score(player_name, final_score)
+	# Save the score to the scoreboard (either locally and online).
+	ScoreDatabase.save_score(player_name, final_score)
 	
 	# Wait for 1.5 seconds to ensure the score is fully submitted.
 	await get_tree().create_timer(1.5).timeout

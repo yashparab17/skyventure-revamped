@@ -85,3 +85,5 @@ offset_bottom = 72.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Retry"
+
+[connection signal="pressed" from="RetryButton" to="." method="_on_retry_button_pressed"]
