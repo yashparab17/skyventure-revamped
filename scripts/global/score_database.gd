@@ -17,8 +17,6 @@ func _ready():
 	http_request = HTTPRequest.new()
 	add_child(http_request)
 
-# Public API ----------------------------------------------------------------
-
 # Saves a score both locally and online (if enabled).
 func save_score(player_name: String, score: int):
 	# Always save locally as fallback.
@@ -37,8 +35,6 @@ func load_scores(callback: Callable = Callable()):
 		var scores = _load_local_scores()
 		if callback.is_valid():
 			callback.call(200, 200, [], JSON.stringify(scores))
-
-# Internal Methods ----------------------------------------------------------
 
 # Saves score online.
 func _save_score_online(player_name: String, score: int):
@@ -87,8 +83,6 @@ func _load_local_scores():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 	var content = file.get_as_text()
 	return JSON.parse_string(content)
-
-# Signal Handlers ----------------------------------------------------------
 
 func _on_scores_loaded(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, callback: Callable):
 	if response_code != 200:

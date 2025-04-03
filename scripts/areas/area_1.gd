@@ -14,6 +14,7 @@ func _ready() -> void:
 	var area_music = preload("res://assets/music/area_1/duvet.mp3")
 	MusicManager.play_music(area_music)
 
+# Called when the player enters the cutscene_1 teigger.
 func _on_cutscene_1_trigger_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		var cutscene_pages = [
