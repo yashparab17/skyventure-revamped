@@ -6,10 +6,10 @@ extends AnimatedSprite2D
 # Handles collision when the health pickup hits a body.
 func _on_pickup_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		if HealthManager.current_health == 3:
+		if GameState.current_health == 3:
 			pass
 		else:
-			HealthManager.increase_health(health_amount)
+			GameState.increase_health(health_amount)
 			visible = false
 			snd_health_pickup.play()
 			await snd_health_pickup.finished

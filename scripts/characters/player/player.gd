@@ -217,7 +217,7 @@ func switch_weapon(index: int) -> void:
 		current_weapon_index = index
 		current_weapon = weapons[index]
 		shoot_timer = 0.0 # Reset shoot timer when switching weapons.
-		Signals.emit_signal("weapon_switched", current_weapon.name)
+		GameState.weapon_changed.emit(current_weapon.name)
 		snd_switch_weapon.play()
 
 # Handles weapon switching input.
@@ -284,9 +284,9 @@ func take_damage(damage: int, enemy_x: float) -> void:
 
 	is_invulnerable = true
 
-	HealthManager.decrease_health(damage)
+	GameState.decrease_health(damage)
 
-	if HealthManager.current_health == 0:
+	if GameState.current_health == 0:
 		die()
 	else:
 		current_state = States.HURT

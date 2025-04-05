@@ -16,7 +16,7 @@ func _ready() -> void:
 # Starts the game.
 func start_game() -> void:
 	transition_to_scene(area_1.resource_path)
-	ScoreManager.reset_score()
+	GameState.reset_score()
 
 # Checks for pausing.
 func _input(event):

@@ -10,7 +10,7 @@ var final_score = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	final_score = ScoreManager.score
+	final_score = GameState.score
 	score_label.text = "Final Score: " + str(final_score)
 	status_label.hide()
 

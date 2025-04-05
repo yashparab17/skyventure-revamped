@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dg73hajrohf2i"
-path="res://.godot/imported/number_2.png-cf61cd815dda4d23910d7c127a98ae07.ctex"
+path="res://.godot/imported/number_2.png-0e29b7161191b8c6fc95e8be27df0931.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/ui/hud/health_bar/number_2.png"
-dest_files=["res://.godot/imported/number_2.png-cf61cd815dda4d23910d7c127a98ae07.ctex"]
+source_file="res://assets/textures/ui/hud/health_display/number_2.png"
+dest_files=["res://.godot/imported/number_2.png-0e29b7161191b8c6fc95e8be27df0931.ctex"]
 
 [params]
 

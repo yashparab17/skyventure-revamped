@@ -1,27 +1,25 @@
 extends CanvasLayer
 
-# Node references.
-@onready var weapon_display: TextureRect = $"Weapon Display"
-@onready var score_display: Control = $"Score Display"
+@onready var health_display = $HealthDisplay
+@onready var weapon_display = $WeaponDisplay
+@onready var score_display = $ScoreDisplay
 
 func _ready():
-	# Connect to the signals.
-	Signals.connect("weapon_switched", _on_weapon_switched)
-	Signals.connect("score_updated", _on_score_updated)
-	Signals.connect("score_reset", _on_score_reset)
+	# Connect to GameState signals.
+	GameState.health_changed.connect(_on_health_changed)
+	GameState.score_changed.connect(_on_score_changed)
+	GameState.weapon_changed.connect(_on_weapon_changed)
+	
+	# Initialize with current values.
+	_on_health_changed(GameState.current_health)
+	_on_score_changed(GameState.score)
+	_on_weapon_changed(GameState.current_weapon)
 
-# Handles score updates.
-func _on_score_updated(new_score: int) -> void:
+func _on_health_changed(new_health: int):
+	health_display.update_health(new_health)
+
+func _on_score_changed(new_score: int):
 	score_display.update_score(new_score)
 
-# Handles score reset.
-func _on_score_reset() -> void:
-	score_display.update_score(0)
-	
-# Handles weapon switching.
-func _on_weapon_switched(weapon_name: String) -> void:
-	update_weapon_icon(weapon_name)
-
-# Updates the weapon icon.
-func update_weapon_icon(weapon_name: String) -> void:
-	weapon_display.update_weapon_icon(weapon_name)
+func _on_weapon_changed(new_weapon: String):
+	weapon_display.update_weapon(new_weapon)

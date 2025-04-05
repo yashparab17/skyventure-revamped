@@ -137,7 +137,7 @@ func die() -> void:
 		health_pickup_instance.global_position = global_position + sprite.position
 		get_parent().add_child(health_pickup_instance)
 
-	ScoreManager.increment_score(score)
+	GameState.increment_score(score)
 	queue_free() # Remove the enemy from the scene.
 
 # Updates animation based on current state.
