@@ -272,6 +272,28 @@ func update_shooting_state(direction: float) -> void:
 	else:
 		current_state = States.JUMP_SHOOT if velocity.y < 0 else States.FALL_SHOOT
 
+# Saves the player data.
+func save_player_data() -> void:
+	SaveManager.save_game(self)
+
+# Loads the player data.
+func load_player_data(save_data: PlayerSaveData) -> void:
+	if not save_data:
+		return
+	
+	global_position = save_data.player_position
+	HealthManager.current_health = save_data.current_health
+	HealthManager.max_health = save_data.max_health
+	
+	# Unlock weapons.
+	for weapon_name in save_data.unlocked_weapons:
+		for i in range(weapons.size()):
+			if weapons[i].name == weapon_name:
+				weapons[i].unlocked = true
+				if weapon_name == save_data.current_weapon:
+					switch_weapon(i)
+				break
+
 # Handles collision with the hurtbox.
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy") and not is_invulnerable:
