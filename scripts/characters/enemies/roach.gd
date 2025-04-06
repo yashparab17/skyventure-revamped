@@ -13,7 +13,7 @@ var health_pickup = preload("res://scenes/items/pickups/health_pickup.tscn")
 ################################################################################
 
 # Enemy movement properties.
-@export var gravity: float = 600
+@export var gravity: float = 400
 @export var speed: int = 50
 @export var acceleration: float = 600
 @export var chase_speed: int = 80 # Speed when chasing.

@@ -305,6 +305,21 @@ func update_shooting_state(direction: float) -> void:
 	else:
 		current_state = States.JUMP_SHOOT if velocity.y < 0 else States.FALL_SHOOT
 
+# Exposes weapon names (for saving).
+func get_weapon_names() -> Array[String]:
+	var names = []
+	for weapon in weapons:
+		names.append(weapon.name)
+	return names
+
+# Exposes unlocked weapon names (for saving).
+func get_unlocked_weapon_names() -> Array[String]:
+	var names = []
+	for weapon in weapons:
+		if weapon.unlocked:
+			names.append(weapon.name)
+	return names
+
 ################################################################################
 # INTERACTION FUNCTIONS
 ################################################################################

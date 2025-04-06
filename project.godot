@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 [autoload]
 
 GameManager="*res://scripts/global/game_manager.gd"
+SaveManager="*res://scripts/global/save_manager.gd"
 GameState="*res://scripts/global/game_state.gd"
 ScoreDatabase="*res://scripts/global/score_database.gd"
 MusicManager="*res://scripts/global/music_manager.gd"

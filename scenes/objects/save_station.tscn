@@ -1,0 +1,93 @@
+[gd_scene load_steps=13 format=3 uid="uid://cwu7ohwsb7xhb"]
+
+[ext_resource type="Texture2D" uid="uid://nkjd7d4mj81c" path="res://assets/sprites/objects/save_station.png" id="1_fbrue"]
+[ext_resource type="Script" uid="uid://buu3wh442ckpx" path="res://scripts/objects/save_station.gd" id="2_hwy0b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwy0b"]
+atlas = ExtResource("1_fbrue")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_erjg7"]
+atlas = ExtResource("1_fbrue")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nm1f"]
+atlas = ExtResource("1_fbrue")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exxnm"]
+atlas = ExtResource("1_fbrue")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vu0co"]
+atlas = ExtResource("1_fbrue")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bokbj"]
+atlas = ExtResource("1_fbrue")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpnmx"]
+atlas = ExtResource("1_fbrue")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1slj"]
+atlas = ExtResource("1_fbrue")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ja0bj"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwy0b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_erjg7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7nm1f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exxnm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vu0co")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bokbj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpnmx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1slj")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fbrue"]
+
+[node name="SaveStation" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_ja0bj")
+animation = &"spin"
+autoplay = "spin"
+frame = 3
+frame_progress = 0.39962
+script = ExtResource("2_hwy0b")
+
+[node name="Interactable Area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Interactable Area"]
+shape = SubResource("RectangleShape2D_fbrue")
+
+[connection signal="body_entered" from="Interactable Area" to="." method="_on_interactable_area_body_entered"]
+[connection signal="body_exited" from="Interactable Area" to="." method="_on_interactable_area_body_exited"]
