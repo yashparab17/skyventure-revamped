@@ -1,8 +1,16 @@
 extends CharacterBody2D
 
+################################################################################
+# PRELOADS
+################################################################################
+
 # Preload scenes for effects and pickups.
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 var health_pickup = preload("res://scenes/items/pickups/health_pickup.tscn")
+
+################################################################################
+# EXPORT PROPERTIES
+################################################################################
 
 # Enemy movement properties.
 @export var gravity: float = 600
@@ -14,24 +22,41 @@ var health_pickup = preload("res://scenes/items/pickups/health_pickup.tscn")
 @export var health_amount: int = 3
 @export var damage_amount: int = 1
 
+# Export patrol variables.
+@export var first_patrol_point: Vector2
+@export var second_patrol_point: Vector2
+
+# Enemy score.
+@export var score: int = 100
+
+################################################################################
+# PATROL SYSTEM
+################################################################################
+
 # Patrol system variables.
 var no_of_points: int = 2
 var point_positions: Array[Vector2] = []
 var current_point_position: int = 0
 
-# Export patrol variables.
-@export var first_patrol_point: Vector2
-@export var second_patrol_point: Vector2
+################################################################################
+# CHASE SYSTEM
+################################################################################
 
 # Chase system variables.
 var chasing: bool = false
 var player_ref: Node2D = null
 
-# Movement state.
+################################################################################
+# MOVEMENT STATE
+################################################################################
+
 var direction: Vector2
 var can_walk: bool = true
 
-# Node references.
+################################################################################
+# NODE REFERENCES
+################################################################################
+
 @onready var sprite = $Sprite
 @onready var anim = $Animation
 @onready var patrol_timer = $PatrolTimer
@@ -43,24 +68,19 @@ var can_walk: bool = true
 @onready var snd_hurt = $Sounds/Hurt
 @onready var snd_death = $Sounds/Death
 
-# State machine.
+################################################################################
+# STATE MACHINE
+################################################################################
+
 enum States {IDLE, WALK, ALERT, CHASE, ATTACK, HURT, DEATH}
 var current_state: States = States.IDLE
 
-# Enemy score.
-@export var score: int = 100
+################################################################################
+# CORE FUNCTIONS
+################################################################################
 
 func _ready() -> void:
 	generate_patrol_points()
-
-# Generates patrol points relative to the spawn position.
-func generate_patrol_points() -> void:
-	point_positions.clear()
-	var spawn_position = global_position
-	point_positions.append(spawn_position + first_patrol_point)
-	point_positions.append(spawn_position + second_patrol_point)
-	no_of_points = point_positions.size()
-	current_point_position = 0 # Reset patrol index.
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -73,6 +93,10 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	update_animation()
+
+################################################################################
+# MOVEMENT FUNCTIONS
+################################################################################
 
 # Applies gravity if the enemy is airborne.
 func apply_gravity(delta: float) -> void:
@@ -114,6 +138,39 @@ func flip_direction(dir_x: float) -> void:
 		sprite.flip_h = dir_x < 0
 		detection_area.position.x = -24 if sprite.flip_h else 24
 
+# Handles chasing the player.
+func chase_player(delta: float) -> void:
+	if not player_ref or current_state == States.DEATH:
+		return
+
+	direction = (player_ref.global_position - global_position).normalized()
+	flip_direction(direction.x)
+	velocity.x = move_toward(velocity.x, direction.x * chase_speed, acceleration * delta)
+	current_state = States.CHASE
+
+################################################################################
+# PATROL FUNCTIONS
+################################################################################
+
+# Generates patrol points relative to the spawn position.
+func generate_patrol_points() -> void:
+	point_positions.clear()
+	var spawn_position = global_position
+	point_positions.append(spawn_position + first_patrol_point)
+	point_positions.append(spawn_position + second_patrol_point)
+	no_of_points = point_positions.size()
+	current_point_position = 0 # Reset patrol index.
+
+# Resumes movement after waiting at a patrol point.
+func _on_patrol_timer_timeout() -> void:
+	if !can_walk and not chasing:
+		can_walk = true
+		current_point_position = (current_point_position + 1) % no_of_points
+
+################################################################################
+# CHASE FUNCTIONS
+################################################################################
+
 # Alert jump before chasing.
 func alert() -> void:
 	if is_on_floor():
@@ -128,21 +185,18 @@ func alert() -> void:
 		current_state = States.CHASE
 		can_walk = true # Allow movement again.
 
-# Handles chasing the player.
-func chase_player(delta: float) -> void:
-	if not player_ref or current_state == States.DEATH:
-		return
+# Stops chase after the cooldown period.
+func _on_chase_timer_timeout() -> void:
+	# Only stop chasing if the player is still outside the detection area.
+	if not detection_area.has_overlapping_bodies() or player_ref == null:
+		chasing = false
+		player_ref = null
+		generate_patrol_points() # Generate new patrol points at current position.
+		can_walk = true # Resume patrolling.
 
-	direction = (player_ref.global_position - global_position).normalized()
-	flip_direction(direction.x)
-	velocity.x = move_toward(velocity.x, direction.x * chase_speed, acceleration * delta)
-	current_state = States.CHASE
-
-# Resumes movement after waiting at a patrol point.
-func _on_patrol_timer_timeout() -> void:
-	if !can_walk and not chasing:
-		can_walk = true
-		current_point_position = (current_point_position + 1) % no_of_points
+################################################################################
+# DETECTION FUNCTIONS
+################################################################################
 
 # Handles player entering the detection area.
 func _on_detection_area_body_entered(body: Node2D) -> void:
@@ -159,6 +213,10 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 	if body == player_ref:
 		chase_timer.start() # Start the 2-second chase timer.
 
+################################################################################
+# COMBAT FUNCTIONS
+################################################################################
+
 # Handles player entering the attack area.
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -167,15 +225,6 @@ func _on_attack_area_body_entered(body: Node2D) -> void:
 		velocity = Vector2.ZERO
 		await anim.animation_finished # Wait for animation to finish.
 		can_walk = true # Resume movement after attack.
-
-# Stops chase after the cooldown period.
-func _on_chase_timer_timeout() -> void:
-	# Only stop chasing if the player is still outside the detection area.
-	if not detection_area.has_overlapping_bodies() or player_ref == null:
-		chasing = false
-		player_ref = null
-		generate_patrol_points() # Generate new patrol points at current position.
-		can_walk = true # Resume patrolling.
 
 # Handles enemy taking damage when hit by a bullet.
 func _on_hurtbox_area_entered(area: Area2D) -> void:
@@ -222,6 +271,10 @@ func die() -> void:
 
 	GameState.increment_score(score)
 	queue_free() # Remove the enemy from the scene.
+
+################################################################################
+# ANIMATION FUNCTIONS
+################################################################################
 
 # Updates animation based on current state.
 func update_animation() -> void:

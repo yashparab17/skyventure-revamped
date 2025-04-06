@@ -19,6 +19,9 @@ script = ExtResource("1_aribk")
 [node name="Player" parent="." instance=ExtResource("2_natpb")]
 position = Vector2(240, 130)
 speed = 125
+jump_force = -225
+acceleration = 300.0
+friction = 500.0
 
 [node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player", "area")]
 position = Vector2(240, 120)

@@ -1,8 +1,16 @@
 extends CharacterBody2D
 
+################################################################################
+# PRELOADS
+################################################################################
+
 # Preload scenes for effects and pickups.
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 var health_pickup = preload("res://scenes/items/pickups/health_pickup.tscn")
+
+################################################################################
+# EXPORT PROPERTIES
+################################################################################
 
 # Enemy movement properties.
 @export var speed: int = 50
@@ -13,23 +21,39 @@ var health_pickup = preload("res://scenes/items/pickups/health_pickup.tscn")
 @export var health_amount: int = 3
 @export var damage_amount: int = 1
 
+# Export patrol variables.
+@export var first_patrol_point: Vector2
+@export var second_patrol_point: Vector2
+
+# Enemy score.
+@export var score: int = 100
+
+################################################################################
+# PATROL SYSTEM
+################################################################################
+
 # Patrol system variables.
 var no_of_points: int = 2
 var point_positions: Array[Vector2] = []
 var current_point_position: int = 0
 
-# Export patrol variables.
-@export var first_patrol_point: Vector2
-@export var second_patrol_point: Vector2
+################################################################################
+# MOVEMENT STATE
+################################################################################
 
-# Movement state.
 var direction: Vector2
 var can_move: bool = true
 
-# Player reference.
+################################################################################
+# PLAYER REFERENCE
+################################################################################
+
 var player_ref: Node2D = null
 
-# Node references.
+################################################################################
+# NODE REFERENCES
+################################################################################
+
 @onready var sprite = $Sprite
 @onready var anim = $Animation
 
@@ -37,26 +61,21 @@ var player_ref: Node2D = null
 @onready var snd_hurt = $Sounds/Hurt
 @onready var snd_death = $Sounds/Death
 
-# State machine.
+################################################################################
+# STATE MACHINE
+################################################################################
+
 enum States {FLY, HURT, DEATH}
 var current_state: States = States.FLY
 
-# Enemy score.
-@export var score: int = 100
+################################################################################
+# CORE FUNCTIONS
+################################################################################
 
 func _ready() -> void:
 	generate_patrol_points()
 	# Find the player node in the scene.
 	player_ref = get_tree().get_first_node_in_group("player")
-
-# Generates patrol points relative to the spawn position.
-func generate_patrol_points() -> void:
-	point_positions.clear()
-	var spawn_position = global_position
-	point_positions.append(spawn_position + first_patrol_point)
-	point_positions.append(spawn_position + second_patrol_point)
-	no_of_points = point_positions.size()
-	current_point_position = 0 # Reset patrol index.
 
 func _physics_process(delta: float) -> void:
 	if can_move and current_state != States.DEATH:
@@ -68,6 +87,19 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	update_animation()
+
+################################################################################
+# PATROL FUNCTIONS
+################################################################################
+
+# Generates patrol points relative to the spawn position.
+func generate_patrol_points() -> void:
+	point_positions.clear()
+	var spawn_position = global_position
+	point_positions.append(spawn_position + first_patrol_point)
+	point_positions.append(spawn_position + second_patrol_point)
+	no_of_points = point_positions.size()
+	current_point_position = 0 # Reset patrol index.
 
 # Patrol logic: Moves between dynamically generated patrol points.
 func patrol(delta: float) -> void:
@@ -94,11 +126,19 @@ func patrol(delta: float) -> void:
 		current_point_position = (current_point_position + 1) % no_of_points
 		can_move = true
 
+################################################################################
+# PLAYER INTERACTION FUNCTIONS
+################################################################################
+
 # Makes the roach face the player.
 func face_player() -> void:
 	if player_ref:
 		var player_direction = (player_ref.global_position - global_position).normalized()
 		sprite.flip_h = player_direction.x < 0 # Flip sprite based on player's position.
+
+################################################################################
+# COMBAT FUNCTIONS
+################################################################################
 
 # Handles enemy taking damage when hit by a bullet.
 func _on_hurtbox_area_entered(area: Area2D) -> void:
@@ -139,6 +179,10 @@ func die() -> void:
 
 	GameState.increment_score(score)
 	queue_free() # Remove the enemy from the scene.
+
+################################################################################
+# ANIMATION FUNCTIONS
+################################################################################
 
 # Updates animation based on current state.
 func update_animation() -> void:

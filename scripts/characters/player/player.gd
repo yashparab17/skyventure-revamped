@@ -1,19 +1,33 @@
 extends CharacterBody2D
 
+################################################################################
+# PRELOADS
+################################################################################
+
 # Preload scenes for projectiles and effects.
 var star_bullet = preload("res://scenes/projectiles/star_bullet.tscn")
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 
+################################################################################
+# EXPORT PROPERTIES
+################################################################################
+
 # Player movement properties.
-@export var gravity: float = 600
-@export var speed: int = 200
-@export var jump_force: int = -300
+@export var gravity: float = 400
+@export var speed: int = 150
+@export var jump_force: int = -10
 @export var acceleration: float = 600
 @export var friction: float = 800
 @export var hurt_knockback: Vector2 = Vector2(200, -200)
 @export var hurt_duration: float = 0.5
 
-# Node references.
+# Sound properties.
+@export var walk_snd_interval: float = 0.3
+
+################################################################################
+# NODE REFERENCES
+################################################################################
+
 @onready var sprite: Sprite2D = $Sprite
 @onready var anim: AnimationPlayer = $Animation
 @onready var aim_node: Node2D = $AimNode
@@ -32,14 +46,9 @@ var entity_death = preload("res://scenes/effects/entity_death.tscn")
 @onready var snd_proj_star_bullet = $Sounds/ProjectileStarBullet
 @onready var snd_proj_fireball = $Sounds/ProjectileFireball
 
-# Sound properties.
-var walk_snd_timer: float = 0.0
-@export var walk_snd_interval: float = 0.3
-
-# Player's weapon inventory.
-var weapons: Array[Weapon] = [] # Stores all weapons.
-var current_weapon_index: int = -1 # Tracks the currently equipped weapon.
-var current_weapon: Weapon = null # Reference to the current weapon.
+################################################################################
+# STATE MANAGEMENT
+################################################################################
 
 # State machine.
 enum States {IDLE, WALK, JUMP, FALL, IDLE_SHOOT, WALK_SHOOT, JUMP_SHOOT, FALL_SHOOT, INTERACT, HURT}
@@ -53,6 +62,24 @@ var facing_direction: FacingDirection = FacingDirection.RIGHT
 enum AimDirection {RIGHT, UP, LEFT, DOWN}
 var current_aim_direction: AimDirection = AimDirection.RIGHT
 
+# Animation tracking.
+var previous_animation: String = ""
+var previous_facing: FacingDirection = FacingDirection.RIGHT
+var previous_aim: AimDirection = AimDirection.RIGHT
+
+################################################################################
+# WEAPON SYSTEM
+################################################################################
+
+# Player's weapon inventory.
+var weapons: Array[Weapon] = [] # Stores all weapons.
+var current_weapon_index: int = -1 # Tracks the currently equipped weapon.
+var current_weapon: Weapon = null # Reference to the current weapon.
+
+################################################################################
+# COMBAT PROPERTIES
+################################################################################
+
 # Shooting properties.
 var shoot_cooldown: float = 0.2
 var shoot_timer: float = 0.0
@@ -60,10 +87,15 @@ var shoot_timer: float = 0.0
 # Invulnerability properties.
 var is_invulnerable: bool = false
 
-# Animation tracking.
-var previous_animation: String = ""
-var previous_facing: FacingDirection = FacingDirection.RIGHT
-var previous_aim: AimDirection = AimDirection.RIGHT
+################################################################################
+# SOUND PROPERTIES
+################################################################################
+
+var walk_snd_timer: float = 0.0
+
+################################################################################
+# CORE FUNCTIONS
+################################################################################
 
 func _ready() -> void:
 	# Add weapons to the inventory (initially locked).
@@ -87,6 +119,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	animate_player()
 
+################################################################################
+# MOVEMENT FUNCTIONS
+################################################################################
+
 # Applies gravity to the player if not on the floor.
 func apply_gravity(delta: float) -> void:
 	if !is_on_floor():
@@ -104,17 +140,6 @@ func apply_gravity(delta: float) -> void:
 func update_timers(delta: float) -> void:
 	shoot_timer -= delta
 	walk_snd_timer -= delta
-
-# Handles player interaction.
-func handle_interaction() -> void:
-	# Only interact if completely idle (no movement input) and on ground.
-	if (is_on_floor() and
-		Input.is_action_pressed("aim_down") and
-		!Input.is_action_pressed("move_left") and
-		!Input.is_action_pressed("move_right") and
-		abs(velocity.x) < 10):
-		current_state = States.INTERACT
-		velocity.x = 0
 
 # Handles player movement, jumping, and shooting.
 func handle_movement_and_shooting(delta: float) -> void:
@@ -171,6 +196,10 @@ func handle_air_movement(direction: float, delta: float) -> void:
 		current_state = States.JUMP_SHOOT if shoot_timer > 0 else States.JUMP
 	velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta)
 
+################################################################################
+# AIMING FUNCTIONS
+################################################################################
+
 # Handles aiming.
 func handle_aiming() -> void:
 	if Input.is_action_pressed("aim_up"):
@@ -195,6 +224,10 @@ func handle_aiming() -> void:
 			current_aim_direction = AimDirection.RIGHT
 			aim_node.rotation_degrees = 0
 			aim_node.position = Vector2(16, -8) # Adjust position for facing right.
+
+################################################################################
+# WEAPON FUNCTIONS
+################################################################################
 
 # Allows the player to collect the various modules.
 func collect_module(module_type: String) -> void:
@@ -271,6 +304,25 @@ func update_shooting_state(direction: float) -> void:
 		current_state = States.WALK_SHOOT if direction else States.IDLE_SHOOT
 	else:
 		current_state = States.JUMP_SHOOT if velocity.y < 0 else States.FALL_SHOOT
+
+################################################################################
+# INTERACTION FUNCTIONS
+################################################################################
+
+# Handles player interaction.
+func handle_interaction() -> void:
+	# Only interact if completely idle (no movement input) and on ground.
+	if (is_on_floor() and
+		Input.is_action_pressed("aim_down") and
+		!Input.is_action_pressed("move_left") and
+		!Input.is_action_pressed("move_right") and
+		abs(velocity.x) < 10):
+		current_state = States.INTERACT
+		velocity.x = 0
+
+################################################################################
+# DAMAGE FUNCTIONS
+################################################################################
 
 # Handles collision with the hurtbox.
 func _on_hurtbox_body_entered(body: Node2D) -> void:
@@ -368,6 +420,10 @@ func die() -> void:
 	await snd_death.finished
 	queue_free()
 	GameManager.to_game_over()
+
+################################################################################
+# ANIMATION FUNCTIONS
+################################################################################
 
 # Updates the player's animation based on the current state.
 func animate_player() -> void:
