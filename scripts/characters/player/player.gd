@@ -15,7 +15,7 @@ var entity_death = preload("res://scenes/effects/entity_death.tscn")
 # Player movement properties.
 var gravity: float = 500
 var speed: int = 125
-var jump_force: int = -250
+var jump_force: int = -225
 var acceleration: float = 600
 var friction: float = 800
 
@@ -28,6 +28,10 @@ var walk_snd_interval: float = 0.3
 
 # Last safe position.
 var last_safe_position: Vector2
+
+# Coyote time.
+var coyote_time: float = 0.2
+var coyote_timer: float = 0.0
 
 ################################################################################
 # NODE REFERENCES
@@ -119,6 +123,9 @@ func _physics_process(delta: float) -> void:
 	# Update last safe position if on ground
 	if is_on_floor():
 		last_safe_position = global_position
+		coyote_timer = coyote_time
+	else:
+		coyote_timer -= delta
 
 	apply_gravity(delta)
 	update_timers(delta)
@@ -172,6 +179,12 @@ func handle_movement_and_shooting(delta: float) -> void:
 		handle_ground_movement(direction, delta)
 	else:
 		handle_air_movement(direction, delta)
+	
+	# Handle jumping.
+	if Input.is_action_just_pressed("jump") and coyote_timer > 0.0:
+		velocity.y = jump_force
+		current_state = States.JUMP
+		snd_jump.play()
 
 	handle_aiming()
 
@@ -195,12 +208,6 @@ func handle_ground_movement(direction: float, delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 		current_state = States.IDLE_SHOOT if shoot_timer > 0 else States.IDLE
 		walk_snd_timer = 0
-
-	# Handle jumping.
-	if Input.is_action_just_pressed("jump"):
-		velocity.y = jump_force
-		current_state = States.JUMP
-		snd_jump.play()
 
 # Handles movement while in the air.
 func handle_air_movement(direction: float, delta: float) -> void:
@@ -360,8 +367,9 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 # Handles player taking damage.
 func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> void:
-	if is_invulnerable:
-		return # Skip if already invulnerable.
+	# Allow damage to go through if it's a pitfall and the player is at 1 HP.
+	if is_invulnerable and not (skip_knockback and GameState.current_health == 1):
+		return
 
 	is_invulnerable = true
 
@@ -471,24 +479,22 @@ func teleport_player() -> void:
 	sprite.visible = false
 	set_physics_process(false)
 
-	# Wait for a short duration.
-	await get_tree().create_timer(0.5).timeout
-
 	# Teleport the player to the last safe position.
 	global_position = last_safe_position
 	velocity = Vector2.ZERO
-	
+
 	# Instantiates the entity death effect.
 	var entity_death_instance = entity_death.instantiate() as Node2D
 	entity_death_instance.global_position = global_position + sprite.position
 	get_parent().add_child(entity_death_instance)
-	
+
 	# Show the player again.
 	sprite.visible = true
-	set_physics_process(true)
 
 	# Take damage *after* teleporting back.
+	await get_tree().create_timer(0.1).timeout
 	take_damage(1, global_position.x, true)
+	set_physics_process(true)
 
 ################################################################################
 # ANIMATION FUNCTIONS

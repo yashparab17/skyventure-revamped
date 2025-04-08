@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://8npv4letncp"]
+
+[ext_resource type="Texture2D" uid="uid://bx55yd5s36thp" path="res://assets/sprites/objects/health_station.png" id="1_xl2r6"]
+[ext_resource type="Script" uid="uid://cingee674ty6l" path="res://scripts/objects/health_station.gd" id="2_6tedo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xl2r6"]
+atlas = ExtResource("1_xl2r6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6tedo"]
+atlas = ExtResource("1_xl2r6")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n410o"]
+atlas = ExtResource("1_xl2r6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3kvfo"]
+animations = [{
+"frames": [{
+"duration": 10.0,
+"texture": SubResource("AtlasTexture_xl2r6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6tedo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n410o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6tedo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n410o")
+}],
+"loop": true,
+"name": &"blink",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xl2r6"]
+size = Vector2(16, 16)
+
+[node name="HealthStation" type="AnimatedSprite2D" groups=["objects"]]
+z_index = -1
+sprite_frames = SubResource("SpriteFrames_3kvfo")
+animation = &"blink"
+autoplay = "blink"
+frame_progress = 0.266143
+script = ExtResource("2_6tedo")
+
+[node name="Interactable Area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Interactable Area"]
+shape = SubResource("RectangleShape2D_xl2r6")
+
+[connection signal="body_entered" from="Interactable Area" to="." method="_on_interactable_area_body_entered"]
+[connection signal="body_exited" from="Interactable Area" to="." method="_on_interactable_area_body_exited"]

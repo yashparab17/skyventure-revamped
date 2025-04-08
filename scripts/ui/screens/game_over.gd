@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @onready var score_label: Label = $ScoreLabel
 @onready var name_input: LineEdit = $NameInput
-@onready var submit_button: Button = $SubmitButton
+@onready var submit_button: Button = $PanelContainer/MarginContainer/VBoxContainer/SubmitButton
 @onready var status_label: Label = $StatusLabel
 
 var leaderboard = preload("res://scenes/ui/screens/leaderboard.tscn")

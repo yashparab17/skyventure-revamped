@@ -4,13 +4,11 @@ extends AnimatedSprite2D
 var player_in_area: bool = false
 var player_ref: Node2D = null
 
-# Called when the player enters the area.
 func _on_interactable_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player_in_area = true
 		player_ref = body
 
-# Called when the player leaves the area.
 func _on_interactable_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player_in_area = false
@@ -20,9 +18,18 @@ func _on_interactable_area_body_exited(body: Node2D) -> void:
 func _process(delta: float) -> void:
 	if player_in_area:
 		if player_ref and player_ref.current_state == player_ref.States.INTERACT:
-			save_game()
+			restore_health()
 
-# Saves the game.
-func save_game() -> void:
-	SaveManager.save_game()
-	print("Game saved!")
+# Restores health.
+func restore_health() -> void:
+	GameState.current_health = GameState.max_health
+
+	var cutscene_page = [
+			{
+				"text": "Restored health!",
+			},
+		]
+
+	var cutscene = preload("res://scenes/ui/cutscenes/cutscene.tscn").instantiate()
+	get_tree().root.add_child(cutscene)
+	cutscene.start_cutscene(cutscene_page)
