@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b88cbbyujj8pj"]
+[gd_scene load_steps=17 format=3 uid="uid://b88cbbyujj8pj"]
 
 [ext_resource type="Script" uid="uid://bkg8vydcpf8fh" path="res://scripts/ui/hud/hud.gd" id="1_bo48s"]
 [ext_resource type="Texture2D" uid="uid://o08odrqxq0dp" path="res://assets/textures/ui/hud/health_display/container.png" id="2_ax4tw"]
@@ -12,7 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://cuu2jykyc1og7" path="res://assets/textures/ui/hud/health_display/number_1.png" id="6_o6s6k"]
 [ext_resource type="Texture2D" uid="uid://dg73hajrohf2i" path="res://assets/textures/ui/hud/health_display/number_2.png" id="7_ct28o"]
 [ext_resource type="Script" uid="uid://dm17yp65r3vjv" path="res://scripts/ui/hud/weapon_display.gd" id="11_7kkr4"]
-[ext_resource type="Script" uid="uid://bc03h40mn8na0" path="res://scenes/ui/hud/score_display.gd" id="12_o6s6k"]
+[ext_resource type="Script" uid="uid://bc03h40mn8na0" path="res://scripts/ui/hud/score_display.gd" id="12_o6s6k"]
+[ext_resource type="Script" uid="uid://c1withqx1o3q8" path="res://scripts/ui/hud/minimap.gd" id="14_ct28o"]
+[ext_resource type="Texture2D" uid="uid://c31w723xx1ssa" path="res://assets/textures/ui/hud/minimap/background.png" id="15_devq0"]
+[ext_resource type="Texture2D" uid="uid://cywpap5poer6r" path="res://assets/textures/ui/hud/minimap/player_indicator.png" id="16_a3iiw"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_bo48s")
@@ -113,3 +116,45 @@ offset_bottom = 24.0
 grow_horizontal = 2
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MinimapBackground" type="TextureRect" parent="."]
+offset_left = 384.0
+offset_top = 16.0
+offset_right = 464.0
+offset_bottom = 48.0
+texture = ExtResource("15_devq0")
+
+[node name="Minimap" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchor_left = 0.802
+anchor_top = 0.071
+anchor_right = 0.802
+anchor_bottom = 0.071
+offset_left = 0.039978
+offset_top = -0.0400009
+offset_right = 78.04
+offset_bottom = 37.96
+script = ExtResource("14_ct28o")
+
+[node name="Display" type="TextureRect" parent="Minimap"]
+layout_mode = 0
+offset_right = 78.0
+offset_bottom = 38.0
+stretch_mode = 2
+
+[node name="PlayerIndicator" type="TextureRect" parent="Minimap"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -3.5
+offset_right = 5.0
+offset_bottom = 3.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_a3iiw")
+stretch_mode = 2

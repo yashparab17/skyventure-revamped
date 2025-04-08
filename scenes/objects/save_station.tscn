@@ -74,7 +74,7 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fbrue"]
 
-[node name="SaveStation" type="AnimatedSprite2D"]
+[node name="SaveStation" type="AnimatedSprite2D" groups=["objects"]]
 sprite_frames = SubResource("SpriteFrames_ja0bj")
 animation = &"spin"
 autoplay = "spin"

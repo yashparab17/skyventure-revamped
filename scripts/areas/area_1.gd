@@ -1,8 +1,14 @@
 extends Node2D
 
+@onready var hud = $HUD
+@onready var player = $Player
+@onready var ground_blocks = $Tiles/GroundBlocks
 @onready var cutscene_1_trigger = $Triggers/Cutscene1Trigger
 
 func _ready() -> void:
+	# Generates map.
+	MapManager.generate_map_from_tilemap_layer(ground_blocks)
+	hud.emit_signal("minimap_setup_requested", player, ground_blocks)
 	# Plays the music.
 	var area_music = preload("res://assets/music/area_1/duvet.mp3")
 	MusicManager.play_music(area_music)

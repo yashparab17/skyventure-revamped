@@ -44,7 +44,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e6jrc"]
 size = Vector2(22, 14)
 
-[node name="Star Bullet Module" type="AnimatedSprite2D"]
+[node name="Star Bullet Module" type="AnimatedSprite2D" groups=["items"]]
 sprite_frames = SubResource("SpriteFrames_ktjft")
 animation = &"flash"
 autoplay = "flash"
