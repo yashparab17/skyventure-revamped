@@ -84,6 +84,7 @@ func _load_local_scores():
 	var content = file.get_as_text()
 	return JSON.parse_string(content)
 
+# Handles online scores being loaded.
 func _on_scores_loaded(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, callback: Callable):
 	if response_code != 200:
 		# If online fails, return local scores.
