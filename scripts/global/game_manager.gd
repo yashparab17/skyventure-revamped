@@ -42,10 +42,10 @@ func can_pause() -> bool:
 func pause_game() -> void:
 	if get_tree().paused:
 		get_tree().paused = false
-		MusicManager.resume_music()
+		MusicManager.undim_music()
 	else:
 		get_tree().paused = true
-		MusicManager.pause_music()
+		MusicManager.dim_music()
 
 # Displays game over screen.
 func to_game_over() -> void:

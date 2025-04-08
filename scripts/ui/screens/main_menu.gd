@@ -1,5 +1,9 @@
 extends CanvasLayer
 
+func _ready() -> void:
+	var main_menu_music = preload("res://assets/music/ao_no_sumika.mp3")
+	MusicManager.play_music(main_menu_music)
+
 # Function that activates upon pressing the New Adventure (New Game) button.
 func _on_new_adventure_button_pressed() -> void:
 	GameManager.start_game()

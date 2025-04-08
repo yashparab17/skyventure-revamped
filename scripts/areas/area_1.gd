@@ -10,7 +10,7 @@ func _ready() -> void:
 	MapManager.generate_map_from_tilemap_layer(ground_blocks)
 	hud.emit_signal("minimap_setup_requested", player, ground_blocks)
 	# Plays the music.
-	var area_music = preload("res://assets/music/area_1/duvet.mp3")
+	var area_music = preload("res://assets/music/duvet.mp3")
 	MusicManager.play_music(area_music)
 
 # Called when the player enters the cutscene_1 teigger.

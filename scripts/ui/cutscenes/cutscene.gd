@@ -37,6 +37,7 @@ func start_cutscene(cutscene_pages: Array, callback: Callable = Callable()):
 	current_page = 0
 	
 	# Pause the game.
+	MusicManager.dim_music()
 	get_tree().paused = true
 	
 	# Show the UI and first page.
@@ -109,6 +110,7 @@ func end_cutscene():
 	await snd_next.finished # Wait for sound to finish.
 
 	hide()
+	MusicManager.undim_music()
 	get_tree().paused = false
 
 	if end_callback.is_valid():
