@@ -57,6 +57,7 @@ func load_game() -> bool:
 	if save_data.scene_path:
 		# Store the save data we need after scene change.
 		var saved_position = save_data.player_position
+		GameState.pending_player_position = saved_position
 		var saved_weapons = save_data.unlocked_weapons
 		var saved_current_weapon = save_data.current_weapon
 		
@@ -65,9 +66,6 @@ func load_game() -> bool:
 		if error != OK:
 			push_error("Failed to load scene: ", save_data.scene_path)
 			return false
-		
-		# Wait for the scene to fully load.
-		await get_tree().create_timer(0.1).timeout
 		
 		# Restore game state.
 		GameState.current_health = save_data.player_health

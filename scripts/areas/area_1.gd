@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var hud = $HUD
 @onready var player = $Player
-@onready var ground_blocks = $Tiles/GroundBlocks
+@onready var ground_blocks = $Tiles/Collidable
 @onready var cutscene_1_trigger = $Triggers/Cutscene1Trigger
 
 func _ready() -> void:
@@ -16,6 +16,8 @@ func _ready() -> void:
 # Called when the player enters the cutscene_1 teigger.
 func _on_cutscene_1_trigger_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		hud.hide()
+		
 		var cutscene_pages = [
 			{
 				"name": "Victor",
@@ -37,4 +39,5 @@ func _on_cutscene_1_trigger_body_entered(body: Node2D) -> void:
 		cutscene.start_cutscene(cutscene_pages, Callable(self, "_on_cutscene_1_finished"))
 
 func _on_cutscene_1_finished():
+	hud.show()
 	cutscene_1_trigger.queue_free()

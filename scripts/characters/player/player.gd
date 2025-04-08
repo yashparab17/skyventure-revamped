@@ -9,20 +9,25 @@ var star_bullet = preload("res://scenes/projectiles/star_bullet.tscn")
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 
 ################################################################################
-# EXPORT PROPERTIES
+# PROPERTIES
 ################################################################################
 
 # Player movement properties.
-@export var gravity: float = 400
-@export var speed: int = 150
-@export var jump_force: int = -10
-@export var acceleration: float = 600
-@export var friction: float = 800
-@export var hurt_knockback: Vector2 = Vector2(200, -200)
-@export var hurt_duration: float = 0.5
+var gravity: float = 500
+var speed: int = 125
+var jump_force: int = -250
+var acceleration: float = 600
+var friction: float = 800
+
+# Player hurt properties.
+var hurt_knockback: Vector2 = Vector2(200, -200)
+var hurt_duration: float = 0.5
 
 # Sound properties.
-@export var walk_snd_interval: float = 0.3
+var walk_snd_interval: float = 0.3
+
+# Last safe position.
+var last_safe_position: Vector2
 
 ################################################################################
 # NODE REFERENCES
@@ -102,20 +107,29 @@ func _ready() -> void:
 	weapons.append(Weapon.new("Star Bullet", preload("res://scenes/projectiles/star_bullet.tscn"), 0.3))
 	weapons.append(Weapon.new("Fireball", preload("res://scenes/projectiles/fireball.tscn"), 0.8))
 
+	# Change position and avoid flicker on loading.
+	if GameState.pending_player_position != Vector2.INF:
+		global_position = GameState.pending_player_position
+		GameState.pending_player_position = Vector2.INF
+
 func _physics_process(delta: float) -> void:
 	if current_state == States.HURT:
 		return # Skip processing if the player is hurt.
 
+	# Update last safe position if on ground
+	if is_on_floor():
+		last_safe_position = global_position
+
 	apply_gravity(delta)
 	update_timers(delta)
-	
+
 	handle_movement_and_shooting(delta)
 	handle_weapon_switching()
-	
+
 	# Check for interaction.
 	if (current_state == States.IDLE and Input.is_action_pressed("aim_down") and is_on_floor()):
 		handle_interaction()
-		
+
 	move_and_slide()
 	animate_player()
 
@@ -339,13 +353,13 @@ func handle_interaction() -> void:
 # DAMAGE FUNCTIONS
 ################################################################################
 
-# Handles collision with the hurtbox.
+# Handles enemy collision with the hurtbox.
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy") and not is_invulnerable:
-		take_damage(body.damage_amount, body.global_position.x)
+		take_damage(body.damage_amount, body.global_position.x, false)
 
 # Handles player taking damage.
-func take_damage(damage: int, enemy_x: float) -> void:
+func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> void:
 	if is_invulnerable:
 		return # Skip if already invulnerable.
 
@@ -361,9 +375,10 @@ func take_damage(damage: int, enemy_x: float) -> void:
 		snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
 		snd_hurt.play()
 
-		# Apply knockback based on enemy position.
-		var knockback_direction = 1 if enemy_x < global_position.x else -1
-		velocity = hurt_knockback * Vector2(knockback_direction, 1)
+		# Only apply knockback if not skipping.
+		if not skip_knockback:
+			var knockback_direction = 1 if enemy_x < global_position.x else -1
+			velocity = hurt_knockback * Vector2(knockback_direction, 1)
 
 		await get_tree().process_frame
 		
@@ -435,6 +450,45 @@ func die() -> void:
 	await snd_death.finished
 	queue_free()
 	GameManager.to_game_over()
+	
+################################################################################
+# PITFALL FUNCTIONS
+################################################################################
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("pitfall"):
+		handle_pitfall()
+
+# Handles pitfalls.
+func handle_pitfall() -> void:
+	if GameState.current_health == 1:
+		take_damage(1, global_position.x, true)
+	else:
+		teleport_player()
+	
+func teleport_player() -> void:
+	# Hide the player temporarily and pause processing.
+	sprite.visible = false
+	set_physics_process(false)
+
+	# Wait for a short duration.
+	await get_tree().create_timer(0.5).timeout
+
+	# Teleport the player to the last safe position.
+	global_position = last_safe_position
+	velocity = Vector2.ZERO
+	
+	# Instantiates the entity death effect.
+	var entity_death_instance = entity_death.instantiate() as Node2D
+	entity_death_instance.global_position = global_position + sprite.position
+	get_parent().add_child(entity_death_instance)
+	
+	# Show the player again.
+	sprite.visible = true
+	set_physics_process(true)
+
+	# Take damage *after* teleporting back.
+	take_damage(1, global_position.x, true)
 
 ################################################################################
 # ANIMATION FUNCTIONS

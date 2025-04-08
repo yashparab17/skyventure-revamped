@@ -16,7 +16,7 @@ var max_health := 3:
 	set(value):
 		max_health = value
 		emit_signal("max_health_changed", max_health)
-		# Ensure current health doesn't exceed new max
+		# Ensure current health doesn't exceed new max.
 		if current_health > max_health:
 			current_health = max_health
 			emit_signal("health_changed", current_health)
@@ -37,6 +37,9 @@ var current_weapon := "":
 	set(value):
 		current_weapon = value
 		emit_signal("weapon_changed", current_weapon)
+
+# Saves player position on save.
+var pending_player_position: Vector2 = Vector2.INF
 
 # Health methods.
 func decrease_health(amount: int) -> void:

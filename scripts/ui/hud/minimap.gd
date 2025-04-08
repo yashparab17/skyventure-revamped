@@ -53,6 +53,12 @@ func _update_offset():
 
 	# Clamp the offset to the texture size.
 	var display_size = MapManager.current_minimap_texture.get_size()
+	
+	# If display smaller than control, just center it
+	if display_size.x <= size.x and display_size.y <= size.y:
+		display_rect.position = (size - display_size) / 2
+		player_indicator.position = (Vector2(tile_pos - MapManager.map_origin)) * display_rect.scalereturn
+	
 	map_offset.x = clamp(map_offset.x, 0, display_size.x - size.x)
 	map_offset.y = clamp(map_offset.y, 0, display_size.y - size.y)
 

@@ -6,6 +6,7 @@ signal minimap_setup_requested(player: Node2D, tilemap_layer: TileMapLayer)
 @onready var weapon_display = $WeaponDisplay
 @onready var score_display = $ScoreDisplay
 @onready var minimap = $Minimap
+@onready var minimap_background = $MinimapBackground
 
 func _ready():
 	# Connect to GameState signals.
@@ -17,6 +18,15 @@ func _ready():
 	_on_health_changed(GameState.current_health)
 	_on_score_changed(GameState.score)
 	_on_weapon_changed(GameState.current_weapon)
+	
+	# Show or hide minimap according to the current scene's group.
+	var current_scene = get_tree().current_scene
+	if current_scene.is_in_group("outside"):
+		minimap.show()
+		minimap_background.show()
+	else:
+		minimap.hide()
+		minimap_background.hide()
 	
 	self.minimap_setup_requested.connect(_on_minimap_setup_requested)
 
