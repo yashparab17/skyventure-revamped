@@ -1,5 +1,8 @@
 extends AnimatedSprite2D
 
+# Sound references.
+@onready var snd_restore: AudioStreamPlayer2D = $Sounds/Restore
+
 # Checks if the player is in the interactable area.
 var player_in_area: bool = false
 var player_ref: Node2D = null
@@ -22,6 +25,7 @@ func _process(delta: float) -> void:
 
 # Restores health.
 func restore_health() -> void:
+	snd_restore.play()
 	GameState.current_health = GameState.max_health
 
 	var cutscene_page = [

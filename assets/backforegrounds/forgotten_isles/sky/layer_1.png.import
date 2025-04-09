@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://es0kr3oirag"
-path="res://.godot/imported/layer_0.png-03d8fc0e1454cfc516f2da1372218a1a.ctex"
+uid="uid://duqkcm8egch2"
+path="res://.godot/imported/layer_1.png-a18559d3e671b3ee6cb8959eb89e5081.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/area_1/layer_0.png"
-dest_files=["res://.godot/imported/layer_0.png-03d8fc0e1454cfc516f2da1372218a1a.ctex"]
+source_file="res://assets/backforegrounds/forgotten_isles/sky/layer_1.png"
+dest_files=["res://.godot/imported/layer_1.png-a18559d3e671b3ee6cb8959eb89e5081.ctex"]
 
 [params]
 

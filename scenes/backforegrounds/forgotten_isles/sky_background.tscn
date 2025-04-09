@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdlrbfiidkw6r"]
+
+[ext_resource type="Texture2D" uid="uid://dhxklvyjnobsh" path="res://assets/backforegrounds/forgotten_isles/sky/layer_0.png" id="1_vpl15"]
+[ext_resource type="Texture2D" uid="uid://duqkcm8egch2" path="res://assets/backforegrounds/forgotten_isles/sky/layer_1.png" id="2_v57ju"]
+[ext_resource type="Texture2D" uid="uid://c1081wh55n0cj" path="res://assets/backforegrounds/forgotten_isles/sky/layer_2.png" id="3_5xnbs"]
+[ext_resource type="Texture2D" uid="uid://i6pk4xs60x8d" path="res://assets/backforegrounds/forgotten_isles/sky/layer_3.png" id="4_ujfru"]
+[ext_resource type="Texture2D" uid="uid://bfotedioctiy5" path="res://assets/backforegrounds/forgotten_isles/sky/layer_4.png" id="5_6xrpv"]
+
+[node name="Sky Background" type="ParallaxBackground"]
+
+[node name="Layer 0" type="TextureRect" parent="."]
+offset_right = 480.0
+offset_bottom = 240.0
+texture = ExtResource("1_vpl15")
+
+[node name="Layer 1" type="ParallaxLayer" parent="."]
+
+[node name="Scrolling" type="Parallax2D" parent="Layer 1"]
+repeat_size = Vector2(320, 0)
+autoscroll = Vector2(32, 0)
+repeat_times = 5
+
+[node name="Clouds" type="Sprite2D" parent="Layer 1/Scrolling"]
+position = Vector2(160, 120)
+texture = ExtResource("2_v57ju")
+
+[node name="Layer 2" type="ParallaxLayer" parent="."]
+
+[node name="Scrolling" type="Parallax2D" parent="Layer 2"]
+repeat_size = Vector2(320, 0)
+autoscroll = Vector2(48, 0)
+repeat_times = 5
+
+[node name="Clouds" type="Sprite2D" parent="Layer 2/Scrolling"]
+position = Vector2(160, 120)
+texture = ExtResource("3_5xnbs")
+
+[node name="Layer 3" type="ParallaxLayer" parent="."]
+
+[node name="Scrolling" type="Parallax2D" parent="Layer 3"]
+repeat_size = Vector2(320, 0)
+autoscroll = Vector2(64, 0)
+repeat_times = 5
+
+[node name="Clouds" type="Sprite2D" parent="Layer 3/Scrolling"]
+position = Vector2(160, 120)
+texture = ExtResource("4_ujfru")
+
+[node name="Layer 4" type="ParallaxLayer" parent="."]
+
+[node name="Scrolling" type="Parallax2D" parent="Layer 4"]
+repeat_size = Vector2(320, 0)
+autoscroll = Vector2(80, 0)
+repeat_times = 5
+
+[node name="Clouds" type="Sprite2D" parent="Layer 4/Scrolling"]
+position = Vector2(160, 120)
+texture = ExtResource("5_6xrpv")

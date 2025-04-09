@@ -30,7 +30,7 @@ var walk_snd_interval: float = 0.3
 var last_safe_position: Vector2
 
 # Coyote time.
-var coyote_time: float = 0.2
+var coyote_time: float = 0.1
 var coyote_timer: float = 0.0
 
 ################################################################################

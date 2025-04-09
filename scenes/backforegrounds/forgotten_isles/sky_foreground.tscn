@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://byuo6h23p4gkf"]
+
+[ext_resource type="Texture2D" uid="uid://dlxkfpvcgd2tq" path="res://assets/backforegrounds/forgotten_isles/sky/layer_5.png" id="1_fpb1x"]
+
+[node name="Sky Foreground" type="ParallaxBackground"]
+layer = 1
+
+[node name="Layer 5" type="ParallaxLayer" parent="."]
+
+[node name="Scrolling" type="Parallax2D" parent="Layer 5"]
+repeat_size = Vector2(320, 0)
+autoscroll = Vector2(96, 0)
+repeat_times = 5
+
+[node name="Clouds" type="Sprite2D" parent="Layer 5/Scrolling"]
+position = Vector2(160, 120)
+texture = ExtResource("1_fpb1x")

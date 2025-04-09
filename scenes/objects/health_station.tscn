@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://8npv4letncp"]
+[gd_scene load_steps=9 format=3 uid="uid://8npv4letncp"]
 
 [ext_resource type="Texture2D" uid="uid://bx55yd5s36thp" path="res://assets/sprites/objects/health_station.png" id="1_xl2r6"]
 [ext_resource type="Script" uid="uid://cingee674ty6l" path="res://scripts/objects/health_station.gd" id="2_6tedo"]
+[ext_resource type="AudioStream" uid="uid://ca7yabwj4foru" path="res://assets/sounds/items/pickups/health_pickup.wav" id="3_n410o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xl2r6"]
 atlas = ExtResource("1_xl2r6")
@@ -60,6 +61,12 @@ collision_mask = 2
 
 [node name="Collision" type="CollisionShape2D" parent="Interactable Area"]
 shape = SubResource("RectangleShape2D_xl2r6")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Restore" type="AudioStreamPlayer2D" parent="Sounds"]
+process_mode = 3
+stream = ExtResource("3_n410o")
 
 [connection signal="body_entered" from="Interactable Area" to="." method="_on_interactable_area_body_entered"]
 [connection signal="body_exited" from="Interactable Area" to="." method="_on_interactable_area_body_exited"]
