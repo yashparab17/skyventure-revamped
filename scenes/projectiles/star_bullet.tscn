@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ckq32nl7vk503"]
+[gd_scene load_steps=9 format=3 uid="uid://ckq32nl7vk503"]
 
 [ext_resource type="Texture2D" uid="uid://litsq0v1ug6l" path="res://assets/sprites/projectiles/star_bullet.png" id="1_r8wcl"]
 [ext_resource type="Script" uid="uid://dbtcm2w6exjrs" path="res://scripts/projectiles/star_bullet.gd" id="2_r8wcl"]
@@ -30,6 +30,18 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_r8wcl"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0.0451977, 0.0451977, 0.0451977, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mdghq"]
+gradient = SubResource("Gradient_r8wcl")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_reqvq"]
 size = Vector2(20, 6)
 
@@ -43,6 +55,10 @@ script = ExtResource("2_r8wcl")
 wait_time = 0.2
 one_shot = true
 autostart = true
+
+[node name="Light" type="PointLight2D" parent="."]
+position = Vector2(7, 0)
+texture = SubResource("GradientTexture2D_mdghq")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 2

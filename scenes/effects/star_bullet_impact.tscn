@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d2g7g7ctkk8ak"]
+[gd_scene load_steps=11 format=3 uid="uid://d2g7g7ctkk8ak"]
 
 [ext_resource type="Texture2D" uid="uid://bry74v0vqorsq" path="res://assets/sprites/effects/star_bullet_impact.png" id="1_w87l3"]
 [ext_resource type="Script" uid="uid://de0qb57yso0q5" path="res://scripts/effects/star_bullet_impact.gd" id="2_avjyc"]
@@ -51,15 +51,32 @@ animations = [{
 "speed": 20.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_r8wcl"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0.0451977, 0.0451977, 0.0451977, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hgka0"]
+gradient = SubResource("Gradient_r8wcl")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="Star Bullet Impact" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_0qd1l")
 animation = &"impact"
 autoplay = "impact"
+frame = 4
+frame_progress = 1.0
 script = ExtResource("2_avjyc")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.4
 one_shot = true
 autostart = true
+
+[node name="Light" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_hgka0")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

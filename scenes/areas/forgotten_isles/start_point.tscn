@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://dhqedu0goo0pp"]
+[gd_scene load_steps=12 format=4 uid="uid://dhqedu0goo0pp"]
 
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="1_3mosh"]
 [ext_resource type="Script" uid="uid://dsvv3sj1dieeb" path="res://scripts/areas/forgotten_isles/start_point.gd" id="1_7k6ii"]
@@ -9,12 +9,16 @@
 [ext_resource type="PackedScene" uid="uid://cwu7ohwsb7xhb" path="res://scenes/objects/save_station.tscn" id="5_o56vm"]
 [ext_resource type="PackedScene" uid="uid://bdlrbfiidkw6r" path="res://scenes/backforegrounds/forgotten_isles/sky_background.tscn" id="6_3oc5e"]
 [ext_resource type="PackedScene" uid="uid://8npv4letncp" path="res://scenes/objects/health_station.tscn" id="7_jsrig"]
+[ext_resource type="PackedScene" uid="uid://s4lyiv5ovl16" path="res://scenes/items/modules/weapons/star_bullet_module.tscn" id="10_3oc5e"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3nrx7"]
 distance = -16.0
 
 [node name="Start Point" type="Node2D"]
 script = ExtResource("1_7k6ii")
+
+[node name="Ambient Light" type="CanvasModulate" parent="."]
+color = Color(0.878431, 0.878431, 0.878431, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_3mosh")]
 position = Vector2(240, 160)
@@ -62,6 +66,9 @@ position = Vector2(392, 120)
 
 [node name="HealthStation" parent="Objects" instance=ExtResource("7_jsrig")]
 position = Vector2(424, 120)
+
+[node name="Star Bullet Module" parent="Objects" instance=ExtResource("10_3oc5e")]
+position = Vector2(120, 120)
 
 [node name="Pitfall" type="Area2D" parent="." groups=["pitfall"]]
 visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://8npv4letncp"]
+[gd_scene load_steps=11 format=3 uid="uid://8npv4letncp"]
 
 [ext_resource type="Texture2D" uid="uid://bx55yd5s36thp" path="res://assets/sprites/objects/health_station.png" id="1_xl2r6"]
 [ext_resource type="Script" uid="uid://cingee674ty6l" path="res://scripts/objects/health_station.gd" id="2_6tedo"]
@@ -47,6 +47,18 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xl2r6"]
 size = Vector2(16, 16)
 
+[sub_resource type="Gradient" id="Gradient_n410o"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3kvfo"]
+gradient = SubResource("Gradient_n410o")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="HealthStation" type="AnimatedSprite2D" groups=["objects"]]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_3kvfo")
@@ -62,9 +74,13 @@ collision_mask = 2
 [node name="Collision" type="CollisionShape2D" parent="Interactable Area"]
 shape = SubResource("RectangleShape2D_xl2r6")
 
+[node name="Light" type="PointLight2D" parent="."]
+color = Color(1, 0, 0, 1)
+texture = SubResource("GradientTexture2D_3kvfo")
+
 [node name="Sounds" type="Node" parent="."]
 
-[node name="Restore" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="Restore" type="AudioStreamPlayer" parent="Sounds"]
 process_mode = 3
 stream = ExtResource("3_n410o")
 

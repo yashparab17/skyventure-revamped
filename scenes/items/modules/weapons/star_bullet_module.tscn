@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://s4lyiv5ovl16"]
+[gd_scene load_steps=11 format=3 uid="uid://s4lyiv5ovl16"]
 
 [ext_resource type="Script" uid="uid://bssw707154sup" path="res://scripts/items/modules/weapons/star_bullet_module.gd" id="1_jv1wh"]
 [ext_resource type="Texture2D" uid="uid://dl08dyi2vsh3i" path="res://assets/sprites/items/modules/weapons/star_bullet_module.png" id="1_ktjft"]
@@ -44,7 +44,20 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e6jrc"]
 size = Vector2(22, 14)
 
+[sub_resource type="Gradient" id="Gradient_e6jrc"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_eg65r"]
+gradient = SubResource("Gradient_e6jrc")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="Star Bullet Module" type="AnimatedSprite2D" groups=["items"]]
+z_index = -1
 sprite_frames = SubResource("SpriteFrames_ktjft")
 animation = &"flash"
 autoplay = "flash"
@@ -56,6 +69,9 @@ collision_mask = 2
 
 [node name="Collision" type="CollisionShape2D" parent="Pickup Area"]
 shape = SubResource("RectangleShape2D_e6jrc")
+
+[node name="Light" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_eg65r")
 
 [node name="Sounds" type="Node" parent="."]
 

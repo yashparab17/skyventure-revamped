@@ -25,4 +25,13 @@ func _process(delta: float) -> void:
 # Saves the game.
 func save_game() -> void:
 	SaveManager.save_game()
-	print("Game saved!")
+	
+	var cutscene_page = [
+			{
+				"text": "Game saved!",
+			},
+		]
+
+	var cutscene = preload("res://scenes/ui/cutscenes/cutscene.tscn").instantiate()
+	get_tree().root.add_child(cutscene)
+	cutscene.start_cutscene(cutscene_page)

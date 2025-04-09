@@ -7,8 +7,11 @@ extends AnimatedSprite2D
 @onready var item_pickup = preload("res://scenes/effects/item_pickup.tscn")
 @onready var cutscene_scene = preload("res://scenes/ui/cutscenes/module_pickup_cutscene.tscn")
 
+# Node references.
+@onready var light: PointLight2D = $Light
+
 # Sound references.
-@onready var snd_pickup = $Sounds/Pickup
+@onready var snd_pickup: AudioStreamPlayer2D = $Sounds/Pickup
 
 # Checks if the player is in the pickup area.
 var player_in_area: bool = false
@@ -26,11 +29,27 @@ func _on_pickup_area_body_exited(body: Node2D) -> void:
 		player_in_area = false
 		player_ref = null
 
-# Checks for interact state.
+# Runs every frame.
 func _process(delta: float) -> void:
+	animate_light()
 	if player_in_area:
 		if player_ref and player_ref.current_state == player_ref.States.INTERACT:
 			pickup_module()
+
+# Animates light according to the frame.
+func animate_light() -> void:
+	var current_frame = frame
+	match animation:
+		"flash":
+			match current_frame:
+				0:
+					light.energy = 0.25
+				1:
+					light.energy = 0.5
+				2:
+					light.energy = 1.0
+				3:
+					light.energy = 0.5
 
 # Picks the module up and adds it to the player.
 func pickup_module() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cwu7ohwsb7xhb"]
+[gd_scene load_steps=15 format=3 uid="uid://cwu7ohwsb7xhb"]
 
 [ext_resource type="Texture2D" uid="uid://nkjd7d4mj81c" path="res://assets/sprites/objects/save_station.png" id="1_fbrue"]
 [ext_resource type="Script" uid="uid://buu3wh442ckpx" path="res://scripts/objects/save_station.gd" id="2_hwy0b"]
@@ -75,6 +75,18 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fbrue"]
 size = Vector2(16, 16)
 
+[sub_resource type="Gradient" id="Gradient_hwy0b"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_erjg7"]
+gradient = SubResource("Gradient_hwy0b")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="SaveStation" type="AnimatedSprite2D" groups=["objects"]]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_ja0bj")
@@ -90,6 +102,10 @@ collision_mask = 2
 
 [node name="Collision" type="CollisionShape2D" parent="Interactable Area"]
 shape = SubResource("RectangleShape2D_fbrue")
+
+[node name="Light" type="PointLight2D" parent="."]
+color = Color(1, 0, 0, 1)
+texture = SubResource("GradientTexture2D_erjg7")
 
 [connection signal="body_entered" from="Interactable Area" to="." method="_on_interactable_area_body_entered"]
 [connection signal="body_exited" from="Interactable Area" to="." method="_on_interactable_area_body_exited"]
