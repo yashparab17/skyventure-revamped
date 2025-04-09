@@ -1,13 +1,13 @@
 extends Node
 
 # Scene variables - UI
-var main_menu = preload("res://scenes/ui/screens/main_menu.tscn")
-var game_over = preload("res://scenes/ui/screens/game_over.tscn")
+var main_menu = preload("res://scenes/screens/main_menu.tscn")
+var game_over = preload("res://scenes/screens/game_over.tscn")
 var cutscene = preload("res://scenes/ui/cutscenes/cutscene.tscn")
 var module_pickup_cutscene = preload("res://scenes/ui/cutscenes/module_pickup_cutscene.tscn")
 
 # Scene variables - Area
-var area_1 = preload("res://scenes/areas/area_1.tscn")
+var start_point = preload("res://scenes/areas/forgotten_isles/start_point.tscn")
 
 # Sets the processing mode to always
 func _ready() -> void:
@@ -15,7 +15,7 @@ func _ready() -> void:
 
 # Starts the game.
 func start_game() -> void:
-	transition_to_scene(area_1.resource_path)
+	transition_to_scene(start_point.resource_path)
 	GameState.reset_score()
 
 # Checks for pausing.

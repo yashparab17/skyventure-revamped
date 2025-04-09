@@ -5,7 +5,7 @@ extends CanvasLayer
 @onready var submit_button: Button = $PanelContainer/MarginContainer/VBoxContainer/SubmitButton
 @onready var status_label: Label = $StatusLabel
 
-var leaderboard = preload("res://scenes/ui/screens/leaderboard.tscn")
+var leaderboard = preload("res://scenes/screens/leaderboard.tscn")
 var final_score = 0
 
 # Called when the node enters the scene tree for the first time.

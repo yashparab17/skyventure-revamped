@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cb4prdc8vmylx"]
 
 [ext_resource type="Theme" uid="uid://beyey7lcgi7mq" path="res://assets/themes/default.tres" id="1_fkwam"]
-[ext_resource type="Script" uid="uid://drfpfihw26iwi" path="res://scripts/ui/screens/leaderboard.gd" id="1_v0sau"]
-[ext_resource type="Texture2D" uid="uid://42nkly27wule" path="res://assets/textures/ui/screens/game_over/background.png" id="2_v0sau"]
+[ext_resource type="Script" uid="uid://drfpfihw26iwi" path="res://scripts/screens/leaderboard.gd" id="1_v0sau"]
+[ext_resource type="Texture2D" uid="uid://42nkly27wule" path="res://assets/textures/screens/game_over/background.png" id="2_v0sau"]
 
 [node name="Leaderboard" type="CanvasLayer"]
 script = ExtResource("1_v0sau")
