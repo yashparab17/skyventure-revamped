@@ -28,6 +28,8 @@ var walk_snd_interval: float = 0.3
 
 # Last safe position.
 var last_safe_position: Vector2
+var safe_ground_timer := 0.0
+var has_saved_safe_pos := false
 
 # Coyote time.
 var coyote_time: float = 0.1
@@ -122,9 +124,16 @@ func _physics_process(delta: float) -> void:
 
 	# Update last safe position if on ground, and check coyote timing.
 	if is_on_floor():
-		last_safe_position = global_position
+		safe_ground_timer += delta
+		
+		if safe_ground_timer >= 0.2 and not has_saved_safe_pos:
+			last_safe_position = global_position
+			has_saved_safe_pos = true
+		
 		coyote_timer = coyote_time
 	else:
+		safe_ground_timer = 0.0
+		has_saved_safe_pos = false
 		coyote_timer -= delta
 
 	apply_gravity(delta)

@@ -11,9 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://clwss3qa34jfo" path="res://assets/sounds/projectiles/star_bullet.wav" id="8_xuses"]
 [ext_resource type="AudioStream" uid="uid://da13h1dsx48xl" path="res://assets/sounds/projectiles/fireball.wav" id="9_42irl"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fc3fl"]
-radius = 6.0
-height = 16.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3xnwo"]
+size = Vector2(12, 16)
 
 [sub_resource type="Animation" id="Animation_2v4cy"]
 resource_name = "fall_left_down"
@@ -831,9 +830,9 @@ _data = {
 &"walk_shoot_right_up": SubResource("Animation_r0hd7")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_otcs5"]
-radius = 8.0
-height = 20.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3xnwo"]
+radius = 7.0
+height = 18.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
@@ -842,7 +841,7 @@ script = ExtResource("1_4jjpf")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
-shape = SubResource("CapsuleShape2D_fc3fl")
+shape = SubResource("RectangleShape2D_3xnwo")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -8)
@@ -866,7 +865,7 @@ collision_mask = 20
 
 [node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, -8)
-shape = SubResource("CapsuleShape2D_otcs5")
+shape = SubResource("CapsuleShape2D_3xnwo")
 debug_color = Color(0.982472, 0, 0.361879, 0.42)
 
 [node name="InvulnerabilityTimer" type="Timer" parent="."]
