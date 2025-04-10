@@ -3,6 +3,33 @@
 [ext_resource type="Script" uid="uid://c21wv1klgcre6" path="res://scripts/screens/presents.gd" id="1_0jb54"]
 [ext_resource type="Texture2D" uid="uid://brluil1v3o482" path="res://assets/textures/screens/presents/player_surprised.png" id="1_csdcb"]
 
+[sub_resource type="Animation" id="Animation_q2eym"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(240, 96)]
+}
+
 [sub_resource type="Animation" id="Animation_0jb54"]
 resource_name = "presents"
 length = 4.0
@@ -29,33 +56,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(240, 96), Vector2(240, 80), Vector2(240, 96)]
-}
-
-[sub_resource type="Animation" id="Animation_q2eym"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Player:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(240, 96)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l4sph"]

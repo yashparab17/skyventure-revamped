@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b88cbbyujj8pj"]
+[gd_scene load_steps=20 format=3 uid="uid://b88cbbyujj8pj"]
 
 [ext_resource type="Script" uid="uid://bkg8vydcpf8fh" path="res://scripts/ui/hud/hud.gd" id="1_bo48s"]
 [ext_resource type="Texture2D" uid="uid://o08odrqxq0dp" path="res://assets/textures/ui/hud/health_display/container.png" id="2_ax4tw"]
@@ -11,6 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://cdjaxxs244puv" path="res://assets/textures/ui/hud/score_display/background.png" id="6_4m4yb"]
 [ext_resource type="Texture2D" uid="uid://cuu2jykyc1og7" path="res://assets/textures/ui/hud/health_display/number_1.png" id="6_o6s6k"]
 [ext_resource type="Texture2D" uid="uid://dg73hajrohf2i" path="res://assets/textures/ui/hud/health_display/number_2.png" id="7_ct28o"]
+[ext_resource type="Texture2D" uid="uid://djhjmvl5ek7be" path="res://assets/textures/ui/hud/health_display/number_4.png" id="9_qd53f"]
+[ext_resource type="Texture2D" uid="uid://nccruwocyrjd" path="res://assets/textures/ui/hud/health_display/number_5.png" id="10_gkg7y"]
+[ext_resource type="Texture2D" uid="uid://s8wgkbfpn2eu" path="res://assets/textures/ui/hud/health_display/number_6.png" id="10_tsfp7"]
 [ext_resource type="Script" uid="uid://dm17yp65r3vjv" path="res://scripts/ui/hud/weapon_display.gd" id="11_7kkr4"]
 [ext_resource type="Script" uid="uid://bc03h40mn8na0" path="res://scripts/ui/hud/score_display.gd" id="12_o6s6k"]
 [ext_resource type="Script" uid="uid://c1withqx1o3q8" path="res://scripts/ui/hud/minimap.gd" id="14_ct28o"]
@@ -25,12 +28,12 @@ layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
 offset_top = 32.0
-offset_right = 88.0
+offset_right = 120.0
 offset_bottom = 40.0
 script = ExtResource("2_todbw")
 bar_active = ExtResource("4_4m4yb")
 bar_inactive = ExtResource("4_m7evv")
-numbers = Array[Texture2D]([ExtResource("5_7kkr4"), ExtResource("6_o6s6k"), ExtResource("7_ct28o"), ExtResource("3_2wu1p")])
+numbers = Array[Texture2D]([ExtResource("5_7kkr4"), ExtResource("6_o6s6k"), ExtResource("7_ct28o"), ExtResource("3_2wu1p"), ExtResource("9_qd53f"), ExtResource("10_gkg7y"), ExtResource("10_tsfp7")])
 
 [node name="Container" type="TextureRect" parent="HealthDisplay"]
 layout_mode = 0
@@ -43,25 +46,46 @@ layout_mode = 0
 offset_left = 16.0
 offset_right = 24.0
 offset_bottom = 8.0
-texture = ExtResource("3_2wu1p")
+texture = ExtResource("5_7kkr4")
 
 [node name="Bar1" type="TextureRect" parent="HealthDisplay"]
 layout_mode = 0
 offset_left = 24.0
-offset_right = 40.0
+offset_right = 32.0
 offset_bottom = 8.0
 texture = ExtResource("4_4m4yb")
 
 [node name="Bar2" type="TextureRect" parent="HealthDisplay"]
 layout_mode = 0
-offset_left = 40.0
-offset_right = 56.0
+offset_left = 32.0
+offset_right = 40.0
 offset_bottom = 8.0
 texture = ExtResource("4_4m4yb")
 
 [node name="Bar3" type="TextureRect" parent="HealthDisplay"]
 layout_mode = 0
+offset_left = 40.0
+offset_right = 48.0
+offset_bottom = 8.0
+texture = ExtResource("4_4m4yb")
+
+[node name="Bar4" type="TextureRect" parent="HealthDisplay"]
+layout_mode = 0
+offset_left = 48.0
+offset_right = 56.0
+offset_bottom = 8.0
+texture = ExtResource("4_4m4yb")
+
+[node name="Bar5" type="TextureRect" parent="HealthDisplay"]
+layout_mode = 0
 offset_left = 56.0
+offset_right = 64.0
+offset_bottom = 8.0
+texture = ExtResource("4_4m4yb")
+
+[node name="Bar6" type="TextureRect" parent="HealthDisplay"]
+layout_mode = 0
+offset_left = 64.0
 offset_right = 72.0
 offset_bottom = 8.0
 texture = ExtResource("4_4m4yb")

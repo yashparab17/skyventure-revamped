@@ -120,7 +120,7 @@ func _physics_process(delta: float) -> void:
 	if current_state == States.HURT:
 		return # Skip processing if the player is hurt.
 
-	# Update last safe position if on ground
+	# Update last safe position if on ground, and check coyote timing.
 	if is_on_floor():
 		last_safe_position = global_position
 		coyote_timer = coyote_time
@@ -340,6 +340,13 @@ func get_unlocked_weapon_names() -> Array[String]:
 		if weapon.unlocked:
 			names.append(weapon.name)
 	return names
+
+# Helper function to check if the player has a certain weapon.
+func has_weapon(name: String) -> bool:
+	for weapon in weapons:
+		if weapon.name.to_lower() == name.to_lower() and weapon.unlocked:
+			return true
+	return false
 
 ################################################################################
 # INTERACTION FUNCTIONS

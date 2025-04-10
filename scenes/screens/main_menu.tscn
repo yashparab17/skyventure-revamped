@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://beyey7lcgi7mq" path="res://assets/themes/default.tres" id="2_nee2d"]
 [ext_resource type="Texture2D" uid="uid://i0m4fo3w8jc4" path="res://assets/textures/screens/main_menu/title.png" id="3_j84ir"]
 
-[node name="Main Menu" type="CanvasLayer" groups=["unpausable"]]
+[node name="MainMenu" type="CanvasLayer" groups=["unpausable"]]
 script = ExtResource("1_sjck8")
 
 [node name="MainMargin" type="MarginContainer" parent="."]

@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvpgqo6weh0fe"]
+
+[ext_resource type="Script" uid="uid://20pale14tmqg" path="res://scripts/screens/pause_menu.gd" id="1_pbepp"]
+[ext_resource type="Theme" uid="uid://beyey7lcgi7mq" path="res://assets/themes/default.tres" id="1_rpmok"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_pbepp")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="MainMargin" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rpmok")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = 192.0
+offset_top = 80.0
+offset_right = 286.0
+offset_bottom = 150.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_rpmok")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="MainMenuButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

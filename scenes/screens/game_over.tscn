@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://42nkly27wule" path="res://assets/textures/screens/game_over/background.png" id="2_4q6mn"]
 [ext_resource type="Texture2D" uid="uid://b32srhoxf8gs0" path="res://assets/textures/screens/game_over/text.png" id="3_ejdjc"]
 
-[node name="Game Over" type="CanvasLayer" groups=["unpausable"]]
+[node name="GameOver" type="CanvasLayer" groups=["unpausable"]]
 script = ExtResource("1_4q6mn")
 
 [node name="MainMargin" type="MarginContainer" parent="."]

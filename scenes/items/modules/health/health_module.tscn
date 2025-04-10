@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://bn61jj2l8liu1"]
+
+[ext_resource type="Texture2D" uid="uid://7va8uikh6ko5" path="res://assets/sprites/items/modules/health/health_module.png" id="1_0hfvw"]
+[ext_resource type="AudioStream" uid="uid://s2u362nrra63" path="res://assets/sounds/items/modules/get_module.wav" id="2_7hdkq"]
+[ext_resource type="Script" uid="uid://d1hl215eplsid" path="res://scripts/items/modules/health/health_module.gd" id="2_nbx25"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hdkq"]
+atlas = ExtResource("1_0hfvw")
+region = Rect2(0, 0, 20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbx25"]
+atlas = ExtResource("1_0hfvw")
+region = Rect2(20, 0, 20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmfqj"]
+atlas = ExtResource("1_0hfvw")
+region = Rect2(40, 0, 20, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a268k"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 10.0,
+"texture": SubResource("AtlasTexture_7hdkq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbx25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fmfqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbx25")
+}],
+"loop": true,
+"name": &"flash",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0hfvw"]
+size = Vector2(22, 14)
+
+[sub_resource type="Gradient" id="Gradient_0hfvw"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7hdkq"]
+gradient = SubResource("Gradient_0hfvw")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="HealthModule" type="AnimatedSprite2D" groups=["items"]]
+z_index = -1
+sprite_frames = SubResource("SpriteFrames_a268k")
+animation = &"flash"
+autoplay = "flash"
+frame = 1
+frame_progress = 0.0737923
+script = ExtResource("2_nbx25")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("RectangleShape2D_0hfvw")
+
+[node name="Light" type="PointLight2D" parent="."]
+color = Color(1, 0, 0, 1)
+texture = SubResource("GradientTexture2D_7hdkq")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Pickup" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("2_7hdkq")
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
+[connection signal="body_exited" from="PickupArea" to="." method="_on_pickup_area_body_exited"]

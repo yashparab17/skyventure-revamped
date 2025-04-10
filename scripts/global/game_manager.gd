@@ -1,12 +1,13 @@
 extends Node
 
-# Scene variables - UI
+# Screen variables.
 var main_menu = preload("res://scenes/screens/main_menu.tscn")
+var pause_menu = preload("res://scenes/screens/pause_menu.tscn")
 var game_over = preload("res://scenes/screens/game_over.tscn")
 var cutscene = preload("res://scenes/ui/cutscenes/cutscene.tscn")
 var module_pickup_cutscene = preload("res://scenes/ui/cutscenes/module_pickup_cutscene.tscn")
 
-# Scene variables - Area
+# Area variables.
 var start_point = preload("res://scenes/areas/forgotten_isles/start_point.tscn")
 
 # Sets the processing mode to always
@@ -43,9 +44,14 @@ func pause_game() -> void:
 	if get_tree().paused:
 		get_tree().paused = false
 		MusicManager.undim_music()
+		var existing_pause_menu = get_tree().root.get_node_or_null("PauseMenu")
+		if existing_pause_menu:
+			existing_pause_menu.queue_free()
 	else:
 		get_tree().paused = true
 		MusicManager.dim_music()
+		var pause_menu_instance = pause_menu.instantiate()
+		get_tree().root.add_child(pause_menu_instance)
 
 # Displays game over screen.
 func to_game_over() -> void:

@@ -11,6 +11,8 @@ signal score_reset()
 # Weapon signals.
 signal weapon_changed(new_weapon)
 
+var unlocked_weapons: Array[String] = []
+
 # Health properties.
 var max_health := 3:
 	set(value):

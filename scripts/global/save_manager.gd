@@ -58,7 +58,12 @@ func load_game() -> bool:
 		# Store the save data we need after scene change.
 		var saved_position = save_data.player_position
 		GameState.pending_player_position = saved_position
+		
 		var saved_weapons = save_data.unlocked_weapons
+		GameState.unlocked_weapons = []
+		for weapon_name in saved_weapons:
+			GameState.unlocked_weapons.append(weapon_name)
+		
 		var saved_current_weapon = save_data.current_weapon
 		
 		# Change scene and wait for it to be ready.

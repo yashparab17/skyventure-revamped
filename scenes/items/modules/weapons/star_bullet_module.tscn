@@ -56,18 +56,19 @@ height = 20
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Star Bullet Module" type="AnimatedSprite2D" groups=["items"]]
+[node name="StarBulletModule" type="AnimatedSprite2D" groups=["items"]]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_ktjft")
 animation = &"flash"
 autoplay = "flash"
+frame_progress = 0.293131
 script = ExtResource("1_jv1wh")
 
-[node name="Pickup Area" type="Area2D" parent="."]
+[node name="PickupArea" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 2
 
-[node name="Collision" type="CollisionShape2D" parent="Pickup Area"]
+[node name="Collision" type="CollisionShape2D" parent="PickupArea"]
 shape = SubResource("RectangleShape2D_e6jrc")
 
 [node name="Light" type="PointLight2D" parent="."]
@@ -78,5 +79,5 @@ texture = SubResource("GradientTexture2D_eg65r")
 [node name="Pickup" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("3_e6jrc")
 
-[connection signal="body_entered" from="Pickup Area" to="." method="_on_pickup_area_body_entered"]
-[connection signal="body_exited" from="Pickup Area" to="." method="_on_pickup_area_body_exited"]
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
+[connection signal="body_exited" from="PickupArea" to="." method="_on_pickup_area_body_exited"]

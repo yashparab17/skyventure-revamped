@@ -1,5 +1,8 @@
 extends Node2D
 
+# Node references.
+@onready var player = $Player
+
 # Preloading music.
 @onready var area_music = preload("res://assets/music/forgotten_isles.mp3")
 

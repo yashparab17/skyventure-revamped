@@ -48,7 +48,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0yq4i"]
 size = Vector2(22, 14)
 
-[node name="Fireball Module" type="AnimatedSprite2D" groups=["items"]]
+[node name="FireballModule" type="AnimatedSprite2D" groups=["items"]]
 sprite_frames = SubResource("SpriteFrames_euoce")
 animation = &"flash"
 autoplay = "flash"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://byareqxo20gbk"]
+[gd_scene load_steps=12 format=3 uid="uid://byareqxo20gbk"]
 
 [ext_resource type="Texture2D" uid="uid://dgea2durmyb4l" path="res://assets/sprites/effects/entity_death.png" id="1_l4tte"]
 [ext_resource type="Script" uid="uid://bqwwmo3707bsj" path="res://scripts/effects/entity_death.gd" id="2_kyvwc"]
@@ -52,12 +52,27 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_binj4"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_33vd5"]
+gradient = SubResource("Gradient_binj4")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="Entity Death" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_iyujr")
 animation = &"death"
 autoplay = "death"
 frame_progress = 0.397655
 script = ExtResource("2_kyvwc")
+
+[node name="Light" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_33vd5")
 
 [node name="Sounds" type="Node" parent="."]
 

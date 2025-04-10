@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://by012kid0li1w"]
+[gd_scene load_steps=11 format=3 uid="uid://by012kid0li1w"]
 
 [ext_resource type="Texture2D" uid="uid://ildcnp1r1m8i" path="res://assets/sprites/effects/item_pickup.png" id="1_rui46"]
 [ext_resource type="Script" uid="uid://b7gp8xp0u5roo" path="res://scripts/effects/item_pickup.gd" id="2_ep5tn"]
@@ -51,7 +51,20 @@ animations = [{
 "speed": 20.0
 }]
 
-[node name="Item Pickup" type="AnimatedSprite2D"]
+[sub_resource type="Gradient" id="Gradient_ep5tn"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_77i5o"]
+gradient = SubResource("Gradient_ep5tn")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0)
+
+[node name="ItemPickup" type="AnimatedSprite2D"]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_j7nup")
 animation = &"pickup"
@@ -59,6 +72,9 @@ autoplay = "pickup"
 frame = 4
 frame_progress = 1.0
 script = ExtResource("2_ep5tn")
+
+[node name="Light" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_77i5o")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.4
