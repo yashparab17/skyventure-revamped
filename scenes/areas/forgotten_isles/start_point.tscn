@@ -6,11 +6,11 @@
 [ext_resource type="Script" uid="uid://cn8qy83ltl6nl" path="res://scripts/repeated/inside_camera.gd" id="3_3nrx7"]
 [ext_resource type="TileSet" uid="uid://bmy57cy4gyepg" path="res://scenes/areas/forgotten_isles/forgotten_isles.tres" id="3_40k1d"]
 [ext_resource type="PackedScene" uid="uid://byuo6h23p4gkf" path="res://scenes/backforegrounds/forgotten_isles/sky_foreground.tscn" id="5_5jj4w"]
-[ext_resource type="PackedScene" uid="uid://cwu7ohwsb7xhb" path="res://scenes/objects/save_station.tscn" id="5_o56vm"]
+[ext_resource type="PackedScene" uid="uid://cwu7ohwsb7xhb" path="res://scenes/objects/stations/save_station.tscn" id="5_o56vm"]
 [ext_resource type="PackedScene" uid="uid://bdlrbfiidkw6r" path="res://scenes/backforegrounds/forgotten_isles/sky_background.tscn" id="6_3oc5e"]
-[ext_resource type="PackedScene" uid="uid://8npv4letncp" path="res://scenes/objects/health_station.tscn" id="7_jsrig"]
+[ext_resource type="PackedScene" uid="uid://8npv4letncp" path="res://scenes/objects/stations/health_station.tscn" id="7_jsrig"]
 [ext_resource type="PackedScene" uid="uid://bn61jj2l8liu1" path="res://scenes/items/modules/health/health_module.tscn" id="10_3oc5e"]
-[ext_resource type="PackedScene" uid="uid://2c8vokrg3u5c" path="res://scenes/objects/sign.tscn" id="11_e1ao7"]
+[ext_resource type="PackedScene" uid="uid://2c8vokrg3u5c" path="res://scenes/objects/interactables/sign.tscn" id="11_e1ao7"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3nrx7"]
 distance = -16.0

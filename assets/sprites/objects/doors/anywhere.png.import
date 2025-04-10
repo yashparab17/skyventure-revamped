@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfx5qr7au7bll"
-path="res://.godot/imported/sign.png-3dba41a57d66e9c3a74581828806c6b0.ctex"
+uid="uid://bu07yi4l06qmn"
+path="res://.godot/imported/anywhere.png-352167383d1e18b3eedf3c4ca24e7d72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/sign.png"
-dest_files=["res://.godot/imported/sign.png-3dba41a57d66e9c3a74581828806c6b0.ctex"]
+source_file="res://assets/sprites/objects/doors/anywhere.png"
+dest_files=["res://.godot/imported/anywhere.png-352167383d1e18b3eedf3c4ca24e7d72.ctex"]
 
 [params]
 

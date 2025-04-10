@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nkjd7d4mj81c"
-path="res://.godot/imported/save_station.png-c6bf2c6cf5beb1913adf7f0417cad97d.ctex"
+uid="uid://bfx5qr7au7bll"
+path="res://.godot/imported/sign.png-a141b2d9bfd88f69aea812c0b5a59d98.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/save_station.png"
-dest_files=["res://.godot/imported/save_station.png-c6bf2c6cf5beb1913adf7f0417cad97d.ctex"]
+source_file="res://assets/sprites/objects/interactables/sign.png"
+dest_files=["res://.godot/imported/sign.png-a141b2d9bfd88f69aea812c0b5a59d98.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://2c8vokrg3u5c"]
 
-[ext_resource type="Texture2D" uid="uid://bfx5qr7au7bll" path="res://assets/sprites/objects/sign.png" id="1_010yf"]
-[ext_resource type="Script" uid="uid://bx2ih5hif2puq" path="res://scripts/objects/sign.gd" id="2_0wll6"]
+[ext_resource type="Texture2D" uid="uid://bfx5qr7au7bll" path="res://assets/sprites/objects/interactables/sign.png" id="1_010yf"]
+[ext_resource type="Script" uid="uid://bx2ih5hif2puq" path="res://scripts/objects/interactables/sign.gd" id="2_0wll6"]
 [ext_resource type="Texture2D" uid="uid://hxmjxexqtpno" path="res://assets/textures/ui/sign/message_box.png" id="2_24rhm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_24rhm"]

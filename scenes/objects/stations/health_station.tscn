@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://8npv4letncp"]
 
-[ext_resource type="Texture2D" uid="uid://bx55yd5s36thp" path="res://assets/sprites/objects/health_station.png" id="1_xl2r6"]
-[ext_resource type="Script" uid="uid://cingee674ty6l" path="res://scripts/objects/health_station.gd" id="2_6tedo"]
+[ext_resource type="Texture2D" uid="uid://bx55yd5s36thp" path="res://assets/sprites/objects/stations/health_station.png" id="1_xl2r6"]
+[ext_resource type="Script" uid="uid://cingee674ty6l" path="res://scripts/objects/stations/health_station.gd" id="2_6tedo"]
 [ext_resource type="AudioStream" uid="uid://ca7yabwj4foru" path="res://assets/sounds/items/pickups/health_pickup.wav" id="3_n410o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xl2r6"]
