@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 [autoload]
 
 GameManager="*res://scripts/global/game_manager.gd"
+SpawnManager="*res://scripts/global/spawn_manager.gd"
 SaveManager="*res://scripts/global/save_manager.gd"
 MapManager="*res://scripts/global/map_manager.gd"
 MusicManager="*res://scripts/global/music_manager.gd"
@@ -41,6 +42,7 @@ items="Collectable items."
 objects="Permanent objects."
 outside="Outside areas."
 pitfall="World boundary."
+spawn_points="Spawn points."
 
 [gui]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://dhqedu0goo0pp"]
+[gd_scene load_steps=14 format=4 uid="uid://dhqedu0goo0pp"]
 
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="1_3mosh"]
 [ext_resource type="Script" uid="uid://dsvv3sj1dieeb" path="res://scripts/areas/forgotten_isles/start_point.gd" id="1_7k6ii"]
@@ -9,8 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://cwu7ohwsb7xhb" path="res://scenes/objects/stations/save_station.tscn" id="5_o56vm"]
 [ext_resource type="PackedScene" uid="uid://bdlrbfiidkw6r" path="res://scenes/backforegrounds/forgotten_isles/sky_background.tscn" id="6_3oc5e"]
 [ext_resource type="PackedScene" uid="uid://8npv4letncp" path="res://scenes/objects/stations/health_station.tscn" id="7_jsrig"]
-[ext_resource type="PackedScene" uid="uid://bn61jj2l8liu1" path="res://scenes/items/modules/health/health_module.tscn" id="10_3oc5e"]
+[ext_resource type="PackedScene" uid="uid://15tbit6med7m" path="res://scenes/objects/doors/spawn_point.tscn" id="11_7fati"]
 [ext_resource type="PackedScene" uid="uid://2c8vokrg3u5c" path="res://scenes/objects/interactables/sign.tscn" id="11_e1ao7"]
+[ext_resource type="PackedScene" uid="uid://ddhhs61u2guwu" path="res://scenes/objects/doors/door.tscn" id="12_07oaq"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3nrx7"]
 distance = -16.0
@@ -68,9 +69,6 @@ position = Vector2(392, 120)
 [node name="HealthStation" parent="Objects" instance=ExtResource("7_jsrig")]
 position = Vector2(424, 120)
 
-[node name="HealthModule" parent="Objects" instance=ExtResource("10_3oc5e")]
-position = Vector2(120, 120)
-
 [node name="Sign" parent="Objects" instance=ExtResource("11_e1ao7")]
 position = Vector2(408, 120)
 text = "Press Down To Interact"
@@ -78,6 +76,15 @@ text = "Press Down To Interact"
 [node name="Sign2" parent="Objects" instance=ExtResource("11_e1ao7")]
 position = Vector2(200, 152)
 text = "Press Z or Space to Jump"
+
+[node name="SpawnPoint" parent="Objects" instance=ExtResource("11_7fati")]
+position = Vector2(118, 98)
+spawn_id = "from_area_2"
+
+[node name="Door" parent="Objects" instance=ExtResource("12_07oaq")]
+position = Vector2(248, 36)
+target_scene = "res://scenes/areas/forgotten_isles/test_level.tscn"
+target_spawn_id = "from_area_1"
 
 [node name="Pitfall" type="Area2D" parent="." groups=["pitfall"]]
 visible = false

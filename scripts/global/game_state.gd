@@ -13,6 +13,11 @@ signal weapon_changed(new_weapon)
 
 var unlocked_weapons: Array[String] = []
 
+var pending_spawn_data := {
+	"scene": "",
+	"spawn_id": ""
+}
+
 # Health properties.
 var max_health := 3:
 	set(value):
@@ -60,6 +65,15 @@ func increment_score(amount: int) -> void:
 func reset_score() -> void:
 	score = 0
 	emit_signal("score_reset")
+
+func set_pending_spawn(scene: String, spawn_id: String) -> void:
+	pending_spawn_data["scene"] = scene
+	pending_spawn_data["spawn_id"] = spawn_id
+
+func consume_pending_spawn_id() -> String:
+	var id = pending_spawn_data["spawn_id"]
+	pending_spawn_data["spawn_id"] = ""
+	return id
 
 # Full game reset.
 func reset_game_state():
