@@ -1,6 +1,6 @@
 extends Node
 
-# Health signals,
+# Health signals.
 signal health_changed(new_health)
 signal max_health_changed(new_max_health)
 
@@ -11,8 +11,10 @@ signal score_reset()
 # Weapon signals.
 signal weapon_changed(new_weapon)
 
+# A list for unlocked weapons.
 var unlocked_weapons: Array[String] = []
 
+# A dictionary for pending spawn data.
 var pending_spawn_data := {
 	"scene": "",
 	"spawn_id": ""
@@ -45,9 +47,6 @@ var current_weapon := "":
 		current_weapon = value
 		emit_signal("weapon_changed", current_weapon)
 
-# Saves player position on save.
-var pending_player_position: Vector2 = Vector2.INF
-
 # Health methods.
 func decrease_health(amount: int) -> void:
 	current_health -= amount
@@ -58,18 +57,24 @@ func increase_health(amount: int) -> void:
 func reset_health() -> void:
 	current_health = max_health
 
+# Saves player position on save.
+var pending_player_position: Vector2 = Vector2.INF
+
 # Score methods.
 func increment_score(amount: int) -> void:
 	score += amount
 
+# Resets score.
 func reset_score() -> void:
 	score = 0
 	emit_signal("score_reset")
 
+# Sets pending spawn data.
 func set_pending_spawn(scene: String, spawn_id: String) -> void:
 	pending_spawn_data["scene"] = scene
 	pending_spawn_data["spawn_id"] = spawn_id
 
+# Consumes pending spawn id.
 func consume_pending_spawn_id() -> String:
 	var id = pending_spawn_data["spawn_id"]
 	pending_spawn_data["spawn_id"] = ""

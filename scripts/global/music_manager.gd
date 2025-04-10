@@ -15,7 +15,6 @@ var is_dimmed: bool = false
 var is_paused: bool = false
 
 func _ready():
-	# Set the process mode to always process
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 # Plays music with a specified volume.
@@ -33,7 +32,7 @@ func play_music(music: AudioStream, volume_db: float = DEFAULT_VOLUME_DB):
 	
 	music_player = AudioStreamPlayer.new()
 	music_player.stream = current_music
-	music_player.volume_db = volume_db  # Set the volume
+	music_player.volume_db = volume_db
 	add_child(music_player)
 	music_player.play()
 
