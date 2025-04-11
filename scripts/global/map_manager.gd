@@ -13,10 +13,10 @@ signal minimap_ready
 func generate_map_from_tilemap_layer(layer: TileMapLayer):
 	var used_rect = layer.get_used_rect()
 	# Define padding around the map.
-	var padding = 16
-	# Adjust the position and size of the used rectangle to include padding.
-	used_rect.position -= Vector2i(padding, padding)
-	used_rect.size += Vector2i(padding * 2, padding * 2)
+	# var padding = 16
+	# # Adjust the position and size of the used rectangle to include padding.
+	# used_rect.position -= Vector2i(padding, padding)
+	# used_rect.size += Vector2i(padding * 2, padding * 2)
 
 	# Store the position of the used rectangle as the map origin.
 	map_origin = used_rect.position

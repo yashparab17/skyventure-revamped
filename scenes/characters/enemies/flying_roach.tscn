@@ -92,7 +92,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ma4d0"]
-height = 24.0
+radius = 11.0
+height = 28.0
 
 [node name="Flying Roach" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
