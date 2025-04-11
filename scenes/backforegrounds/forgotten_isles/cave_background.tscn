@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ti01f6us1ym3"]
+
+[ext_resource type="Texture2D" uid="uid://fyvlcugp5yoo" path="res://assets/backforegrounds/forgotten_isles/cave/layer_0.png" id="1_oyglg"]
+
+[node name="CaveBackground" type="ParallaxBackground"]
+
+[node name="Layer 0" type="TextureRect" parent="."]
+offset_right = 512.0
+offset_bottom = 256.0
+texture = ExtResource("1_oyglg")
+stretch_mode = 1

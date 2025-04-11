@@ -1,61 +1,96 @@
-[gd_scene load_steps=4 format=3 uid="uid://dwbtm6p4a8ye"]
+[gd_scene load_steps=8 format=4 uid="uid://dwbtm6p4a8ye"]
 
 [ext_resource type="Script" uid="uid://bi2ohkygaft86" path="res://scripts/screens/main_menu.gd" id="1_sjck8"]
 [ext_resource type="Theme" uid="uid://beyey7lcgi7mq" path="res://assets/themes/default.tres" id="2_nee2d"]
 [ext_resource type="Texture2D" uid="uid://i0m4fo3w8jc4" path="res://assets/textures/screens/main_menu/title.png" id="3_j84ir"]
+[ext_resource type="TileSet" uid="uid://bmy57cy4gyepg" path="res://scenes/areas/forgotten_isles/forgotten_isles.tres" id="4_5weqt"]
+[ext_resource type="PackedScene" uid="uid://bdlrbfiidkw6r" path="res://scenes/backforegrounds/forgotten_isles/sky_background.tscn" id="4_kr80i"]
+[ext_resource type="PackedScene" uid="uid://byuo6h23p4gkf" path="res://scenes/backforegrounds/forgotten_isles/sky_foreground.tscn" id="5_e21yp"]
+[ext_resource type="Texture2D" uid="uid://c8xkk7pjpcho3" path="res://assets/sprites/characters/player/player.png" id="7_e21yp"]
 
 [node name="MainMenu" type="CanvasLayer" groups=["unpausable"]]
 script = ExtResource("1_sjck8")
 
-[node name="MainMargin" type="MarginContainer" parent="."]
+[node name="Control" type="Node2D" parent="."]
+
+[node name="MainMargin" type="MarginContainer" parent="Control"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 16.0
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_nee2d")
 
-[node name="Title" type="TextureRect" parent="."]
+[node name="Title" type="TextureRect" parent="Control"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -88.0
-offset_top = -88.0
-offset_right = 88.0
-offset_bottom = -40.0
+offset_left = 152.0
+offset_top = 32.0
+offset_right = 328.0
+offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_j84ir")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
 offset_left = 192.0
 offset_top = 104.0
-offset_right = 286.0
-offset_bottom = 191.0
+offset_right = 290.0
+offset_bottom = 209.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("2_nee2d")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="NewAdventureButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="NewAdventureButton" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "New Adventure"
 
-[node name="ContinueButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ContinueButton" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Continue"
 
-[node name="QuitButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
 
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/NewAdventureButton" to="." method="_on_new_adventure_button_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[node name="Decorative" type="Node2D" parent="."]
+
+[node name="Layers" type="Node2D" parent="Decorative"]
+
+[node name="SkyBackground" parent="Decorative/Layers" instance=ExtResource("4_kr80i")]
+
+[node name="SkyForeground" parent="Decorative/Layers" instance=ExtResource("5_e21yp")]
+
+[node name="Tiles" type="Node2D" parent="Decorative"]
+
+[node name="Collidable" type="TileMapLayer" parent="Decorative/Tiles"]
+z_index = 1
+tile_map_data = PackedByteArray("AAAAAA0AAAABAAEAAAAAAA4AAAABAAIAAAABAA0AAAACAAEAAAABAA4AAAACAAIAAAACAA0AAAABAAEAAAACAA4AAAABAAIAAAADAA0AAAAEAAAAAAADAA4AAAACAAIAAAAEAA0AAAAFAAAAAAAEAA4AAAABAAIAAAAFAA0AAAAFAAAAAAAFAA4AAAACAAIAAAAGAA0AAAAEAAAAAAAGAA4AAAABAAIAAAAHAA0AAAACAAUAAAAHAA4AAAAGAAAAAAAAAAsAAAAEAAcAAAABAAsAAAAFAAcAAAACAAwAAAAGAAEAAAAIAA0AAAAEAAIAAAAJAA0AAAAFAAIAAAAAAAwAAAABAAIAAAABAAwAAAACAAIAAAA=")
+tile_set = ExtResource("4_5weqt")
+
+[node name="Dressing" type="TileMapLayer" parent="Decorative/Tiles"]
+z_index = 1
+tile_map_data = PackedByteArray("AAAEAAwAAAABAAAAAAAFAAwAAAACAAAAAAAGAAwAAAABAAQAAAAHAAwAAAACAAQAAAAIAAwAAAABAAAAAAAJAAwAAAACAAAAAAAAAAoAAAAEAAYAAAA=")
+tile_set = ExtResource("4_5weqt")
+
+[node name="Player" type="Sprite2D" parent="Decorative"]
+position = Vector2(104, 201)
+texture = ExtResource("7_e21yp")
+hframes = 8
+vframes = 17
+frame = 104
+
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/NewAdventureButton" to="." method="_on_new_adventure_button_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

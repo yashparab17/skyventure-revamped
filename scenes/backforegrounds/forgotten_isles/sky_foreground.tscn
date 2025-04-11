@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://dlxkfpvcgd2tq" path="res://assets/backforegrounds/forgotten_isles/sky/layer_5.png" id="1_fpb1x"]
 
-[node name="Sky Foreground" type="ParallaxBackground"]
-layer = 1
+[node name="SkyForeground" type="ParallaxBackground"]
+layer = 10
 
 [node name="Layer 5" type="ParallaxLayer" parent="."]
 

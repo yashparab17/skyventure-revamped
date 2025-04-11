@@ -1,7 +1,8 @@
 extends Node2D
 
-# Preloading music.
-@onready var area_music = preload("res://assets/music/forgotten_isles.mp3")
+@onready var map_player = $Player
+@onready var collidable = $Tiles/Collidable
+@onready var hud = $HUD
 
 # Called when the area loads in.
 func _ready() -> void:
@@ -10,7 +11,7 @@ func _ready() -> void:
 	SpawnManager.set_player(player)
 	SpawnManager.spawn_player()
 	print("Player spawned!")
-
-	# Plays the appropriate music.
-	if not MusicManager.is_playing() or not MusicManager.is_current_music(area_music):
-		MusicManager.play_music(area_music)
+	
+	# Generate map.
+	MapManager.generate_map_from_tilemap_layer(collidable)
+	hud.emit_signal("minimap_setup_requested", map_player, collidable)

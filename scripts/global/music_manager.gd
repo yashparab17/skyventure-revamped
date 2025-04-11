@@ -73,3 +73,9 @@ func stop_music():
 		music_player.stop()
 		music_player.queue_free()
 		music_player = null
+
+func is_playing() -> bool:
+	return music_player != null and music_player.playing
+
+func is_current_music(music: AudioStream) -> bool:
+	return current_music == music

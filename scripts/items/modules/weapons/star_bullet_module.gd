@@ -73,4 +73,6 @@ func pickup_module() -> void:
 		item_pickup_instance.global_position = global_position
 		get_parent().add_child(item_pickup_instance)
 		
+		GameState.increment_score(100)
+		
 		queue_free()

@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://i6pk4xs60x8d" path="res://assets/backforegrounds/forgotten_isles/sky/layer_3.png" id="4_ujfru"]
 [ext_resource type="Texture2D" uid="uid://bfotedioctiy5" path="res://assets/backforegrounds/forgotten_isles/sky/layer_4.png" id="5_6xrpv"]
 
-[node name="Sky Background" type="ParallaxBackground"]
+[node name="SkyBackground" type="ParallaxBackground"]
 
 [node name="Layer 0" type="TextureRect" parent="."]
 offset_right = 480.0

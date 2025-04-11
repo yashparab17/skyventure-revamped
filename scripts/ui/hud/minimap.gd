@@ -20,20 +20,20 @@ func _ready():
 		_on_minimap_ready()
 
 func _on_minimap_ready():
-	# Check if the player and tilemap layer have been assigned.
+	# If tilemap/player not ready, wait and try again safely
 	if not player or not tilemap_layer:
-		# Wait until they're assigned, then try again next frame.
 		await get_tree().process_frame
-		_on_minimap_ready()
-		return
+		if not is_instance_valid(self): return
+		if not player or not tilemap_layer: return
+		# Don't recurse, just continue below when ready
 
-	# Set the texture of the minimap display.
 	display_rect.texture = MapManager.current_minimap_texture
 	print("Minimap texture set.")
 	print("Minimap assigned tilemap:", tilemap_layer)
 	print("Minimap assigned player:", player)
 
 	_update_offset()
+
 
 # Update the offset of the minimap every frame to follow the player.
 func _process(_delta):
@@ -57,7 +57,13 @@ func _update_offset():
 	# If display smaller than control, just center it
 	if display_size.x <= size.x and display_size.y <= size.y:
 		display_rect.position = (size - display_size) / 2
-		player_indicator.position = (Vector2(tile_pos - MapManager.map_origin)) * display_rect.scalereturn
+		var scale_factor = display_rect.size / display_size
+		player_indicator.position = (Vector2(tile_pos - MapManager.map_origin)) * scale_factor
+	else:
+		map_offset.x = clamp(map_offset.x, 0, display_size.x - size.x)
+		map_offset.y = clamp(map_offset.y, 0, display_size.y - size.y)
+		player_indicator.position = (Vector2(tile_pos - MapManager.map_origin)) - map_offset - player_indicator.size / 2.0
+		display_rect.position = -map_offset
 	
 	map_offset.x = clamp(map_offset.x, 0, display_size.x - size.x)
 	map_offset.y = clamp(map_offset.y, 0, display_size.y - size.y)
