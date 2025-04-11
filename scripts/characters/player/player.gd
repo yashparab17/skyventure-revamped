@@ -34,6 +34,9 @@ var has_saved_safe_pos := false
 var coyote_time: float = 0.1
 var coyote_timer: float = 0.0
 
+# Checks if player can move.
+var can_move: bool = true
+
 ################################################################################
 # NODE REFERENCES
 ################################################################################
@@ -107,7 +110,7 @@ func _ready() -> void:
 		GameState.pending_player_position = Vector2.INF
 
 func _physics_process(delta: float) -> void:
-	if current_state == States.HURT:
+	if not can_move or current_state == States.HURT:
 		return # Skip processing if the player is hurt
 
 	# Update last safe position if on ground, and check coyote timing
@@ -140,6 +143,12 @@ func _physics_process(delta: float) -> void:
 ################################################################################
 # MOVEMENT FUNCTIONS
 ################################################################################
+
+func enable_movement() -> void:
+	can_move = true
+	if anim:
+		anim.play()  # Resume animations
+	current_state = States.IDLE  # Reset to idle state
 
 func apply_gravity(delta: float) -> void:
 	if !is_on_floor():

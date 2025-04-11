@@ -28,10 +28,27 @@ func _process(delta: float) -> void:
 	if player_in_area and not has_transitioned:
 		# Transition if the player is in the interact state.
 		if player_ref and player_ref.current_state == player_ref.States.INTERACT:
+			# Lock player in interact state.
+			lock_player()
 			transition()
+
+func lock_player() -> void:
+	player_ref.can_move = false
+	player_ref.velocity = Vector2.ZERO
+	player_ref.anim.stop()
+	player_ref.current_state = player_ref.States.INTERACT
 
 # Transitions to the target scene.
 func transition() -> void:
 	has_transitioned = true
+	
+	# Freeze player animation
+	if player_ref:
+		player_ref.anim.stop()
+	
 	GameState.set_pending_spawn(target_scene, target_spawn_id)
 	GameManager.transition_to_scene(target_scene)
+
+func _on_scene_transition_completed() -> void:
+	if player_ref:
+		player_ref.enable_movement()

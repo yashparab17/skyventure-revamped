@@ -10,6 +10,9 @@ var module_pickup_cutscene = preload("res://scenes/ui/cutscenes/module_pickup_cu
 # Area variables.
 var start_point = preload("res://scenes/areas/forgotten_isles/start_point.tscn")
 
+signal scene_transition_started
+signal scene_transition_completed
+
 # Sets the processing mode to always
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -71,5 +74,6 @@ func quit_game() -> void:
 
 # For scene transitions.
 func transition_to_scene(scene_path) -> void:
+	emit_signal("scene_transition_started")
 	await get_tree().create_timer(0.5).timeout
 	get_tree().change_scene_to_file(scene_path)
