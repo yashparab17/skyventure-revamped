@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SaveGame" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/save_game.gd" id="1_lhbgx"]
+
+[resource]
+script = ExtResource("1_lhbgx")
+scene_path = "res://scenes/areas/forgotten_isles/start_point.tscn"
+player_position = Vector2(391.08, 127.925)
+player_health = 3
+score = 0
+unlocked_weapons = PackedStringArray()
+current_weapon = ""

@@ -9,17 +9,23 @@ signal minimap_setup_requested(player: Node2D, tilemap_layer: TileMapLayer)
 @onready var minimap_background = $MinimapBackground
 
 func _ready():
-	# Connect to GameState signals.
+	# Connect to GameState signals
 	GameState.health_changed.connect(_on_health_changed)
+	GameState.max_health_changed.connect(health_display.update_max_health)
 	GameState.score_changed.connect(_on_score_changed)
 	GameState.weapon_changed.connect(_on_weapon_changed)
 	
-	# Initialize with current values.
+	# Initialize with current values
 	_on_health_changed(GameState.current_health)
 	_on_score_changed(GameState.score)
-	_on_weapon_changed(GameState.current_weapon)
+	_on_weapon_changed(GameState.current_weapon_name)
 	
-	# Show or hide minimap according to the current scene's group.
+	# Handle minimap visibility
+	update_minimap_visibility()
+	
+	self.minimap_setup_requested.connect(_on_minimap_setup_requested)
+
+func update_minimap_visibility():
 	var current_scene = get_tree().current_scene
 	if current_scene.is_in_group("outside"):
 		minimap.show()
@@ -27,8 +33,6 @@ func _ready():
 	else:
 		minimap.hide()
 		minimap_background.hide()
-	
-	self.minimap_setup_requested.connect(_on_minimap_setup_requested)
 
 func _on_health_changed(new_health: int):
 	health_display.update_health(new_health)
@@ -37,7 +41,8 @@ func _on_score_changed(new_score: int):
 	score_display.update_score(new_score)
 
 func _on_weapon_changed(new_weapon: String):
-	weapon_display.update_weapon(new_weapon)
+	if new_weapon != "":
+		weapon_display.update_weapon(new_weapon)
 
 func _on_minimap_setup_requested(player: Node2D, tilemap_layer: TileMapLayer):
 	minimap.player = player

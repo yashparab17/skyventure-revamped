@@ -1,8 +1,13 @@
 extends Node
 
+################################################################################
+# SIGNALS
+################################################################################
+
 # Health signals.
 signal health_changed(new_health)
 signal max_health_changed(new_max_health)
+signal player_died
 
 # Score signals.
 signal score_changed(new_score)
@@ -10,44 +15,88 @@ signal score_reset()
 
 # Weapon signals.
 signal weapon_changed(new_weapon)
+signal weapon_unlocked(weapon_name)
 
-# A list for unlocked weapons.
-var unlocked_weapons: Array[String] = []
+# Player signals.
+signal player_position_updated(new_position)
 
-# A dictionary for pending spawn data.
+################################################################################
+# CONSTANTS
+################################################################################
+
+const DEFAULT_MAX_HEALTH := 3
+const DEFAULT_SCORE := 0
+
+################################################################################
+# PROPERTIES
+################################################################################
+
+# Health properties.
+var max_health := DEFAULT_MAX_HEALTH:
+	set(value):
+		max_health = max(1, value)
+		emit_signal("max_health_changed", max_health)
+		# Ensure current health doesn't exceed new max
+		if current_health > max_health:
+			current_health = max_health
+			emit_signal("health_changed", current_health)
+
+var current_health := DEFAULT_MAX_HEALTH:
+	set(value):
+		var new_value = clamp(value, 0, max_health)
+		if new_value != current_health:
+			current_health = new_value
+			emit_signal("health_changed", current_health)
+			if current_health <= 0:
+				emit_signal("player_died")
+
+# Score property.
+var score := DEFAULT_SCORE:
+	set(value):
+		score = max(0, value)
+		emit_signal("score_changed", score)
+
+# Player position.
+var pending_player_position: Vector2 = Vector2.INF:
+	set(value):
+		pending_player_position = value
+		if value != Vector2.INF:
+			emit_signal("player_position_updated", value)
+
+# Weapon system.
+var weapons: Array[Weapon] = [
+	Weapon.new("Star Bullet", preload("res://scenes/projectiles/star_bullet.tscn"), 0.3),
+	Weapon.new("Fireball", preload("res://scenes/projectiles/fireball.tscn"), 0.8)
+]
+
+var current_weapon_index: int = -1:
+	set(value):
+		if value >= -1 and value < weapons.size() and (value == -1 or weapons[value].unlocked):
+			current_weapon_index = value
+			if current_weapon_index != -1:
+				current_weapon_name = weapons[current_weapon_index].name
+			else:
+				current_weapon_name = ""
+
+var current_weapon_name := "":
+	set(value):
+		if value != current_weapon_name:
+			current_weapon_name = value
+			emit_signal("weapon_changed", current_weapon_name)
+
+# Spawn system.
 var pending_spawn_data := {
 	"scene": "",
 	"spawn_id": ""
 }
 
-# Health properties.
-var max_health := 3:
-	set(value):
-		max_health = value
-		emit_signal("max_health_changed", max_health)
-		# Ensure current health doesn't exceed new max.
-		if current_health > max_health:
-			current_health = max_health
-			emit_signal("health_changed", current_health)
+# Save system.
+var pending_save_data: Dictionary = {}
 
-var current_health := 3:
-	set(value):
-		current_health = clamp(value, 0, max_health)
-		emit_signal("health_changed", current_health)
+################################################################################
+# PUBLIC METHODS - HEALTH
+################################################################################
 
-# Score property.
-var score := 0:
-	set(value):
-		score = max(0, value)
-		emit_signal("score_changed", score)
-
-# Weapon property.
-var current_weapon := "":
-	set(value):
-		current_weapon = value
-		emit_signal("weapon_changed", current_weapon)
-
-# Health methods.
 func decrease_health(amount: int) -> void:
 	current_health -= amount
 
@@ -57,31 +106,103 @@ func increase_health(amount: int) -> void:
 func reset_health() -> void:
 	current_health = max_health
 
-# Saves player position on save.
-var pending_player_position: Vector2 = Vector2.INF
+func increase_max_health(amount: int) -> void:
+	max_health += amount
 
-# Score methods.
+################################################################################
+# PUBLIC METHODS - SCORE
+################################################################################
+
 func increment_score(amount: int) -> void:
 	score += amount
 
-# Resets score.
 func reset_score() -> void:
-	score = 0
+	score = DEFAULT_SCORE
 	emit_signal("score_reset")
 
-# Sets pending spawn data.
+################################################################################
+# PUBLIC METHODS - WEAPONS
+################################################################################
+
+func unlock_weapon(weapon_name: String) -> bool:
+	for i in weapons.size():
+		if weapons[i].name == weapon_name:
+			if not weapons[i].unlocked:
+				weapons[i].unlocked = true
+				emit_signal("weapon_unlocked", weapon_name)
+				
+				# Auto-equip first unlocked weapon
+				if current_weapon_index == -1:
+					switch_weapon(i)
+				return true
+			return false
+	return false
+
+func switch_weapon(index: int) -> void:
+	current_weapon_index = index
+
+func switch_to_next_weapon() -> void:
+	if current_weapon_index == -1: return
+	
+	for i in range(1, weapons.size()):
+		var next_index = (current_weapon_index + i) % weapons.size()
+		if weapons[next_index].unlocked:
+			switch_weapon(next_index)
+			break
+
+func switch_to_previous_weapon() -> void:
+	if current_weapon_index == -1: return
+	
+	for i in range(1, weapons.size()):
+		var prev_index = (current_weapon_index - i + weapons.size()) % weapons.size()
+		if weapons[prev_index].unlocked:
+			switch_weapon(prev_index)
+			break
+
+func has_weapon(name: String) -> bool:
+	for weapon in weapons:
+		if weapon.name.to_lower() == name.to_lower() and weapon.unlocked:
+			return true
+	return false
+
+func get_current_weapon() -> Weapon:
+	if current_weapon_index >= 0 and current_weapon_index < weapons.size():
+		return weapons[current_weapon_index]
+	return null
+
+func get_unlocked_weapon_names() -> PackedStringArray:
+	var unlocked_names = PackedStringArray()
+	for weapon in weapons:
+		if weapon.unlocked:
+			unlocked_names.append(weapon.name)
+	return unlocked_names
+
+################################################################################
+# PUBLIC METHODS - SPAWN SYSTEM
+################################################################################
+
 func set_pending_spawn(scene: String, spawn_id: String) -> void:
 	pending_spawn_data["scene"] = scene
 	pending_spawn_data["spawn_id"] = spawn_id
 
-# Consumes pending spawn id.
 func consume_pending_spawn_id() -> String:
 	var id = pending_spawn_data["spawn_id"]
 	pending_spawn_data["spawn_id"] = ""
 	return id
 
-# Full game reset.
-func reset_game_state():
+################################################################################
+# PUBLIC METHODS - GAME STATE
+################################################################################
+
+func reset_game_state() -> void:
 	reset_health()
 	reset_score()
-	current_weapon = ""
+	current_weapon_index = -1
+	
+	# Reset weapon unlocks but keep the definitions
+	for weapon in weapons:
+		weapon.unlocked = false
+	
+	# Clear pending position and save
+	pending_player_position = Vector2.INF
+	pending_save_data = {}

@@ -1,7 +1,7 @@
 extends AnimatedSprite2D
 
 # The type of module.
-@export var module_type: String = "star_bullet"
+@export var module_type: String = "Star Bullet"
 
 # Item pickup effect.
 @onready var item_pickup = preload("res://scenes/effects/item_pickup.tscn")
@@ -59,7 +59,8 @@ func pickup_module() -> void:
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		await get_tree().create_timer(0.2)
-		player.collect_module(module_type)
+		GameState.unlock_weapon(module_type)
+		GameState.increment_score(100)
 		snd_pickup.play()
 		visible = false
 		
@@ -72,7 +73,5 @@ func pickup_module() -> void:
 		var item_pickup_instance = item_pickup.instantiate() as Node2D
 		item_pickup_instance.global_position = global_position
 		get_parent().add_child(item_pickup_instance)
-		
-		GameState.increment_score(100)
 		
 		queue_free()
