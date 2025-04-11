@@ -4,7 +4,10 @@
 
 [node name="CaveBackground" type="ParallaxBackground"]
 
-[node name="Layer 0" type="TextureRect" parent="."]
+[node name="Layer 0" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.1, 1.1)
+
+[node name="Texture" type="TextureRect" parent="Layer 0"]
 offset_right = 512.0
 offset_bottom = 256.0
 texture = ExtResource("1_oyglg")

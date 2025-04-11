@@ -226,8 +226,11 @@ func _on_attack_area_body_entered(body: Node2D) -> void:
 		await anim.animation_finished # Wait for animation to finish.
 		can_walk = true # Resume movement after attack.
 
-# Handles enemy taking damage when hit by a bullet.
+# Handles enemy taking damage when hit by a bullet and pitfalls.
 func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("pitfall"):
+		die()
+	
 	if area.get_parent().has_method("get_damage_amount"):
 		var bullet = area.get_parent() as Node
 		var bullet_damage = bullet.damage_amount
