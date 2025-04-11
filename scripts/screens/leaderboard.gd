@@ -2,12 +2,14 @@ extends CanvasLayer
 
 # Node references.
 @onready var container: VBoxContainer = $ScrollContainer/VBoxContainer
+@onready var leaderboard_label: Label = $LeaderboardLabel
 @onready var loading_label: Label = $LoadingLabel
 @onready var error_label: Label = $ErrorLabel
 @onready var retry_button: Button = $RetryButton
 
 func _ready():
 	refresh_leaderboard()
+	leaderboard_label.hide()
 	retry_button.hide()
 	retry_button.pressed.connect(_on_retry_button_pressed)
 
@@ -28,6 +30,7 @@ func clear_scores():
 
 # Displays the given scores in the leaderboard.
 func display_scores(scores: Array):
+	leaderboard_label.show()
 	clear_scores()
 	
 	if scores.is_empty():

@@ -40,6 +40,19 @@ horizontal_scroll_mode = 0
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
 
+[node name="LeaderboardLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -33.0
+offset_top = 8.0
+offset_right = 33.0
+offset_bottom = 21.0
+grow_horizontal = 2
+text = "Leaderboard"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="LoadingLabel" type="Label" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
