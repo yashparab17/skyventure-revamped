@@ -3,6 +3,8 @@ extends Node
 # Reference for the player.
 var player: Node = null
 
+signal player_spawned
+
 # Sets player in the manager.
 func set_player(p: Node):
 	player = p
@@ -11,17 +13,21 @@ func set_player(p: Node):
 func spawn_player():
 	# Get spawn ID.
 	var spawn_id = GameState.consume_pending_spawn_id()
-	
-	# Check if spawn id or player exists. If they don't, then return.
-	if spawn_id == "" or player == null:
-		return
-	
-	# Find spawn point.
 	var spawn_point = find_spawn_point_by_id(spawn_id)
+
+	if player == null:
+		return
+
+	if spawn_id == "":
+		emit_signal("player_spawned")
+		return
+
 
 	# Spawn player.
 	if spawn_point:
 		player.global_position = spawn_point.global_position
+		print("Emitting player_spawned signal...")
+		emit_signal("player_spawned")
 	else:
 		print("SpawnManager: Could not find spawn point with ID: ", spawn_id)
 

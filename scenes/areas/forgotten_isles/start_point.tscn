@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="1_3mosh"]
 [ext_resource type="Script" uid="uid://dsvv3sj1dieeb" path="res://scripts/areas/forgotten_isles/start_point.gd" id="1_7k6ii"]
 [ext_resource type="PackedScene" uid="uid://b88cbbyujj8pj" path="res://scenes/ui/hud/hud.tscn" id="2_luboo"]
-[ext_resource type="Script" uid="uid://cn8qy83ltl6nl" path="res://scripts/repeated/inside_camera.gd" id="3_3nrx7"]
 [ext_resource type="TileSet" uid="uid://bmy57cy4gyepg" path="res://scenes/areas/forgotten_isles/forgotten_isles.tres" id="3_40k1d"]
+[ext_resource type="Script" uid="uid://ck4fbcbt0pf1q" path="res://scripts/repeated/camera_controller.gd" id="3_e1ao7"]
 [ext_resource type="PackedScene" uid="uid://ti01f6us1ym3" path="res://scenes/backforegrounds/forgotten_isles/cave_background.tscn" id="5_e1ao7"]
 [ext_resource type="PackedScene" uid="uid://cwu7ohwsb7xhb" path="res://scenes/objects/stations/save_station.tscn" id="5_o56vm"]
 [ext_resource type="PackedScene" uid="uid://8npv4letncp" path="res://scenes/objects/stations/health_station.tscn" id="7_jsrig"]
@@ -27,13 +27,16 @@ position = Vector2(240, 160)
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(240, 120)
 scale = Vector2(13.1888, -30.8696)
-position_smoothing_enabled = true
+limit_left = 0
+limit_top = -128
+limit_right = 480
+limit_bottom = 240
 position_smoothing_speed = 2.0
 drag_left_margin = 0.1
 drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
-script = ExtResource("3_3nrx7")
+script = ExtResource("3_e1ao7")
 
 [node name="HUD" parent="." instance=ExtResource("2_luboo")]
 
@@ -80,7 +83,7 @@ text = "Press Z or Space to Jump"
 [node name="Transitions" type="Node2D" parent="."]
 
 [node name="FromUnderIslands" parent="Transitions" instance=ExtResource("11_7fati")]
-position = Vector2(248, 40)
+position = Vector2(248, 48)
 spawn_id = "from_under_islands"
 
 [node name="Door" parent="Transitions" instance=ExtResource("12_07oaq")]
