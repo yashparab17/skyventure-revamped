@@ -20,12 +20,11 @@ func _ready():
 		_on_minimap_ready()
 
 func _on_minimap_ready():
-	# If tilemap/player not ready, wait and try again safely
+	# If tilemap/player not ready, wait and try again safely.
 	if not player or not tilemap_layer:
 		await get_tree().process_frame
 		if not is_instance_valid(self): return
 		if not player or not tilemap_layer: return
-		# Don't recurse, just continue below when ready
 
 	display_rect.texture = MapManager.current_minimap_texture
 	print("Minimap texture set.")
@@ -44,32 +43,26 @@ func _update_offset():
 	if not player or not tilemap_layer:
 		return
 
-	# Calculate the position of the player relative to the map origin.
-	var tile_pos = tilemap_layer.local_to_map(player.global_position)
+	# Calculate the position of the player and tilemap relative to the map origin.
+	var player_pos = tilemap_layer.to_local(player.global_position)
+	var tile_pos = tilemap_layer.local_to_map(
+		tilemap_layer.to_local(player.global_position)
+	)
 	var relative_pos = Vector2(tile_pos - MapManager.map_origin)
 
 	# Calculate the offset of the minimap.
-	map_offset = relative_pos - size / 2.0
-
-	# Clamp the offset to the texture size.
 	var display_size = MapManager.current_minimap_texture.get_size()
-	
-	# If display smaller than control, just center it
-	if display_size.x <= size.x and display_size.y <= size.y:
-		display_rect.position = (size - display_size) / 2
-		var scale_factor = display_rect.size / display_size
-		player_indicator.position = (Vector2(tile_pos - MapManager.map_origin)) * scale_factor
-	else:
-		map_offset.x = clamp(map_offset.x, 0, display_size.x - size.x)
-		map_offset.y = clamp(map_offset.y, 0, display_size.y - size.y)
-		player_indicator.position = (Vector2(tile_pos - MapManager.map_origin)) - map_offset - player_indicator.size / 2.0
-		display_rect.position = -map_offset
-	
+	map_offset = relative_pos - size / 2.0
 	map_offset.x = clamp(map_offset.x, 0, display_size.x - size.x)
 	map_offset.y = clamp(map_offset.y, 0, display_size.y - size.y)
 
-	# Set the position of the player indicator.
-	player_indicator.position = (Vector2(tile_pos - MapManager.map_origin)) - map_offset - player_indicator.size / 2.0
+	# Set the texture.
+	display_rect.texture = MapManager.current_minimap_texture
 
-	# Set the position of the minimap display.
-	display_rect.position = - map_offset
+	if display_size.x <= size.x and display_size.y <= size.y:
+		display_rect.position = (size - display_size) / 2
+		var scale_factor = display_rect.size / display_size
+		player_indicator.position = relative_pos * scale_factor
+	else:
+		display_rect.position = -map_offset
+		player_indicator.position = relative_pos - map_offset - player_indicator.size / 2.0

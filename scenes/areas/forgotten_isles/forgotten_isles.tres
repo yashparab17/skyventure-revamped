@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bmy57cy4gyepg"]
 
-[ext_resource type="Texture2D" uid="uid://c8pcg8wyh6xy1" path="res://assets/tilesets/forgotten_isles/ground_blocks.png" id="1_48eed"]
+[ext_resource type="Texture2D" uid="uid://c8pcg8wyh6xy1" path="res://assets/tilesets/forgotten_isles/rugged_rocks.png" id="1_48eed"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7k6ii"]
 texture = ExtResource("1_48eed")
@@ -152,6 +152,15 @@ texture = ExtResource("1_48eed")
 7:11/0 = 0
 8:11/0 = 0
 9:11/0 = 0
+8:4/0 = 0
+8:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:4/0 = 0
+9:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:5/0 = 0
+8:5/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+8:7/0 = 0
 
 [resource]
 physics_layer_0/collision_layer = 1

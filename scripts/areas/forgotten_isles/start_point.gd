@@ -5,12 +5,12 @@ extends Node2D
 
 # Called when the area loads in.
 func _ready() -> void:
-	# Spawns the player accordingly at the correct position.
+	# Spawn the player accordingly at the correct position.
 	var player = get_node("Player")
 	SpawnManager.set_player(player)
 	SpawnManager.spawn_player()
 	print("Player spawned!")
 
-	# Plays the appropriate music.
+	# Play the appropriate music.
 	if not MusicManager.is_playing() or not MusicManager.is_current_music(area_music):
 		MusicManager.play_music(area_music)

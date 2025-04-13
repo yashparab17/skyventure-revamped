@@ -11,7 +11,7 @@ func _ready():
 	SpawnManager.connect("player_spawned", Callable(self, "_on_player_spawned"))
 
 	if not player:
-		push_warning("OutdoorCamera: Player node not found!")
+		push_warning("Camera: Player node not found!")
 
 func _on_player_spawned():
 	global_position = player.global_position

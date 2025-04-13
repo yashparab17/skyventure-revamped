@@ -4,6 +4,7 @@ extends Node2D
 @onready var map_player = $Player
 @onready var collidable = $Tiles/Collidable
 @onready var hud = $HUD
+@onready var star_bullet_module = $Objects/StarBulletModule
 
 # Preloading music.
 @onready var area_music = preload("res://assets/music/forgotten_isles.mp3")
@@ -20,6 +21,5 @@ func _ready() -> void:
 	if not MusicManager.is_playing() or not MusicManager.is_current_music(area_music):
 		MusicManager.play_music(area_music)
 	
-	# Generate map.
-	MapManager.generate_map_from_tilemap_layer(collidable)
-	hud.emit_signal("minimap_setup_requested", map_player, collidable)
+	if GameState.has_weapon("Star Bullet"):
+		star_bullet_module.queue_free()

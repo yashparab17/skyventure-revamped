@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8pcg8wyh6xy1"
-path="res://.godot/imported/ground_blocks.png-96b91f0f353133b83dddfbf6c068a7f0.ctex"
+path="res://.godot/imported/rugged_rocks.png-88b50965df975e8812782183fdd61128.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/forgotten_isles/ground_blocks.png"
-dest_files=["res://.godot/imported/ground_blocks.png-96b91f0f353133b83dddfbf6c068a7f0.ctex"]
+source_file="res://assets/tilesets/forgotten_isles/rugged_rocks.png"
+dest_files=["res://.godot/imported/rugged_rocks.png-88b50965df975e8812782183fdd61128.ctex"]
 
 [params]
 

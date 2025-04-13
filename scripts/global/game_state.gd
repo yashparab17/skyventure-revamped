@@ -65,7 +65,7 @@ var pending_player_position: Vector2 = Vector2.INF:
 
 # Weapon system.
 var weapons: Array[Weapon] = [
-	Weapon.new("Star Bullet", preload("res://scenes/projectiles/star_bullet.tscn"), 0.3),
+	Weapon.new("Star Bullet", preload("res://scenes/projectiles/star_bullet.tscn"), 0.25),
 	Weapon.new("Fireball", preload("res://scenes/projectiles/fireball.tscn"), 0.8)
 ]
 

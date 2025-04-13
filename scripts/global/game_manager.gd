@@ -20,7 +20,7 @@ func _ready() -> void:
 # Starts the game.
 func start_game() -> void:
 	transition_to_scene(start_point.resource_path)
-	GameState.reset_score()
+	GameState.reset_game_state()
 
 # Checks for pausing.
 func _input(event):
