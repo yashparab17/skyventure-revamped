@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-class_name CutsceneSystem
+class_name PausedCutsceneSystem
 
 signal ready_to_start_cutscene
 signal cutscene_finished
@@ -20,7 +20,6 @@ var current_page: int = 0
 var input_allowed: bool = false
 var pages: Array = []
 var end_callback: Callable = Callable()
-var player_ref: Node2D = null
 
 func _ready():
 	await get_tree().process_frame
@@ -43,13 +42,9 @@ func start_cutscene(cutscene_pages: Array, callback: Callable = Callable(), play
 	pages = cutscene_pages
 	end_callback = callback
 	current_page = 0
-	player_ref = player
-
-	# Lock the player if provided.
-	if player_ref:
-		player_ref.can_move = false
-		player_ref.velocity = Vector2.ZERO
-		player_ref.current_state = player_ref.States.IDLE
+	
+	# Pauses the game.
+	get_tree().paused = true
 	
 	# Show the UI and first page.
 	show()
@@ -122,10 +117,9 @@ func end_cutscene():
 
 	hide()
 
-	# Enable player movement if provided.
-	if player_ref:
-		player_ref.enable_movement()
-
+	# Unpause the game.
+	get_tree().paused = false
+	
 	if end_callback.is_valid():
 		end_callback.call()
 

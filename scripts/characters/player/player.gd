@@ -111,6 +111,8 @@ func _ready() -> void:
 		GameState.pending_player_position = Vector2.INF
 
 func _physics_process(delta: float) -> void:
+	apply_gravity(delta)
+
 	if not can_move or current_state == States.HURT:
 		return # Skip processing if the player is hurt.
 
@@ -128,7 +130,6 @@ func _physics_process(delta: float) -> void:
 		has_saved_safe_pos = false
 		coyote_timer -= delta
 
-	apply_gravity(delta)
 	update_timers(delta)
 
 	handle_movement_and_shooting(delta)

@@ -32,6 +32,8 @@ func save_game() -> void:
 			},
 		]
 
-	var cutscene = preload("res://scenes/ui/cutscenes/cutscene.tscn").instantiate()
+	var cutscene = preload("res://scenes/ui/cutscenes/paused_cutscene.tscn").instantiate()
 	get_tree().root.add_child(cutscene)
+	
+	await cutscene.ready_to_start_cutscene
 	cutscene.start_cutscene(cutscene_page)

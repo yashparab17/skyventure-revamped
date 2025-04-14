@@ -93,6 +93,9 @@ var pending_spawn_data := {
 # Save system.
 var pending_save_data: Dictionary = {}
 
+# Cutscene system.
+var triggered_cutscenes: Dictionary = {}
+
 ################################################################################
 # PUBLIC METHODS - HEALTH
 ################################################################################
@@ -191,6 +194,16 @@ func consume_pending_spawn_id() -> String:
 	return id
 
 ################################################################################
+# PUBLIC METHODS - CUTSCENE SYSTEM
+################################################################################
+
+func has_seen_cutscene(cutscene_id: String) -> bool:
+	return triggered_cutscenes.get(cutscene_id, false)
+
+func mark_cutscene_as_seen(cutscene_id: String) -> void:
+	triggered_cutscenes[cutscene_id] = true
+
+################################################################################
 # PUBLIC METHODS - GAME STATE
 ################################################################################
 
@@ -199,10 +212,13 @@ func reset_game_state() -> void:
 	reset_score()
 	current_weapon_index = -1
 	
-	# Reset weapon unlocks but keep the definitions
+	# Reset weapon unlocks but keep the definitions.
 	for weapon in weapons:
 		weapon.unlocked = false
 	
-	# Clear pending position and save
+	# Clear pending position and save.
 	pending_player_position = Vector2.INF
 	pending_save_data = {}
+
+	# Clear triggered cutscenes.
+	triggered_cutscenes.clear()

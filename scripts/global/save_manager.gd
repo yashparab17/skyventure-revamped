@@ -20,6 +20,7 @@ func save_game() -> void:
 	save_data.score = GameState.score
 	save_data.unlocked_weapons = GameState.get_unlocked_weapon_names()
 	save_data.current_weapon = GameState.current_weapon_name
+	save_data.triggered_cutscenes = GameState.triggered_cutscenes
 	
 	var error = ResourceSaver.save(save_data, SAVE_PATH)
 	if error != OK:
@@ -54,6 +55,9 @@ func load_game() -> bool:
 				if GameState.weapons[i].name == save_data.current_weapon:
 					GameState.switch_weapon(i)
 					break
+		
+		# Restore cutscene data.
+		GameState.triggered_cutscenes = save_data.triggered_cutscenes
 		
 		# Change scene.
 		await GameManager.transition_to_scene(save_data.scene_path, true)

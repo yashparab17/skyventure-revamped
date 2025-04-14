@@ -7,3 +7,4 @@ class_name SaveGame
 @export var score: int = 0
 @export var unlocked_weapons: PackedStringArray = []
 @export var current_weapon: String = ""
+@export var triggered_cutscenes: Dictionary = {}

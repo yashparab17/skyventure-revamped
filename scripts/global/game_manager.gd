@@ -5,6 +5,10 @@ var main_menu = preload("res://scenes/screens/main_menu.tscn")
 var pause_menu = preload("res://scenes/screens/pause_menu.tscn")
 var game_over = preload("res://scenes/screens/game_over.tscn")
 
+# UI variables.
+var cutscene = preload("res://scenes/ui/cutscenes/cutscene.tscn")
+var module_pickup_cutscene = preload("res://scenes/ui/cutscenes/module_pickup_cutscene.tscn")
+
 # Transition variables.
 var simple_transition = preload("res://scenes/screens/simple_transition.tscn")
 var fancy_transition = preload("res://scenes/screens/fancy_transition.tscn")
