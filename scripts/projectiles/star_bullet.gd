@@ -31,10 +31,10 @@ func get_damage_amount() -> int:
 	return damage_amount
 
 # Handles collision when the bullet hits an area or body.
-func _on_hitbox_area_entered(area: Area2D) -> void:
+func _on_hitbox_area_entered(_area: Area2D) -> void:
 	handle_collision()
 
-func _on_hitbox_body_entered(body: Node2D) -> void:
+func _on_hitbox_body_entered(_body: Node2D) -> void:
 	handle_collision()
 
 # Handles the bullet impact effect and deletes the bullet.

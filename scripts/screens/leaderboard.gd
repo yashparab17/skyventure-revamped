@@ -47,7 +47,7 @@ func display_scores(scores: Array):
 		container.add_child(label)
 
 # Handles the response from the score loading.
-func _on_scores_received(result, response_code, headers, body):
+func _on_scores_received(_result, response_code, _headers, body):
 	loading_label.hide()
 	
 	if response_code == 200:

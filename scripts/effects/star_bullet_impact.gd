@@ -3,7 +3,7 @@ extends AnimatedSprite2D
 # Node references.
 @onready var light: PointLight2D = $Light
 
-func _process(delta):
+func _process(_delta):
 	# Animates light according to the frame.
 	var current_frame = frame
 	match animation:

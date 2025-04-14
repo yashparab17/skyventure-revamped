@@ -3,7 +3,7 @@ extends AnimatedSprite2D
 # Node references.
 @onready var light: PointLight2D = $Light
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	animate_light()
 
 # Animates light according to the frame.

@@ -6,7 +6,7 @@ extends AnimatedSprite2D
 # Sound references.
 @onready var snd_block_destroy: AudioStreamPlayer2D = $Sounds/BlockDestroySound
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	animate_light()
 
 func _ready() -> void:
@@ -36,4 +36,3 @@ func animate_light() -> void:
 					light.energy = 0.25
 				7:
 					light.energy = 0.125
-				

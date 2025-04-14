@@ -6,7 +6,7 @@ extends AnimatedSprite2D
 # Sound references.
 @onready var snd_entity_death: AudioStreamPlayer2D = $Sounds/EntityDeath
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	animate_light()
 
 func _ready() -> void:
