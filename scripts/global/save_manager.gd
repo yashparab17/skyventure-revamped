@@ -56,11 +56,7 @@ func load_game() -> bool:
 					break
 		
 		# Change scene.
-		var error = get_tree().change_scene_to_file(save_data.scene_path)
-		if error != OK:
-			push_error("Failed to load scene: ", save_data.scene_path)
-			GameState.reset_game_state()
-			return false
+		await GameManager.transition_to_scene(save_data.scene_path, true)
 		
 		# Wait for scene to load and position player.
 		await get_tree().process_frame

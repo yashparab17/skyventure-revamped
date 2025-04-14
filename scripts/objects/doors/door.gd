@@ -47,7 +47,7 @@ func transition() -> void:
 		player_ref.anim.stop()
 	
 	GameState.set_pending_spawn(target_scene, target_spawn_id)
-	GameManager.transition_to_scene(target_scene)
+	GameManager.transition_to_scene(target_scene, true)
 
 func _on_scene_transition_completed() -> void:
 	if player_ref:
