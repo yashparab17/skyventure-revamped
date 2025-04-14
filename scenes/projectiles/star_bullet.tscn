@@ -45,7 +45,7 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_reqvq"]
 size = Vector2(20, 6)
 
-[node name="Star Bullet" type="AnimatedSprite2D"]
+[node name="Star Bullet" type="AnimatedSprite2D" groups=["destroying"]]
 sprite_frames = SubResource("SpriteFrames_05h55")
 animation = &"star_bullet"
 autoplay = "star_bullet"
@@ -60,7 +60,7 @@ autostart = true
 position = Vector2(7, 0)
 texture = SubResource("GradientTexture2D_mdghq")
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="." groups=["destroying"]]
 collision_layer = 2
 collision_mask = 5
 

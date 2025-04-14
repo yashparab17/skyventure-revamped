@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://beny66ev1crw2"]
+[gd_scene load_steps=11 format=4 uid="uid://beny66ev1crw2"]
 
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="1_x3brp"]
 [ext_resource type="Script" uid="uid://nyx6470i7seu" path="res://scripts/areas/forgotten_isles/under_islands.gd" id="1_ywan2"]
 [ext_resource type="Script" uid="uid://ck4fbcbt0pf1q" path="res://scripts/repeated/camera_controller.gd" id="2_m6w8v"]
 [ext_resource type="PackedScene" uid="uid://b88cbbyujj8pj" path="res://scenes/ui/hud/hud.tscn" id="3_m6w8v"]
 [ext_resource type="PackedScene" uid="uid://bdlrbfiidkw6r" path="res://scenes/backforegrounds/forgotten_isles/sky_background.tscn" id="4_ywan2"]
+[ext_resource type="PackedScene" uid="uid://bwkt2iimwrlu8" path="res://scenes/objects/blocks/star_block.tscn" id="5_ywan2"]
 [ext_resource type="TileSet" uid="uid://bmy57cy4gyepg" path="res://scenes/areas/forgotten_isles/forgotten_isles.tres" id="6_21tt4"]
 [ext_resource type="PackedScene" uid="uid://ddhhs61u2guwu" path="res://scenes/objects/doors/door.tscn" id="6_m6w8v"]
 [ext_resource type="PackedScene" uid="uid://15tbit6med7m" path="res://scenes/objects/doors/spawn_point.tscn" id="8_ywan2"]
@@ -36,6 +37,20 @@ drag_bottom_margin = 0.1
 script = ExtResource("2_m6w8v")
 
 [node name="HUD" parent="." instance=ExtResource("3_m6w8v")]
+
+[node name="Blocks" type="Node2D" parent="."]
+
+[node name="StarBlock1" parent="Blocks" instance=ExtResource("5_ywan2")]
+position = Vector2(552, -280)
+
+[node name="StarBlock2" parent="Blocks" instance=ExtResource("5_ywan2")]
+position = Vector2(552, -264)
+
+[node name="StarBlock3" parent="Blocks" instance=ExtResource("5_ywan2")]
+position = Vector2(552, -248)
+
+[node name="StarBlock4" parent="Blocks" instance=ExtResource("5_ywan2")]
+position = Vector2(552, -232)
 
 [node name="Layers" type="Node2D" parent="."]
 

@@ -12,6 +12,7 @@ var star_bullet_impact = preload("res://scenes/effects/star_bullet_impact.tscn")
 func _ready() -> void:
 	# Rotate the bullet to match its direction.
 	rotation = direction.angle()
+	add_to_group("destroying")
 
 func _physics_process(delta: float) -> void:
 	move_bullet(delta)

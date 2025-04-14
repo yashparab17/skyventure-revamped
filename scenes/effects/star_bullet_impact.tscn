@@ -63,7 +63,7 @@ height = 20
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Star Bullet Impact" type="AnimatedSprite2D"]
+[node name="StarBulletImpact" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_0qd1l")
 animation = &"impact"
 autoplay = "impact"

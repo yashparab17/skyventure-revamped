@@ -43,6 +43,7 @@ objects="Permanent objects."
 outside="Outside areas."
 pitfall="World boundary."
 spawn_points="Spawn points."
+destroying="Destroying projectiles."
 
 [gui]
 

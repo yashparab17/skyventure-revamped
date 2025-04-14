@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwkt2iimwrlu8"]
+
+[ext_resource type="Script" uid="uid://dduulyxps1h0j" path="res://scripts/objects/blocks/star_block.gd" id="1_3dom0"]
+[ext_resource type="Texture2D" uid="uid://ce783kkrrstl0" path="res://assets/sprites/objects/blocks/star_block.png" id="1_lc7oo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dom0"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e86nb"]
+size = Vector2(18, 18)
+
+[node name="StarBlock" type="StaticBody2D"]
+collision_mask = 6
+script = ExtResource("1_3dom0")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3dom0")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_lc7oo")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("RectangleShape2D_e86nb")
+debug_color = Color(1, 0.306115, 0.502954, 0.42)
+
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

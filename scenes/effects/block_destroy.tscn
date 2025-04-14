@@ -1,0 +1,103 @@
+[gd_scene load_steps=15 format=3 uid="uid://cocg3x1g805ng"]
+
+[ext_resource type="Texture2D" uid="uid://bsva3132xd3f" path="res://assets/sprites/effects/block_destroy.png" id="1_ion2q"]
+[ext_resource type="Script" uid="uid://8oi7675k5je8" path="res://scripts/effects/block_destroy.gd" id="2_khd7v"]
+[ext_resource type="AudioStream" uid="uid://bu0bhx1or4yoc" path="res://assets/sounds/objects/blocks/block_destroy.wav" id="2_pcg6q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pcg6q"]
+atlas = ExtResource("1_ion2q")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khd7v"]
+atlas = ExtResource("1_ion2q")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74kig"]
+atlas = ExtResource("1_ion2q")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wnnun"]
+atlas = ExtResource("1_ion2q")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3iv7w"]
+atlas = ExtResource("1_ion2q")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgpgt"]
+atlas = ExtResource("1_ion2q")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ue4ea"]
+atlas = ExtResource("1_ion2q")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11w06"]
+atlas = ExtResource("1_ion2q")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rxvnk"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pcg6q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khd7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_74kig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wnnun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3iv7w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgpgt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ue4ea")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11w06")
+}],
+"loop": false,
+"name": &"destroy",
+"speed": 20.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_binj4"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ion2q"]
+gradient = SubResource("Gradient_binj4")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="BlockDestroy" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_rxvnk")
+animation = &"destroy"
+autoplay = "destroy"
+frame = 7
+frame_progress = 1.0
+script = ExtResource("2_khd7v")
+
+[node name="Light" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_ion2q")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="BlockDestroySound" type="AudioStreamPlayer2D" parent="Sounds"]
+process_mode = 3
+stream = ExtResource("2_pcg6q")
