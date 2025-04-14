@@ -1,20 +1,11 @@
 extends Node
 
-# Screen variables.
-var main_menu = preload("res://scenes/screens/main_menu.tscn")
-var pause_menu = preload("res://scenes/screens/pause_menu.tscn")
-var game_over = preload("res://scenes/screens/game_over.tscn")
-
-# UI variables.
-var cutscene = preload("res://scenes/ui/cutscenes/cutscene.tscn")
-var module_pickup_cutscene = preload("res://scenes/ui/cutscenes/module_pickup_cutscene.tscn")
-
-# Transition variables.
-var simple_transition = preload("res://scenes/screens/simple_transition.tscn")
-var fancy_transition = preload("res://scenes/screens/fancy_transition.tscn")
-
-# Area variables.
-var start_point = preload("res://scenes/areas/forgotten_isles/start_point.tscn")
+const MAIN_MENU_PATH = "res://scenes/screens/main_menu.tscn"
+const PAUSE_MENU_PATH = "res://scenes/screens/pause_menu.tscn"
+const GAME_OVER_PATH = "res://scenes/screens/game_over.tscn"
+const SIMPLE_TRANSITION_PATH = "res://scenes/screens/simple_transition.tscn"
+const FANCY_TRANSITION_PATH = "res://scenes/screens/fancy_transition.tscn"
+const START_POINT_PATH = "res://scenes/areas/forgotten_isles/start_point.tscn"
 
 signal scene_transition_started
 signal scene_transition_completed
@@ -26,7 +17,7 @@ func _ready() -> void:
 # Starts the game.
 func start_game() -> void:
 	GameState.reset_game_state()
-	transition_to_scene(start_point.resource_path)
+	transition_to_scene(START_POINT_PATH)
 
 # Checks for pausing.
 func _input(event):
@@ -67,12 +58,12 @@ func pause_game() -> void:
 		MusicManager.dim_music()
 
 		# Instantiates the pause menu.
-		var pause_menu_instance = pause_menu.instantiate()
+		var pause_menu_instance = load(PAUSE_MENU_PATH)
 		get_tree().root.add_child(pause_menu_instance)
 
 # Displays game over screen.
 func to_game_over() -> void:
-	transition_to_scene(game_over.resource_path, true, true)
+	transition_to_scene(GAME_OVER_PATH, true, true)
 
 # Quits the game.
 func quit_game() -> void:
@@ -80,26 +71,33 @@ func quit_game() -> void:
 
 # For scene transitions.
 func transition_to_scene(scene_path, use_fancy: bool = false, only_wipe_in: bool = false) -> void:
-	var fancy_transition_instance = fancy_transition.instantiate()
-	var simple_transition_instance = simple_transition.instantiate()
 	emit_signal("scene_transition_started")
-
+	
+	var transition_instance
+	
 	if use_fancy:
-		get_tree().root.add_child(fancy_transition_instance)
-		await fancy_transition_instance.play_in()
+		transition_instance = load(FANCY_TRANSITION_PATH).instantiate()
 	else:
-		get_tree().root.add_child(simple_transition_instance)
-
-	await get_tree().create_timer(0.4).timeout
+		transition_instance = load(SIMPLE_TRANSITION_PATH).instantiate()
+	
+	get_tree().root.add_child(transition_instance)
+	
+	if use_fancy:
+		await transition_instance.play_in()
+	else:
+		await get_tree().create_timer(0.4).timeout
+	
 	get_tree().change_scene_to_file(scene_path)
-
-	if use_fancy and not only_wipe_in:
+	
+	if use_fancy && !only_wipe_in:
 		await get_tree().process_frame
 		await get_tree().process_frame
-		await fancy_transition_instance.play_out()
-	elif use_fancy and only_wipe_in:
+		await transition_instance.play_out()
+	elif use_fancy && only_wipe_in:
 		await get_tree().process_frame
 		await get_tree().process_frame
-		fancy_transition_instance.queue_free()
+		transition_instance.queue_free()
 	else:
-		simple_transition_instance.queue_free()
+		transition_instance.queue_free()
+	
+	emit_signal("scene_transition_completed")

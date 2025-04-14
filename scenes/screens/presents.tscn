@@ -1,11 +1,13 @@
 [gd_scene load_steps=7 format=3 uid="uid://s70nosv78fn7"]
 
 [ext_resource type="Script" uid="uid://c21wv1klgcre6" path="res://scripts/screens/presents.gd" id="1_0jb54"]
-[ext_resource type="Texture2D" uid="uid://brluil1v3o482" path="res://assets/textures/screens/presents/player_surprised.png" id="1_csdcb"]
+[ext_resource type="Texture2D" uid="uid://brluil1v3o482" path="res://assets/textures/screens/presents/player_animation.png" id="1_csdcb"]
 [ext_resource type="Texture2D" uid="uid://c5owe8k6kqx0x" path="res://assets/textures/screens/presents/presents_text.png" id="3_q2eym"]
 
-[sub_resource type="Animation" id="Animation_q2eym"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_l4sph"]
+resource_name = "loading"
+length = 0.8
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -13,46 +15,10 @@ tracks/0/path = NodePath("Player:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [Vector2i(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Player:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(240, 96)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Text:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Text:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_0jb54"]
@@ -68,7 +34,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4, 1.2, 1.7, 1.85, 2, 2.1, 2.2),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(5, 0), Vector2i(6, 0), Vector2i(7, 0)]
+"values": [Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(4, 1), Vector2i(5, 1), Vector2i(6, 1), Vector2i(7, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -85,7 +51,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Text:visible")
+tracks/2/path = NodePath("PresentsText:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -97,7 +63,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Text:scale")
+tracks/3/path = NodePath("PresentsText:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -109,12 +75,17 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l4sph"]
 _data = {
-&"RESET": SubResource("Animation_q2eym"),
+&"loading": SubResource("Animation_l4sph"),
 &"presents": SubResource("Animation_0jb54")
 }
 
 [node name="Presents" type="CanvasLayer" groups=["unpausable"]]
 script = ExtResource("1_0jb54")
+
+[node name="Animator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_l4sph")
+}
 
 [node name="Color" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -125,11 +96,13 @@ grow_vertical = 2
 color = Color(0.0941176, 0.0784314, 0.145098, 1)
 
 [node name="Player" type="Sprite2D" parent="."]
-position = Vector2(240, 96)
+position = Vector2(240, 94)
 texture = ExtResource("1_csdcb")
 hframes = 8
+vframes = 2
 
-[node name="Text" type="TextureRect" parent="."]
+[node name="PresentsText" type="TextureRect" parent="."]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -141,12 +114,20 @@ offset_right = 68.0
 offset_bottom = 34.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.2, 1.2)
 pivot_offset = Vector2(68, 8)
 texture = ExtResource("3_q2eym")
 stretch_mode = 2
 
-[node name="Animator" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_l4sph")
-}
-autoplay = "RESET"
+[node name="LoadingLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 16.5
+offset_right = 20.0
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2

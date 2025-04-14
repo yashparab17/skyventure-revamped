@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brluil1v3o482"
-path="res://.godot/imported/player_surprised.png-8569f7cf2a8b2b5528ad2d80d9ffc24e.ctex"
+uid="uid://8kh7u8ntw54o"
+path="res://.godot/imported/shocked.png-225612ed74f6503c95a66acb44d67a6e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/screens/presents/player_surprised.png"
-dest_files=["res://.godot/imported/player_surprised.png-8569f7cf2a8b2b5528ad2d80d9ffc24e.ctex"]
+source_file="res://assets/textures/ui/cutscene/portraits/player/shocked.png"
+dest_files=["res://.godot/imported/shocked.png-225612ed74f6503c95a66acb44d67a6e.ctex"]
 
 [params]
 

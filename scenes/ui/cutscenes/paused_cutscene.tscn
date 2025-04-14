@@ -35,6 +35,7 @@ animations = [{
 
 [node name="PausedCutscene" type="CanvasLayer" groups=["unpausable"]]
 process_mode = 3
+layer = 127
 script = ExtResource("1_ff22g")
 
 [node name="CutsceneUI" type="Control" parent="."]

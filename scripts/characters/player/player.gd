@@ -12,21 +12,21 @@ var teleport = preload("res://scenes/effects/teleport.tscn")
 # PROPERTIES
 ################################################################################
 
-# Player movement properties
+# Player movement properties.
 var gravity: float = 500
-var speed: int = 125
+var speed: int = 100
 var jump_force: int = -225
 var acceleration: float = 600
 var friction: float = 800
 
-# Player hurt properties
+# Player hurt properties.
 var hurt_knockback: Vector2 = Vector2(200, -200)
 var hurt_duration: float = 0.5
 
-# Sound properties
+# Sound properties.
 var walk_snd_interval: float = 0.3
 
-# Last safe position
+# Last safe position.
 var last_safe_position: Vector2
 var safe_ground_timer := 0.0
 var has_saved_safe_pos := false
