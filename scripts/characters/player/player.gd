@@ -4,8 +4,9 @@ extends CharacterBody2D
 # PRELOADS
 ################################################################################
 
-# Preload scenes for projectiles and effects
+# Preload scenes for effects.
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
+var teleport = preload("res://scenes/effects/teleport.tscn")
 
 ################################################################################
 # PROPERTIES
@@ -101,19 +102,19 @@ var walk_snd_timer: float = 0.0
 ################################################################################
 
 func _ready() -> void:
-	# Connect to GameState signals
+	# Connect to GameState signals.
 	GameState.weapon_changed.connect(_on_weapon_changed)
 	
-	# Change position and avoid flicker on loading
+	# Change position and avoid flicker on loading.
 	if GameState.pending_player_position != Vector2.INF:
 		global_position = GameState.pending_player_position
 		GameState.pending_player_position = Vector2.INF
 
 func _physics_process(delta: float) -> void:
 	if not can_move or current_state == States.HURT:
-		return # Skip processing if the player is hurt
+		return # Skip processing if the player is hurt.
 
-	# Update last safe position if on ground, and check coyote timing
+	# Update last safe position if on ground, and check coyote timing.
 	if is_on_floor():
 		safe_ground_timer += delta
 		
@@ -133,7 +134,7 @@ func _physics_process(delta: float) -> void:
 	handle_movement_and_shooting(delta)
 	handle_weapon_switching()
 
-	# Check for interaction
+	# Check for interaction.
 	if (current_state == States.IDLE and Input.is_action_pressed("aim_down") and is_on_floor()):
 		handle_interaction()
 
@@ -147,18 +148,18 @@ func _physics_process(delta: float) -> void:
 func enable_movement() -> void:
 	can_move = true
 	if anim:
-		anim.play()  # Resume animations
-	current_state = States.IDLE  # Reset to idle state
+		anim.play() # Resume animations.
+	current_state = States.IDLE # Reset to idle state.
 
 func apply_gravity(delta: float) -> void:
 	if !is_on_floor():
 		velocity.y += gravity * delta
 
-	# Shorten jump if the jump button is released early
+	# Shorten jump if the jump button is released early.
 	if velocity.y < 0 and !Input.is_action_pressed("jump"):
 		velocity.y += gravity * 2 * delta
 
-	# Play bonk sound if the player hits the ceiling
+	# Play bonk sound if the player hits the ceiling.
 	if is_on_ceiling():
 		snd_bonk.play()
 
@@ -167,23 +168,23 @@ func update_timers(delta: float) -> void:
 	walk_snd_timer -= delta
 
 func handle_movement_and_shooting(delta: float) -> void:
-	# Reset from interact state if no longer pressing down
+	# Reset from interact state if no longer pressing down.
 	if current_state == States.INTERACT and !Input.is_action_pressed("aim_down"):
 		current_state = States.IDLE
 
 	var direction = Input.get_axis("move_left", "move_right")
 
-	# Update facing direction based on movement input
+	# Update facing direction based on movement input.
 	if direction:
 		facing_direction = FacingDirection.LEFT if direction < 0 else FacingDirection.RIGHT
 
-	# Handle movement based on whether the player is on the ground or in the air
+	# Handle movement based on whether the player is on the ground or in the air.
 	if is_on_floor():
 		handle_ground_movement(direction, delta)
 	else:
 		handle_air_movement(direction, delta)
 	
-	# Handle jumping
+	# Handle jumping.
 	if Input.is_action_just_pressed("jump") and coyote_timer > 0.0:
 		velocity.y = jump_force
 		current_state = States.JUMP
@@ -191,7 +192,7 @@ func handle_movement_and_shooting(delta: float) -> void:
 
 	handle_aiming()
 
-	# Handle shooting
+	# Handle shooting.
 	if Input.is_action_just_pressed("shoot") and shoot_timer <= 0 and GameState.get_current_weapon():
 		shoot_bullet()
 		shoot_timer = GameState.get_current_weapon().cooldown
@@ -202,7 +203,7 @@ func handle_ground_movement(direction: float, delta: float) -> void:
 		velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta)
 		current_state = States.WALK_SHOOT if shoot_timer > 0 else States.WALK
 
-		# Play walking sound at intervals
+		# Play walking sound at intervals.
 		if walk_snd_timer <= 0:
 			snd_walk.play()
 			walk_snd_timer = walk_snd_interval
@@ -224,27 +225,27 @@ func handle_air_movement(direction: float, delta: float) -> void:
 
 func handle_aiming() -> void:
 	if Input.is_action_pressed("aim_up"):
-		# Aim up
+		# Aim up.
 		current_aim_direction = AimDirection.UP
 		aim_node.rotation_degrees = 270
-		aim_node.position = Vector2(0, -24) # Adjust position for aiming up
+		aim_node.position = Vector2(0, -24) # Adjust position for aiming up.
 	elif Input.is_action_pressed("aim_down") and !is_on_floor():
-		# Aim down (only allowed in the air)
+		# Aim down (only allowed in the air).
 		current_aim_direction = AimDirection.DOWN
 		aim_node.rotation_degrees = 90
-		aim_node.position = Vector2(0, 16) # Adjust position for aiming down
+		aim_node.position = Vector2(0, 16) # Adjust position for aiming down.
 	else:
 		# Default to facing direction (left or right)
 		if facing_direction == FacingDirection.LEFT:
 			# Facing left
 			current_aim_direction = AimDirection.LEFT
 			aim_node.rotation_degrees = 180
-			aim_node.position = Vector2(-16, -8) # Adjust position for facing left
+			aim_node.position = Vector2(-16, -8) # Adjust position for facing left.
 		else:
 			# Facing right
 			current_aim_direction = AimDirection.RIGHT
 			aim_node.rotation_degrees = 0
-			aim_node.position = Vector2(16, -8) # Adjust position for facing right
+			aim_node.position = Vector2(16, -8) # Adjust position for facing right.
 
 ################################################################################
 # WEAPON FUNCTIONS
@@ -278,7 +279,7 @@ func shoot_bullet() -> void:
 		bullet.direction = Vector2.RIGHT.rotated(aim_node.rotation)
 		bullet.shooter = self
 		
-		# Play appropriate sounds
+		# Play appropriate sounds.
 		if current_weapon.name == "Star Bullet":
 			snd_proj_star_bullet.play()
 		elif current_weapon.name == "Fireball":
@@ -298,7 +299,7 @@ func update_shooting_state(direction: float) -> void:
 ################################################################################
 
 func handle_interaction() -> void:
-	# Only interact if completely idle (no movement input) and on ground
+	# Only interact if completely idle (no movement input) and on ground.
 	if (is_on_floor() and
 		Input.is_action_pressed("aim_down") and
 		!Input.is_action_pressed("move_left") and
@@ -316,7 +317,7 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 		take_damage(body.damage_amount, body.global_position.x, false)
 
 func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> void:
-	# Allow damage to go through if it's a pitfall and the player is at 1 HP
+	# Allow damage to go through if it's a pitfall and the player is at 1 HP.
 	if is_invulnerable and not (skip_knockback and GameState.current_health == 1):
 		return
 
@@ -332,7 +333,7 @@ func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> v
 		snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
 		snd_hurt.play()
 
-		# Only apply knockback if not skipping
+		# Only apply knockback if not skipping.
 		if not skip_knockback:
 			var knockback_direction = 1 if enemy_x < global_position.x else -1
 			velocity = hurt_knockback * Vector2(knockback_direction, 1)
@@ -346,22 +347,22 @@ func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> v
 		
 		anim.process_mode = Node.PROCESS_MODE_INHERIT
 
-		# Start blinking and invulnerability timer
+		# Start blinking and invulnerability timer.
 		start_blinking()
 		set_collision_layer_value(2, false)
 		set_collision_mask_value(3, false)
 		current_state = States.IDLE
 		invuln_timer.start()
 
-		# Wait for the invulnerability timer to finish
+		# Wait for the invulnerability timer to finish.
 		await invuln_timer.timeout
 
-		# Stop blinking and reset invulnerability
+		# Stop blinking and reset invulnerability.
 		stop_blinking()
 		set_collision_layer_value(2, true)
 		set_collision_mask_value(3, true)
 		is_invulnerable = false
-		sprite.visible = true # Ensure the sprite is visible after blinking ends
+		sprite.visible = true # Ensure the sprite is visible after blinking ends.
 
 func start_blinking() -> void:
 	blink_timer.start()
@@ -374,28 +375,28 @@ func _on_blink_timer_timeout() -> void:
 	sprite.visible = !sprite.visible
 
 func die() -> void:
-	# Unpauses the game and plays the hurt sound effect
+	# Unpause the game and play the hurt sound effect.
 	get_tree().paused = false
 	anim.process_mode = Node.PROCESS_MODE_ALWAYS
 	snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
 	snd_hurt.play()
 
-	# Pauses the game and plays the hurt animation
+	# Pause the game and play the hurt animation.
 	get_tree().paused = true
 	animate_hurt()
 	await anim.animation_finished
 	get_tree().paused = false
 
-	# Sets visibility and disables processes
+	# Set visibility and disable processes.
 	visible = false
 	set_physics_process(false)
 	set_process(false)
 	
-	# Stops current music and plays the death sound effect
+	# Stop current music and play the death sound effect.
 	MusicManager.stop_music()
 	snd_death.play()
 
-	# Instantiates the entity death effect
+	# Instantiate the entity death effect.
 	var entity_death_instance = entity_death.instantiate() as Node2D
 	entity_death_instance.global_position = global_position + sprite.position
 	get_parent().add_child(entity_death_instance)
@@ -419,23 +420,25 @@ func handle_pitfall() -> void:
 		teleport_player()
 	
 func teleport_player() -> void:
-	# Hide the player temporarily and pause processing
+	# Hide the player temporarily and pause processing.
 	sprite.visible = false
 	set_physics_process(false)
 
-	# Teleport the player to the last safe position
+	# Teleport the player to the last safe position.
 	global_position = last_safe_position
 	velocity = Vector2.ZERO
 
-	# Instantiates the entity death effect
-	var entity_death_instance = entity_death.instantiate() as Node2D
-	entity_death_instance.global_position = global_position + sprite.position
-	get_parent().add_child(entity_death_instance)
-
-	# Show the player again
+	# Instantiate the teleport effect.
+	var teleport_instance = teleport.instantiate() as Node2D
+	teleport_instance.global_position = global_position + sprite.position
+	get_parent().add_child(teleport_instance)
+	
+	# Show the player.
 	sprite.visible = true
+	
+	await teleport_instance.teleport_finished
 
-	# Take damage *after* teleporting back
+	# Take damage after teleporting back.
 	await get_tree().create_timer(0.1).timeout
 	take_damage(1, global_position.x, true)
 	set_physics_process(true)
@@ -446,7 +449,7 @@ func teleport_player() -> void:
 
 func animate_player() -> void:
 	var animation_name = get_animation_name()
-	# Handle interact animation separately since it should lock other animations
+	# Handle interact animation separately since it should lock other animations.
 	if current_state == States.INTERACT:
 		animation_name = "interact_right" if facing_direction == FacingDirection.RIGHT else "interact_left"
 		if anim.current_animation != animation_name:
@@ -456,14 +459,14 @@ func animate_player() -> void:
 		var current_frame = anim.current_animation_position
 		anim.play(animation_name)
 	
-		# Check if the new animation has the same facing and aiming directions as the previous one
+		# Check if the new animation has the same facing and aiming directions as the previous one.
 		if facing_direction == previous_facing and current_aim_direction == previous_aim:
 			anim.play(animation_name)
 			anim.seek(current_frame)
 		else:
 			anim.play(animation_name)
 		
-		# Update the previous animation tracking
+		# Update the previous animation tracking.
 		previous_animation = animation_name
 		previous_facing = facing_direction
 		previous_aim = current_aim_direction
@@ -496,10 +499,10 @@ func get_animation_name() -> String:
 		States.INTERACT:
 			base_animation = "interact"
 
-	# Determine the facing direction
+	# Determine the facing direction.
 	var facing = "right" if facing_direction == FacingDirection.RIGHT else "left"
 
-	# Append the aiming direction to the base animation name
+	# Append the aiming direction to the base animation name.
 	match current_aim_direction:
 		AimDirection.UP:
 			return base_animation + "_" + facing + "_up"

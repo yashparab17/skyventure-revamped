@@ -1,0 +1,101 @@
+[gd_scene load_steps=11 format=3 uid="uid://b5vg2j5otuotb"]
+
+[ext_resource type="Texture2D" uid="uid://bn33jvn7pgbqd" path="res://assets/sprites/effects/teleport.png" id="1_qsd4c"]
+[ext_resource type="AudioStream" uid="uid://dl88chggbbh8m" path="res://assets/sounds/effects/teleport.wav" id="2_3v8oy"]
+[ext_resource type="Script" uid="uid://cmwkyro3gwm50" path="res://scripts/effects/teleport.gd" id="2_s8e8v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v8oy"]
+atlas = ExtResource("1_qsd4c")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8e8v"]
+atlas = ExtResource("1_qsd4c")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7x7ie"]
+atlas = ExtResource("1_qsd4c")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_au7nd"]
+atlas = ExtResource("1_qsd4c")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nclhp"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v8oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8e8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7x7ie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v8oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8e8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7x7ie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v8oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8e8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7x7ie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v8oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8e8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7x7ie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_au7nd")
+}],
+"loop": false,
+"name": &"teleport",
+"speed": 10.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_qsd4c"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3v8oy"]
+gradient = SubResource("Gradient_qsd4c")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Teleport" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_nclhp")
+animation = &"teleport"
+autoplay = "teleport"
+frame = 3
+frame_progress = 1.0
+script = ExtResource("2_s8e8v")
+
+[node name="Light" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_3v8oy")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Teleport" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("2_3v8oy")
