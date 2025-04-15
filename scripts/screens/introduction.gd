@@ -10,11 +10,13 @@ var block_destroy = preload("res://scenes/effects/block_destroy.tscn")
 @onready var fake_player: Sprite2D = $FakePlayer
 @onready var anim: AnimationPlayer = $Animator
 
+# Called when the scene is loaded.
 func _ready() -> void:
 	fake_player.visible = false
 	await get_tree().create_timer(1.0).timeout
 	animate_effect()
 
+# Animates the teleport effect.
 func animate_effect() -> void:
 	var teleport_instance = teleport.instantiate() as Node2D
 	teleport_instance.global_position = global_position + fake_player.position
@@ -25,6 +27,7 @@ func animate_effect() -> void:
 	await teleport_instance.teleport_finished
 	animate_fake_player()
 
+# Animates the fake player falling and landing.
 func animate_fake_player() -> void:
 	anim.play("fall")
 	await anim.animation_finished
@@ -37,5 +40,6 @@ func animate_fake_player() -> void:
 	await get_tree().create_timer(3.0).timeout
 	exit()
 
+# Exits the introduction scene and transitions to the main menu.
 func exit() -> void:
 	GameManager.transition_to_scene(MAIN_MENU_PATH, true)

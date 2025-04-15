@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://tpe5ta6nwxuj"]
+
+[ext_resource type="Script" uid="uid://c6cj36pnrfyr5" path="res://scripts/objects/blocks/spike.gd" id="1_minc0"]
+[ext_resource type="Texture2D" uid="uid://dhrklcaxk4mr5" path="res://assets/sprites/objects/blocks/spike.png" id="1_vxnf2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_minc0"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jlmwy"]
+size = Vector2(16, 16)
+
+[node name="Spike" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_minc0")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_minc0")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_vxnf2")
+hframes = 4
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="DetectionCollision" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("RectangleShape2D_jlmwy")
+debug_color = Color(0.976079, 0, 0.414583, 0.42)
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

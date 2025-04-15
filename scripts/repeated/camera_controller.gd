@@ -19,7 +19,7 @@ func _on_player_spawned():
 	await get_tree().process_frame
 	position_smoothing_enabled = true
 
-func _process(delta):
+func _process(_delta):
 	if not player:
 		return
 
