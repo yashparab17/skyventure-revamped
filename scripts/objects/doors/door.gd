@@ -5,6 +5,7 @@ extends Sprite2D
 @export var target_spawn_id: String
 
 # Node references.
+@onready var anim: AnimationPlayer = $Animator
 @onready var snd_enter: AudioStreamPlayer = $Sounds/Enter
 
 # Variables to check if the player is in the interactable area, and has transitioned.
@@ -34,6 +35,7 @@ func _process(delta: float) -> void:
 		if player_ref and player_ref.current_state == player_ref.States.INTERACT:
 			SoundManager.play_sound(snd_enter.stream)
 			# Lock player in interact state.
+			anim.play("enter")
 			lock_player()
 			transition()
 

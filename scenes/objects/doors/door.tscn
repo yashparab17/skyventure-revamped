@@ -1,8 +1,45 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddhhs61u2guwu"]
+[gd_scene load_steps=8 format=3 uid="uid://ddhhs61u2guwu"]
 
 [ext_resource type="Texture2D" uid="uid://bu07yi4l06qmn" path="res://assets/sprites/objects/doors/anywhere.png" id="1_xn45g"]
 [ext_resource type="Script" uid="uid://colx5g8cau51o" path="res://scripts/objects/doors/door.gd" id="2_ovqo0"]
 [ext_resource type="AudioStream" uid="uid://ckqr4spp2p4j8" path="res://assets/sounds/objects/doors/enter.wav" id="3_iqqvg"]
+
+[sub_resource type="Animation" id="Animation_vtovw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_iqqvg"]
+resource_name = "enter"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b8p6d"]
+_data = {
+&"RESET": SubResource("Animation_vtovw"),
+&"enter": SubResource("Animation_iqqvg")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ovqo0"]
 size = Vector2(16, 24)
@@ -13,11 +50,17 @@ texture = ExtResource("1_xn45g")
 hframes = 2
 script = ExtResource("2_ovqo0")
 
+[node name="Animator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_b8p6d")
+}
+
 [node name="InteractableArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
 [node name="Collision" type="CollisionShape2D" parent="InteractableArea"]
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_ovqo0")
 
 [node name="Sounds" type="Node" parent="."]

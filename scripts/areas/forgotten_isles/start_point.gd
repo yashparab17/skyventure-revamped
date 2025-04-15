@@ -38,6 +38,8 @@ func _animate_fake_player() -> void:
 
 # Animates the introduction cutscene.
 func _play_intro_cutscene() -> void:
+	MusicManager.play_music(preload("res://assets/music/awkward.mp3"))
+	
 	var cutscene_data = [
 		{
 			"text": "Huh? Where am I?",
@@ -81,6 +83,7 @@ func _play_intro_cutscene() -> void:
 	
 	# Wait for cutscene to finish.
 	await cutscene_instance.tree_exited
+	MusicManager.stop_music()
 	hud.show()
 
 func _initialize_systems() -> void:
