@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://beny66ev1crw2"]
+[gd_scene load_steps=14 format=4 uid="uid://beny66ev1crw2"]
 
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="1_x3brp"]
 [ext_resource type="Script" uid="uid://nyx6470i7seu" path="res://scripts/areas/forgotten_isles/under_islands.gd" id="1_ywan2"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bwkt2iimwrlu8" path="res://scenes/objects/blocks/star_block.tscn" id="5_ywan2"]
 [ext_resource type="TileSet" uid="uid://bmy57cy4gyepg" path="res://scenes/areas/forgotten_isles/forgotten_isles.tres" id="6_21tt4"]
 [ext_resource type="PackedScene" uid="uid://ddhhs61u2guwu" path="res://scenes/objects/doors/door.tscn" id="6_m6w8v"]
+[ext_resource type="PackedScene" uid="uid://dr05a15hk6l7w" path="res://scenes/characters/enemies/critter.tscn" id="6_yq775"]
 [ext_resource type="PackedScene" uid="uid://byuo6h23p4gkf" path="res://scenes/backforegrounds/forgotten_isles/sky_foreground.tscn" id="7_ntldn"]
 [ext_resource type="PackedScene" uid="uid://bn61jj2l8liu1" path="res://scenes/items/modules/health/health_module.tscn" id="8_21tt4"]
 [ext_resource type="PackedScene" uid="uid://15tbit6med7m" path="res://scenes/objects/doors/spawn_point.tscn" id="8_ywan2"]
@@ -56,6 +57,11 @@ position = Vector2(552, -232)
 
 [node name="StarBlock5" parent="Blocks" instance=ExtResource("5_ywan2")]
 position = Vector2(-920, -88)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Critter1" parent="Enemies" instance=ExtResource("6_yq775")]
+position = Vector2(-400, -97)
 
 [node name="Layers" type="Node2D" parent="."]
 

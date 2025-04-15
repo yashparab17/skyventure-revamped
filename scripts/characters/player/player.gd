@@ -39,6 +39,8 @@ var can_move: bool = true
 # NODE REFERENCES
 ################################################################################
 
+@onready var collision: CollisionShape2D = $Collision
+@onready var hurtbox_collision: CollisionShape2D = $Hurtbox/HurtboxCollision
 @onready var sprite: Sprite2D = $Sprite
 @onready var anim: AnimationPlayer = $Animation
 @onready var aim_node: Node2D = $AimNode
@@ -330,6 +332,8 @@ func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> v
 		anim.process_mode = Node.PROCESS_MODE_ALWAYS
 		snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
 		SoundManager.play_sound(snd_hurt.stream)
+		
+		hurtbox_collision.disabled = true
 
 		# Only apply knockback if not skipping.
 		if not skip_knockback:
@@ -361,6 +365,8 @@ func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> v
 		set_collision_mask_value(3, true)
 		is_invulnerable = false
 		sprite.visible = true # Ensure the sprite is visible after blinking ends.
+		
+		hurtbox_collision.disabled = false
 
 func start_blinking() -> void:
 	blink_timer.start()
@@ -374,9 +380,15 @@ func _on_blink_timer_timeout() -> void:
 
 func die() -> void:
 	# Unpause the game and play the hurt sound effect.
+	collision.disabled = true
+	hurtbox_collision.disabled = true
 	get_tree().paused = false
 	anim.process_mode = Node.PROCESS_MODE_ALWAYS
 	SoundManager.play_sound(snd_hurt.stream)
+
+	# Disable processes.
+	set_physics_process(false)
+	set_process(false)
 
 	# Pause the game and play the hurt animation.
 	get_tree().paused = true
@@ -384,10 +396,8 @@ func die() -> void:
 	await anim.animation_finished
 	get_tree().paused = false
 
-	# Set visibility and disable processes.
+	# Set visibility.
 	visible = false
-	set_physics_process(false)
-	set_process(false)
 	
 	# Stop current music and play the death sound effect.
 	MusicManager.stop_music()

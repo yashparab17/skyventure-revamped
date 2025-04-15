@@ -1,0 +1,184 @@
+[gd_scene load_steps=16 format=3 uid="uid://dr05a15hk6l7w"]
+
+[ext_resource type="Texture2D" uid="uid://uqvyxsbowyit" path="res://assets/sprites/characters/enemies/critter.png" id="1_12oyj"]
+[ext_resource type="Script" uid="uid://bh35y81yd5war" path="res://scripts/characters/enemies/critter.gd" id="1_356xw"]
+[ext_resource type="AudioStream" uid="uid://dvsnxb2wq0fxn" path="res://assets/sounds/characters/enemies/critter/jump.wav" id="3_pj4bo"]
+[ext_resource type="AudioStream" uid="uid://b3lfwxbd0lvut" path="res://assets/sounds/characters/enemies/critter/death.wav" id="4_dhrfq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53jdm"]
+size = Vector2(14, 14)
+
+[sub_resource type="Animation" id="Animation_356xw"]
+resource_name = "asleep"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_27m8e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pj4bo"]
+resource_name = "awake"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_dhrfq"]
+resource_name = "jump"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 2)]
+}
+
+[sub_resource type="Animation" id="Animation_xcrud"]
+resource_name = "land"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_vtu2h"]
+resource_name = "death"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 3), Vector2i(1, 3), Vector2i(0, 3), Vector2i(1, 3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pj4bo"]
+_data = {
+&"RESET": SubResource("Animation_27m8e"),
+&"asleep": SubResource("Animation_356xw"),
+&"awake": SubResource("Animation_pj4bo"),
+&"death": SubResource("Animation_vtu2h"),
+&"jump": SubResource("Animation_dhrfq"),
+&"land": SubResource("Animation_xcrud")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12oyj"]
+size = Vector2(16, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_356xw"]
+size = Vector2(96, 192)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_27m8e"]
+size = Vector2(192, 224)
+
+[node name="Critter" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 4
+collision_mask = 33
+script = ExtResource("1_356xw")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_53jdm")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("1_12oyj")
+hframes = 2
+vframes = 4
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_pj4bo")
+}
+
+[node name="LandTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 48
+
+[node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_12oyj")
+debug_color = Color(0.969112, 0, 0.463492, 0.42)
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="DetectionCollision" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("RectangleShape2D_356xw")
+debug_color = Color(0.775963, 0.440196, 0.0144619, 0.42)
+
+[node name="InitialDetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="InitialDetectionCollision" type="CollisionShape2D" parent="InitialDetectionArea"]
+shape = SubResource("RectangleShape2D_27m8e")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("3_pj4bo")
+volume_db = 24.0
+
+[node name="Death" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("4_dhrfq")
+
+[connection signal="timeout" from="LandTimer" to="." method="_on_land_timer_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="body_entered" from="InitialDetectionArea" to="." method="_on_initial_detection_area_body_entered"]
+[connection signal="body_exited" from="InitialDetectionArea" to="." method="_on_initial_detection_area_body_exited"]

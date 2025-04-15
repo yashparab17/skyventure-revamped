@@ -13,7 +13,7 @@ var health_pickup = preload("res://scenes/items/pickups/health_pickup.tscn")
 ################################################################################
 
 # Enemy movement properties.
-@export var gravity: float = 400
+@export var gravity: float = 500
 @export var speed: int = 50
 @export var acceleration: float = 600
 @export var chase_speed: int = 80 # Speed when chasing.
@@ -57,11 +57,11 @@ var can_walk: bool = true
 # NODE REFERENCES
 ################################################################################
 
-@onready var sprite = $Sprite
-@onready var anim = $Animation
-@onready var patrol_timer = $PatrolTimer
-@onready var chase_timer = $ChaseTimer
-@onready var detection_area = $DetectionArea
+@onready var sprite: Sprite2D = $Sprite
+@onready var anim: AnimationPlayer = $Animation
+@onready var patrol_timer: Timer = $PatrolTimer
+@onready var chase_timer: Timer = $ChaseTimer
+@onready var detection_area: Area2D = $DetectionArea
 
 # Sound references.
 @onready var snd_alert: AudioStreamPlayer2D = $Sounds/Alert
