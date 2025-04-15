@@ -18,6 +18,7 @@ func _on_new_adventure_button_pressed() -> void:
 func _on_continue_button_pressed() -> void:
 	# Call the load function and wait for completion
 	MusicManager.stop_music()
+	await get_tree().create_timer(0.5).timeout
 	var success = await SaveManager.load_game()
 	
 	if success:

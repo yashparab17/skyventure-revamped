@@ -54,12 +54,12 @@ var player_ref: Node2D = null
 # NODE REFERENCES
 ################################################################################
 
-@onready var sprite = $Sprite
-@onready var anim = $Animation
+@onready var sprite: Sprite2D = $Sprite
+@onready var anim: AnimationPlayer = $Animation
 
 # Sound references.
-@onready var snd_hurt = $Sounds/Hurt
-@onready var snd_death = $Sounds/Death
+@onready var snd_hurt: AudioStreamPlayer2D = $Sounds/Hurt
+@onready var snd_death: AudioStreamPlayer2D = $Sounds/Death
 
 ################################################################################
 # STATE MACHINE
@@ -148,7 +148,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 		health_amount -= bullet_damage # Reduce health based on bullet damage.
 		current_state = States.HURT
-		snd_hurt.play()
+		SoundManager.play_sound_2d(snd_hurt.stream, global_position)
 		can_move = false # Stop movement.
 		velocity = Vector2.ZERO
 		await get_tree().create_timer(0.2).timeout # Brief stun duration.
@@ -162,7 +162,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 # Handles enemy death.
 func die() -> void:
 	current_state = States.DEATH
-	snd_death.play()
+	SoundManager.play_sound_2d(snd_death.stream, global_position)
 	velocity = Vector2.ZERO
 	await anim.animation_finished # Wait for death animation to finish.
 

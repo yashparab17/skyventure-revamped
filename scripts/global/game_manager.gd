@@ -17,7 +17,8 @@ func _ready() -> void:
 # Starts the game.
 func start_game() -> void:
 	GameState.reset_game_state()
-	transition_to_scene(START_POINT_PATH)
+	await get_tree().create_timer(0.5).timeout
+	transition_to_scene(START_POINT_PATH, true)
 
 # Checks for pausing.
 func _input(event):
@@ -58,7 +59,8 @@ func pause_game() -> void:
 		MusicManager.dim_music()
 
 		# Instantiates the pause menu.
-		var pause_menu_instance = load(PAUSE_MENU_PATH)
+		var pause_menu_scene = load(PAUSE_MENU_PATH)
+		var pause_menu_instance = pause_menu_scene.instantiate()
 		get_tree().root.add_child(pause_menu_instance)
 
 # Displays game over screen.

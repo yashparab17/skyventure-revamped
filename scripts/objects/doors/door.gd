@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 	if player_in_area and not has_transitioned:
 		# Transition if the player is in the interact state.
 		if player_ref and player_ref.current_state == player_ref.States.INTERACT:
-			snd_enter.play()
+			SoundManager.play_sound(snd_enter.stream)
 			# Lock player in interact state.
 			lock_player()
 			transition()

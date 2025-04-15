@@ -14,7 +14,7 @@ var teleport = preload("res://scenes/effects/teleport.tscn")
 
 # Player movement properties.
 var gravity: float = 500
-var speed: int = 100
+var speed: int = 110
 var jump_force: int = -225
 var acceleration: float = 600
 var friction: float = 800
@@ -22,9 +22,6 @@ var friction: float = 800
 # Player hurt properties.
 var hurt_knockback: Vector2 = Vector2(200, -200)
 var hurt_duration: float = 0.5
-
-# Sound properties.
-var walk_snd_interval: float = 0.3
 
 # Last safe position.
 var last_safe_position: Vector2
@@ -48,17 +45,17 @@ var can_move: bool = true
 @onready var invuln_timer: Timer = $InvulnerabilityTimer
 @onready var blink_timer: Timer = $BlinkTimer
 
-# Sound references
-@onready var snd_walk = $Sounds/Walk
-@onready var snd_jump = $Sounds/Jump
-@onready var snd_bonk = $Sounds/Bonk
-@onready var snd_hurt = $Sounds/Hurt
-@onready var snd_death = $Sounds/Death
-@onready var snd_switch_weapon = $Sounds/SwitchWeapon
+# Sound references.
+@onready var snd_walk: AudioStreamPlayer = $Sounds/Walk
+@onready var snd_jump: AudioStreamPlayer = $Sounds/Jump
+@onready var snd_bonk: AudioStreamPlayer = $Sounds/Bonk
+@onready var snd_hurt: AudioStreamPlayer = $Sounds/Hurt
+@onready var snd_death: AudioStreamPlayer = $Sounds/Death
 
-# Projectile sound references
-@onready var snd_proj_star_bullet = $Sounds/ProjectileStarBullet
-@onready var snd_proj_fireball = $Sounds/ProjectileFireball
+# Weapon sound references.
+@onready var snd_switch_weapon: AudioStreamPlayer = $Sounds/SwitchWeapon
+@onready var snd_proj_star_bullet: AudioStreamPlayer = $Sounds/ProjectileStarBullet
+@onready var snd_proj_fireball: AudioStreamPlayer = $Sounds/ProjectileFireball
 
 ################################################################################
 # STATE MANAGEMENT
@@ -96,6 +93,7 @@ var is_invulnerable: bool = false
 ################################################################################
 
 var walk_snd_timer: float = 0.0
+var walk_snd_interval: float = 0.3
 
 ################################################################################
 # CORE FUNCTIONS
@@ -162,7 +160,7 @@ func apply_gravity(delta: float) -> void:
 
 	# Play bonk sound if the player hits the ceiling.
 	if is_on_ceiling():
-		snd_bonk.play()
+		SoundManager.play_sound(snd_bonk.stream)
 
 func update_timers(delta: float) -> void:
 	shoot_timer -= delta
@@ -189,7 +187,7 @@ func handle_movement_and_shooting(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and coyote_timer > 0.0:
 		velocity.y = jump_force
 		current_state = States.JUMP
-		snd_jump.play()
+		SoundManager.play_sound(snd_jump.stream)
 
 	handle_aiming()
 
@@ -206,12 +204,11 @@ func handle_ground_movement(direction: float, delta: float) -> void:
 
 		# Play walking sound at intervals.
 		if walk_snd_timer <= 0:
-			snd_walk.play()
+			SoundManager.play_sound(snd_walk.stream)
 			walk_snd_timer = walk_snd_interval
 	else:
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 		current_state = States.IDLE_SHOOT if shoot_timer > 0 else States.IDLE
-		walk_snd_timer = 0
 
 func handle_air_movement(direction: float, delta: float) -> void:
 	if velocity.y > 0:
@@ -267,7 +264,7 @@ func handle_weapon_switching() -> void:
 
 func _on_weapon_changed(new_weapon: String) -> void:
 	if new_weapon != "":
-		snd_switch_weapon.play()
+		SoundManager.play_sound(snd_switch_weapon.stream)
 
 func shoot_bullet() -> void:
 	if current_state == States.INTERACT or current_state == States.HURT:
@@ -282,9 +279,9 @@ func shoot_bullet() -> void:
 		
 		# Play appropriate sounds.
 		if current_weapon.name == "Star Bullet":
-			snd_proj_star_bullet.play()
+			SoundManager.play_sound(snd_proj_star_bullet.stream)
 		elif current_weapon.name == "Fireball":
-			snd_proj_fireball.play()
+			SoundManager.play_sound(snd_proj_fireball.stream)
 		
 		get_tree().current_scene.add_child(bullet)
 		shoot_timer = current_weapon.cooldown
@@ -332,7 +329,7 @@ func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> v
 		current_state = States.HURT
 		anim.process_mode = Node.PROCESS_MODE_ALWAYS
 		snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
-		snd_hurt.play()
+		SoundManager.play_sound(snd_hurt.stream)
 
 		# Only apply knockback if not skipping.
 		if not skip_knockback:
@@ -379,8 +376,7 @@ func die() -> void:
 	# Unpause the game and play the hurt sound effect.
 	get_tree().paused = false
 	anim.process_mode = Node.PROCESS_MODE_ALWAYS
-	snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
-	snd_hurt.play()
+	SoundManager.play_sound(snd_hurt.stream)
 
 	# Pause the game and play the hurt animation.
 	get_tree().paused = true
@@ -395,16 +391,16 @@ func die() -> void:
 	
 	# Stop current music and play the death sound effect.
 	MusicManager.stop_music()
-	snd_death.play()
+	var death_sound_player = SoundManager.play_sound(snd_death.stream)
 
 	# Instantiate the entity death effect.
 	var entity_death_instance = entity_death.instantiate() as Node2D
 	entity_death_instance.global_position = global_position + sprite.position
 	get_parent().add_child(entity_death_instance)
 
-	await snd_death.finished
-	queue_free()
+	await death_sound_player.finished
 	GameManager.to_game_over()
+	queue_free()
 	
 ################################################################################
 # PITFALL FUNCTIONS

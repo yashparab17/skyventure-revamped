@@ -10,7 +10,7 @@ func _process(_delta: float) -> void:
 	animate_light()
 
 func _ready() -> void:
-	snd_entity_death.play()
+	SoundManager.play_sound_2d(snd_entity_death.stream, global_position)
 	await snd_entity_death.finished
 	queue_free()
 

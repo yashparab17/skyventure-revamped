@@ -830,9 +830,8 @@ _data = {
 &"walk_shoot_right_up": SubResource("Animation_r0hd7")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3xnwo"]
-radius = 7.0
-height = 18.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djydg"]
+size = Vector2(14, 18)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
@@ -865,7 +864,7 @@ collision_mask = 20
 
 [node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, -8)
-shape = SubResource("CapsuleShape2D_3xnwo")
+shape = SubResource("RectangleShape2D_djydg")
 debug_color = Color(0.982472, 0, 0.361879, 0.42)
 
 [node name="InvulnerabilityTimer" type="Timer" parent="."]
@@ -878,7 +877,7 @@ wait_time = 0.1
 
 [node name="Walk" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("3_81bep")
-volume_db = 2.5
+volume_db = 24.0
 
 [node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("3_xym5y")

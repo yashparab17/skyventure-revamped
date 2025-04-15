@@ -16,13 +16,14 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 
 [autoload]
 
-GameLoader="*res://scripts/global/game_loader.gd"
-GameManager="*res://scripts/global/game_manager.gd"
-SpawnManager="*res://scripts/global/spawn_manager.gd"
-SaveManager="*res://scripts/global/save_manager.gd"
-MapManager="*res://scripts/global/map_manager.gd"
-MusicManager="*res://scripts/global/music_manager.gd"
 GameState="*res://scripts/global/game_state.gd"
+GameManager="*res://scripts/global/game_manager.gd"
+SaveManager="*res://scripts/global/save_manager.gd"
+GameLoader="*res://scripts/global/game_loader.gd"
+SpawnManager="*res://scripts/global/spawn_manager.gd"
+MapManager="*res://scripts/global/map_manager.gd"
+SoundManager="*res://scripts/global/sound_manager.gd"
+MusicManager="*res://scripts/global/music_manager.gd"
 ScoreDatabase="*res://scripts/global/score_database.gd"
 
 [display]

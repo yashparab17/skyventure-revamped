@@ -10,7 +10,7 @@ func _process(_delta: float) -> void:
 	animate_light()
 
 func _ready() -> void:
-	snd_block_destroy.play()
+	SoundManager.play_sound_2d(snd_block_destroy.stream, global_position)
 	await snd_block_destroy.finished
 	queue_free()
 

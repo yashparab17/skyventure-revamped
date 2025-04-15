@@ -12,7 +12,7 @@ func _process(_delta: float) -> void:
 	animate_light()
 
 func _ready() -> void:
-	snd_teleport.play()
+	SoundManager.play_sound_2d(snd_teleport.stream, global_position)
 	await snd_teleport.finished
 	emit_signal("teleport_finished")
 	queue_free()

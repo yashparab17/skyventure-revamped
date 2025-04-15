@@ -46,7 +46,7 @@ func animate_light() -> void:
 
 # Restores health.
 func restore_health() -> void:
-	snd_restore.play()
+	SoundManager.play_sound(snd_restore.stream)
 	GameState.current_health = GameState.max_health
 
 	var cutscene_page = [
