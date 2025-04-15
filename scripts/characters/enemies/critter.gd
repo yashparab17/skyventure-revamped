@@ -56,10 +56,16 @@ var current_state: States = States.ASLEEP
 ################################################################################
 
 func _ready() -> void:
-	var players = get_tree().get_nodes_in_group("player")
-	if players.size() > 0:
-		player_ref = players[0]
+	if SpawnManager.player:
+		player_ref = SpawnManager.player
 		update_facing_direction()
+	else:
+		# Wait for the signal when the player is spawned
+		SpawnManager.player_spawned.connect(_on_player_spawned)
+
+func _on_player_spawned() -> void:
+	player_ref = SpawnManager.player
+	update_facing_direction()
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -79,12 +85,12 @@ func _physics_process(delta: float) -> void:
 			just_jumped = false
 
 	if is_on_floor() and current_state == States.JUMP and !just_jumped:
+		velocity.x = 0  # ensure no residual horizontal speed
 		land()
 
 	# After LAND timer finishes, we're back in AWAKE
 	if current_state == States.AWAKE and ready_to_jump and is_on_floor() and is_player_in_detection_area():
 		jump_towards_player()
-
 
 ################################################################################
 # MOVEMENT FUNCTIONS
@@ -139,10 +145,14 @@ func _on_initial_detection_area_body_entered(body: Node2D) -> void:
 		wake_up()
 
 func _on_initial_detection_area_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player") and current_state == States.AWAKE:
+	if body.is_in_group("player"):
+		try_go_to_sleep()
+
+func try_go_to_sleep() -> void:
+	if !is_player_in_detection_area() and current_state != States.DEATH:
 		current_state = States.ASLEEP
-		land_timer.stop() # cancel any pending wake-up
-		ready_to_jump = false # reset jump readiness too
+		land_timer.stop()
+		ready_to_jump = false
 
 ################################################################################
 # TIMER FUNCTIONS
@@ -176,6 +186,7 @@ func die() -> void:
 	
 	var death_sound_player = SoundManager.play_sound_2d(snd_death.stream, global_position)
 	await death_sound_player.finished
+	set_process(false)
 	set_physics_process(false)
 
 	var entity_death_instance = entity_death.instantiate() as Node2D

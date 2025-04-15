@@ -22,7 +22,6 @@ func spawn_player():
 		emit_signal("player_spawned")
 		return
 
-
 	# Spawn player.
 	if spawn_point:
 		player.global_position = spawn_point.global_position

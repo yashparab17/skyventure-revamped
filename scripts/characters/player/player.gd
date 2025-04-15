@@ -102,6 +102,7 @@ var walk_snd_interval: float = 0.3
 ################################################################################
 
 func _ready() -> void:
+	SpawnManager.set_player(self)
 	# Connect to GameState signals.
 	GameState.weapon_changed.connect(_on_weapon_changed)
 	
@@ -333,7 +334,7 @@ func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> v
 		snd_hurt.process_mode = Node.PROCESS_MODE_ALWAYS
 		SoundManager.play_sound(snd_hurt.stream)
 		
-		hurtbox_collision.disabled = true
+		hurtbox_collision.call_deferred("set_disabled", true)
 
 		# Only apply knockback if not skipping.
 		if not skip_knockback:
@@ -366,7 +367,7 @@ func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> v
 		is_invulnerable = false
 		sprite.visible = true # Ensure the sprite is visible after blinking ends.
 		
-		hurtbox_collision.disabled = false
+		hurtbox_collision.call_deferred("set_disabled", false)
 
 func start_blinking() -> void:
 	blink_timer.start()
@@ -380,8 +381,8 @@ func _on_blink_timer_timeout() -> void:
 
 func die() -> void:
 	# Unpause the game and play the hurt sound effect.
-	collision.disabled = true
-	hurtbox_collision.disabled = true
+	collision.call_deferred("set_disabled", true)
+	hurtbox_collision.call_deferred("set_disabled", true)
 	get_tree().paused = false
 	anim.process_mode = Node.PROCESS_MODE_ALWAYS
 	SoundManager.play_sound(snd_hurt.stream)
