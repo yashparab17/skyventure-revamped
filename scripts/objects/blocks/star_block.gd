@@ -4,7 +4,8 @@ var block_destroy = preload("res://scenes/effects/block_destroy.tscn")
 
 func _on_detection_area_area_entered(area: Area2D) -> void:
 	if area.is_in_group("destroying"):
-		area.handle_collision()
+		if area.has_method("handle_collision"):
+			area.handle_collision()
 		handle_destroy()
 
 func handle_destroy() -> void:

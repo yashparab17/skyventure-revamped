@@ -8,6 +8,8 @@ var scenes_to_preload = [
 	preload("res://scenes/characters/enemies/flying_roach.tscn"),
 	preload("res://scenes/characters/enemies/roach.tscn"),
 	preload("res://scenes/characters/player/player.tscn"),
+	# Projectiles.
+	preload("res://scenes/projectiles/star_bullet.tscn"),
 	# Screens.
 	preload("res://scenes/screens/fancy_transition.tscn"),
 	preload("res://scenes/screens/game_over.tscn"),

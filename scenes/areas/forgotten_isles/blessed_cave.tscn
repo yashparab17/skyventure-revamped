@@ -42,6 +42,11 @@ script = ExtResource("2_7e78a")
 [node name="AmbientLight" type="CanvasModulate" parent="Layers/CaveBackground"]
 color = Color(0.25098, 0.25098, 0.25098, 1)
 
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="StarBulletModule" parent="Objects" instance=ExtResource("6_8ewsb")]
+position = Vector2(240, 104)
+
 [node name="Tiles" type="Node2D" parent="."]
 
 [node name="Collidable" type="TileMapLayer" parent="Tiles"]
@@ -56,11 +61,6 @@ tile_set = ExtResource("5_gguwy")
 [node name="Background" type="TileMapLayer" parent="Tiles"]
 z_index = -2
 tile_set = ExtResource("5_gguwy")
-
-[node name="Objects" type="Node2D" parent="."]
-
-[node name="StarBulletModule" parent="Objects" instance=ExtResource("6_8ewsb")]
-position = Vector2(240, 104)
 
 [node name="Transitions" type="Node2D" parent="."]
 

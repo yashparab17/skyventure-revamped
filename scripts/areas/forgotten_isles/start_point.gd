@@ -7,6 +7,9 @@ var intro_cutscene_id = "intro_cutscene"
 @onready var cutscene_scene = preload("res://scenes/ui/cutscenes/cutscene.tscn")
 @onready var area_music = preload("res://assets/music/forgotten_isles.mp3")
 
+# Preloading effects.
+var block_destroy = preload("res://scenes/effects/block_destroy.tscn")
+
 # Node references.
 @onready var fake_player: Sprite2D = $FakePlayer
 @onready var player: Node2D = $Player
@@ -57,7 +60,7 @@ func _play_intro_cutscene() -> void:
 			"portrait": preload("res://assets/textures/ui/cutscene/portraits/player/flabbergasted.png")
 		},
 		{
-			"text": "On second thought, it's cool.",
+			"text": "On second thought... it's cool, considering everything else in my life.",
 			"name": "Victor",
 			"portrait": preload("res://assets/textures/ui/cutscene/portraits/player/grinning.png")
 		},

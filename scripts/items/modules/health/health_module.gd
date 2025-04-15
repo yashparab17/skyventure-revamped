@@ -55,17 +55,15 @@ func pickup_module() -> void:
 	
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
-		print("Old max health: ", GameState.max_health)
 		GameState.max_health += 1
 		GameState.current_health = GameState.max_health
-		print("New max health: ", GameState.max_health)
 		snd_pickup.play()
 		visible = false
 		
 		var cutscene_instance = cutscene_scene.instantiate()
 		get_tree().root.add_child(cutscene_instance)
-		cutscene_instance.module_name = "Picked up a health module!"
-		cutscene_instance.module_description = "Increased your max health by 3."
+		cutscene_instance.module_name = "Picked up a Health Module!"
+		cutscene_instance.module_description = "Increased max health by 1."
 		cutscene_instance.start_cutscene()
 		
 		var item_pickup_instance = item_pickup.instantiate() as Node2D

@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=4 uid="uid://dpprpvk5earb8"]
+[gd_scene load_steps=14 format=4 uid="uid://dpprpvk5earb8"]
 
 [ext_resource type="Texture2D" uid="uid://d3hhck38po74j" path="res://assets/sprites/characters/player/fake_player.png" id="1_f0qmv"]
 [ext_resource type="Script" uid="uid://ds1wv0kvp0nid" path="res://scripts/screens/introduction.gd" id="1_y6mgy"]
 [ext_resource type="PackedScene" uid="uid://ti01f6us1ym3" path="res://scenes/backforegrounds/forgotten_isles/cave_background.tscn" id="2_f0qmv"]
 [ext_resource type="TileSet" uid="uid://bmy57cy4gyepg" path="res://scenes/areas/forgotten_isles/forgotten_isles.tres" id="3_y6mgy"]
+[ext_resource type="PackedScene" uid="uid://cwu7ohwsb7xhb" path="res://scenes/objects/stations/save_station.tscn" id="6_f0qmv"]
 [ext_resource type="PackedScene" uid="uid://2c8vokrg3u5c" path="res://scenes/objects/interactables/sign.tscn" id="6_ylpqd"]
 [ext_resource type="PackedScene" uid="uid://ddhhs61u2guwu" path="res://scenes/objects/doors/door.tscn" id="7_gexp2"]
+[ext_resource type="PackedScene" uid="uid://8npv4letncp" path="res://scenes/objects/stations/health_station.tscn" id="7_y6mgy"]
 [ext_resource type="PackedScene" uid="uid://15tbit6med7m" path="res://scenes/objects/doors/spawn_point.tscn" id="8_tnpbf"]
 
 [sub_resource type="Animation" id="Animation_y6mgy"]
@@ -141,6 +143,12 @@ tile_map_data = PackedByteArray("AAAaAAUAAAABAAkAAAAaAAYAAAABAAoAAAAbAAUAAAACAAk
 tile_set = ExtResource("3_y6mgy")
 
 [node name="Objects" type="Node2D" parent="."]
+
+[node name="SaveStation" parent="Objects" instance=ExtResource("6_f0qmv")]
+position = Vector2(392, 120)
+
+[node name="HealthStation" parent="Objects" instance=ExtResource("7_y6mgy")]
+position = Vector2(424, 120)
 
 [node name="Sign1" parent="Objects" instance=ExtResource("6_ylpqd")]
 position = Vector2(200, 152)
