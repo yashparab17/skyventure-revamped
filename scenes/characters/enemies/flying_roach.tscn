@@ -5,9 +5,8 @@
 [ext_resource type="AudioStream" uid="uid://cs1yc7b6n5hcp" path="res://assets/sounds/characters/enemies/roach/hurt.wav" id="3_yp3q5"]
 [ext_resource type="AudioStream" uid="uid://thcnkra1yvna" path="res://assets/sounds/characters/enemies/roach/death.wav" id="4_1mby0"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ykdf"]
-radius = 8.0
-height = 20.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1mby0"]
+size = Vector2(12, 20)
 
 [sub_resource type="Animation" id="Animation_yp3q5"]
 resource_name = "death"
@@ -91,9 +90,8 @@ _data = {
 &"hurt": SubResource("Animation_ma4d0")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ma4d0"]
-radius = 11.0
-height = 28.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_is8i0"]
+size = Vector2(16, 22)
 
 [node name="Flying Roach" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
@@ -102,7 +100,7 @@ script = ExtResource("1_ma4d0")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)
-shape = SubResource("CapsuleShape2D_8ykdf")
+shape = SubResource("RectangleShape2D_1mby0")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(-1, -10)
@@ -122,7 +120,7 @@ collision_mask = 2
 
 [node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, -10)
-shape = SubResource("CapsuleShape2D_ma4d0")
+shape = SubResource("RectangleShape2D_is8i0")
 debug_color = Color(0.994119, 0, 0.22716, 0.42)
 
 [node name="Sounds" type="Node" parent="."]
