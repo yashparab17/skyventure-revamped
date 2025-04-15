@@ -19,7 +19,6 @@ shape = SubResource("RectangleShape2D_minc0")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_vxnf2")
-hframes = 4
 
 [node name="DetectionArea" type="Area2D" parent="."]
 collision_mask = 2
