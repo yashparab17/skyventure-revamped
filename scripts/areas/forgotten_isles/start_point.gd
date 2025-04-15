@@ -1,26 +1,43 @@
 extends Node2D
 
-# Variables.
+# Cutscene variables.
 var intro_cutscene_id = "intro_cutscene"
 
 # Preload variables.
 @onready var cutscene_scene = preload("res://scenes/ui/cutscenes/cutscene.tscn")
 @onready var area_music = preload("res://assets/music/forgotten_isles.mp3")
+
+# Node references.
+@onready var fake_player: Sprite2D = $FakePlayer
 @onready var player: Node2D = $Player
+@onready var anim: AnimationPlayer = $Animator
 @onready var hud: CanvasLayer = $HUD
 
 # Called when the area loads in.
 func _ready() -> void:
+	fake_player.hide()
+	
 	if not GameState.has_seen_cutscene(intro_cutscene_id):
-		await get_tree().create_timer(0.1).timeout
-		await _play_intro_cutscene()
+		player.hide()
+		fake_player.show()
+		hud.hide()
+		await get_tree().create_timer(2.0).timeout
+		await _animate_fake_player()
 	
 	# Initialize other systems after cutscene is done.
 	_initialize_systems()
 
+# Animates the fake player sprite.
+func _animate_fake_player() -> void:
+	anim.play("jump")
+	SoundManager.play_sound(preload("res://assets/sounds/characters/player/jump.wav"))
+	await anim.animation_finished
+	fake_player.hide()
+	player.show()
+	await _play_intro_cutscene()
+
+# Animates the introduction cutscene.
 func _play_intro_cutscene() -> void:
-	hud.hide()
-	
 	var cutscene_data = [
 		{
 			"text": "Huh? Where am I?",
@@ -67,6 +84,7 @@ func _play_intro_cutscene() -> void:
 	hud.show()
 
 func _initialize_systems() -> void:
+	fake_player.hide()
 	# Spawn the player accordingly at the correct position.
 	SpawnManager.set_player(player)
 	SpawnManager.spawn_player()

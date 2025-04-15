@@ -10,8 +10,8 @@ func _process(_delta: float) -> void:
 	animate_light()
 
 func _ready() -> void:
-	SoundManager.play_sound_2d(snd_entity_death.stream, global_position)
-	await snd_entity_death.finished
+	var entity_death_player = SoundManager.play_sound_2d(snd_entity_death.stream, global_position)
+	await entity_death_player.finished
 	queue_free()
 
 # Animates light according to the frame.

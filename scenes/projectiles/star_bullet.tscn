@@ -61,7 +61,7 @@ position = Vector2(7, 0)
 texture = SubResource("GradientTexture2D_mdghq")
 
 [node name="Hitbox" type="Area2D" parent="." groups=["destroying"]]
-collision_layer = 2
+collision_layer = 32
 collision_mask = 5
 
 [node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]

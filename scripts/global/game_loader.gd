@@ -11,6 +11,7 @@ var scenes_to_preload = [
 	# Screens.
 	preload("res://scenes/screens/fancy_transition.tscn"),
 	preload("res://scenes/screens/game_over.tscn"),
+	preload("res://scenes/screens/introduction.tscn"),
 	preload("res://scenes/screens/leaderboard.tscn"),
 	preload("res://scenes/screens/main_menu.tscn"),
 	preload("res://scenes/screens/pause_menu.tscn"),

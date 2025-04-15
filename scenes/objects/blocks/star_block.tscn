@@ -20,7 +20,7 @@ shape = SubResource("RectangleShape2D_3dom0")
 texture = ExtResource("1_lc7oo")
 
 [node name="DetectionArea" type="Area2D" parent="."]
-collision_mask = 2
+collision_mask = 32
 
 [node name="DetectionCollision" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("RectangleShape2D_e86nb")

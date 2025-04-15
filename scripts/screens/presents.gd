@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const INTRODUCTION_PATH = "res://scenes/screens/introduction.tscn"
+
 # Node references.
 @onready var anim: AnimationPlayer = $Animator
 @onready var loading_label: Label = $LoadingLabel
@@ -24,4 +26,4 @@ func _finish_loading() -> void:
 	exit()
 
 func exit() -> void:
-	GameManager.transition_to_scene("res://scenes/screens/main_menu.tscn")
+	GameManager.transition_to_scene(INTRODUCTION_PATH, true)

@@ -26,7 +26,7 @@ func play_sound(stream: AudioStream):
 	for player in global_players:
 		if not player.playing:
 			player.stream = stream
-			player.pitch_scale = randf_range(0.8, 1.2)
+			player.pitch_scale = randf_range(0.9, 1.1)
 			player.play()
 			return player
 

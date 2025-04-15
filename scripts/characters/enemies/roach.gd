@@ -266,8 +266,8 @@ func die() -> void:
 	entity_death_instance.global_position = global_position + sprite.position
 	get_parent().add_child(entity_death_instance)
 
-	# 50% chance to drop a health pickup.
-	if randf() < 0.50:
+	# 25% chance to drop a health pickup.
+	if randf() < 0.25:
 		var health_pickup_instance = health_pickup.instantiate() as Node2D
 		health_pickup_instance.global_position = global_position + sprite.position
 		get_parent().add_child(health_pickup_instance)

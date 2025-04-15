@@ -86,18 +86,17 @@ func transition_to_scene(scene_path, use_fancy: bool = false, only_wipe_in: bool
 	
 	if use_fancy:
 		await transition_instance.play_in()
+		await get_tree().create_timer(0.2).timeout
 	else:
 		await get_tree().create_timer(0.4).timeout
 	
 	get_tree().change_scene_to_file(scene_path)
 	
 	if use_fancy && !only_wipe_in:
-		await get_tree().process_frame
-		await get_tree().process_frame
+		await get_tree().create_timer(0.2).timeout
 		await transition_instance.play_out()
 	elif use_fancy && only_wipe_in:
-		await get_tree().process_frame
-		await get_tree().process_frame
+		await get_tree().create_timer(0.2).timeout
 		transition_instance.queue_free()
 	else:
 		transition_instance.queue_free()
