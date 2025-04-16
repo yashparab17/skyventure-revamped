@@ -101,6 +101,7 @@ var walk_snd_interval: float = 0.3
 # CORE FUNCTIONS
 ################################################################################
 
+# Function that activates when the scene is ready.
 func _ready() -> void:
 	SpawnManager.set_player(self)
 	# Connect to GameState signals.
@@ -111,6 +112,7 @@ func _ready() -> void:
 		global_position = GameState.pending_player_position
 		GameState.pending_player_position = Vector2.INF
 
+# Physics process.
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 
@@ -147,12 +149,14 @@ func _physics_process(delta: float) -> void:
 # MOVEMENT FUNCTIONS
 ################################################################################
 
+# Enables movement for the player.
 func enable_movement() -> void:
 	can_move = true
 	if anim:
 		anim.play() # Resume animations.
 	current_state = States.IDLE # Reset to idle state.
 
+# Applies gravity to the player.
 func apply_gravity(delta: float) -> void:
 	if !is_on_floor():
 		velocity.y += gravity * delta
@@ -165,10 +169,12 @@ func apply_gravity(delta: float) -> void:
 	if is_on_ceiling():
 		SoundManager.play_sound(snd_bonk.stream)
 
+# Updates the timers for shooting and walking sounds.
 func update_timers(delta: float) -> void:
 	shoot_timer -= delta
 	walk_snd_timer -= delta
 
+# Handles the player's movement and shooting.
 func handle_movement_and_shooting(delta: float) -> void:
 	# Reset from interact state if no longer pressing down.
 	if current_state == States.INTERACT and !Input.is_action_pressed("aim_down"):
@@ -200,6 +206,7 @@ func handle_movement_and_shooting(delta: float) -> void:
 		shoot_timer = GameState.get_current_weapon().cooldown
 		update_shooting_state(direction)
 
+# Handles ground movement.
 func handle_ground_movement(direction: float, delta: float) -> void:
 	if direction:
 		velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta)
@@ -213,6 +220,7 @@ func handle_ground_movement(direction: float, delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 		current_state = States.IDLE_SHOOT if shoot_timer > 0 else States.IDLE
 
+# Handles air movement.
 func handle_air_movement(direction: float, delta: float) -> void:
 	if velocity.y > 0:
 		current_state = States.FALL_SHOOT if shoot_timer > 0 else States.FALL
@@ -224,6 +232,7 @@ func handle_air_movement(direction: float, delta: float) -> void:
 # AIMING FUNCTIONS
 ################################################################################
 
+# Handles the aiming input.
 func handle_aiming() -> void:
 	if Input.is_action_pressed("aim_up"):
 		# Aim up.
@@ -236,14 +245,14 @@ func handle_aiming() -> void:
 		aim_node.rotation_degrees = 90
 		aim_node.position = Vector2(0, 16) # Adjust position for aiming down.
 	else:
-		# Default to facing direction (left or right)
+		# Default to facing direction (left or right).
 		if facing_direction == FacingDirection.LEFT:
-			# Facing left
+			# Facing left.
 			current_aim_direction = AimDirection.LEFT
 			aim_node.rotation_degrees = 180
 			aim_node.position = Vector2(-16, -8) # Adjust position for facing left.
 		else:
-			# Facing right
+			# Facing right.
 			current_aim_direction = AimDirection.RIGHT
 			aim_node.rotation_degrees = 0
 			aim_node.position = Vector2(16, -8) # Adjust position for facing right.
@@ -252,6 +261,7 @@ func handle_aiming() -> void:
 # WEAPON FUNCTIONS
 ################################################################################
 
+# Handles the collection of weapon modules.
 func collect_module(module_type: String) -> void:
 	match module_type:
 		"star_bullet":
@@ -259,16 +269,19 @@ func collect_module(module_type: String) -> void:
 		"fireball":
 			GameState.unlock_weapon("Fireball")
 
+# Handles the weapon switching input.
 func handle_weapon_switching() -> void:
 	if Input.is_action_just_pressed("next_weapon"):
 		GameState.switch_to_next_weapon()
 	elif Input.is_action_just_pressed("previous_weapon"):
 		GameState.switch_to_previous_weapon()
 
+# Handles the weapon change event.
 func _on_weapon_changed(new_weapon: String) -> void:
 	if new_weapon != "":
 		SoundManager.play_sound(snd_switch_weapon.stream)
 
+# Handles the shooting action.
 func shoot_bullet() -> void:
 	if current_state == States.INTERACT or current_state == States.HURT:
 		return
@@ -289,6 +302,7 @@ func shoot_bullet() -> void:
 		get_tree().current_scene.add_child(bullet)
 		shoot_timer = current_weapon.cooldown
 
+# Update the shooting state based on the player's direction and state.
 func update_shooting_state(direction: float) -> void:
 	if is_on_floor():
 		current_state = States.WALK_SHOOT if direction else States.IDLE_SHOOT
@@ -299,6 +313,7 @@ func update_shooting_state(direction: float) -> void:
 # INTERACTION FUNCTIONS
 ################################################################################
 
+# Handles the player's interaction with objects.
 func handle_interaction() -> void:
 	# Only interact if completely idle (no movement input) and on ground.
 	if (is_on_floor() and
@@ -313,10 +328,12 @@ func handle_interaction() -> void:
 # DAMAGE FUNCTIONS
 ################################################################################
 
+# Handles the player's collision with the enemy.
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy") and not is_invulnerable:
 		take_damage(body.damage_amount, body.global_position.x, false)
 
+# Take damage.
 func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> void:
 	# Allow damage to go through if it's a pitfall and the player is at 1 HP.
 	if is_invulnerable and not (skip_knockback and GameState.current_health == 1):
@@ -364,21 +381,26 @@ func take_damage(damage: int, enemy_x: float, skip_knockback: bool = false) -> v
 		stop_blinking()
 		set_collision_layer_value(2, true)
 		set_collision_mask_value(3, true)
+
 		is_invulnerable = false
-		sprite.visible = true # Ensure the sprite is visible after blinking ends.
+		sprite.visible = true
 		
 		hurtbox_collision.call_deferred("set_disabled", false)
 
+# Starts blinking.
 func start_blinking() -> void:
 	blink_timer.start()
 
+# Stops blinking.
 func stop_blinking() -> void:
 	blink_timer.stop()
 	sprite.visible = true
 
+# Handles the blink timer timeout event.
 func _on_blink_timer_timeout() -> void:
 	sprite.visible = !sprite.visible
 
+# Handles the player's death.
 func die() -> void:
 	# Unpause the game and play the hurt sound effect.
 	collision.call_deferred("set_disabled", true)
@@ -417,16 +439,19 @@ func die() -> void:
 # PITFALL FUNCTIONS
 ################################################################################
 
+# Checks if the player is in a pitfall area.
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("pitfall"):
 		handle_pitfall()
 
+# Handles the player's collision with pitfalls.
 func handle_pitfall() -> void:
 	if GameState.current_health == 1:
 		take_damage(1, global_position.x, true)
 	else:
 		teleport_player()
-	
+
+# Teleports the player to the last safe position.
 func teleport_player() -> void:
 	# Hide the player temporarily and pause processing.
 	sprite.visible = false
@@ -455,6 +480,7 @@ func teleport_player() -> void:
 # ANIMATION FUNCTIONS
 ################################################################################
 
+# Handles the player's animation based on the current state and direction.
 func animate_player() -> void:
 	var animation_name = get_animation_name()
 	# Handle interact animation separately since it should lock other animations.
@@ -479,12 +505,14 @@ func animate_player() -> void:
 		previous_facing = facing_direction
 		previous_aim = current_aim_direction
 
+# Handles the player's hurt animation.
 func animate_hurt() -> void:
 	if facing_direction == FacingDirection.RIGHT:
 		anim.play("hurt_right")
 	else:
 		anim.play("hurt_left")
 
+# Gets the animation name based on the current state and direction.
 func get_animation_name() -> String:
 	var base_animation = ""
 	match current_state:

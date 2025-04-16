@@ -117,10 +117,10 @@ _data = {
 size = Vector2(16, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_356xw"]
-size = Vector2(96, 192)
+size = Vector2(176, 192)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_27m8e"]
-size = Vector2(192, 224)
+size = Vector2(256, 224)
 
 [node name="Critter" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4

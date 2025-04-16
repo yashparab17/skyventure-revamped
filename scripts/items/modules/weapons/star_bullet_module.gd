@@ -13,6 +13,9 @@ extends AnimatedSprite2D
 # Sound references.
 @onready var snd_pickup: AudioStreamPlayer2D = $Sounds/Pickup
 
+# Score variable.
+var score: int = 1000
+
 # Checks if the player is in the pickup area.
 var player_in_area: bool = false
 var player_ref: Node2D = null
@@ -55,23 +58,32 @@ func animate_light() -> void:
 func pickup_module() -> void:
 	if !player_ref:
 		return
-	
+
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		await get_tree().create_timer(0.2)
 		GameState.unlock_weapon(module_type)
-		GameState.increment_score(100)
+		GameState.increment_score(score)
 		snd_pickup.play()
 		visible = false
-		
+
+		var hud = get_tree().get_first_node_in_group("hud")
+		if hud:
+			hud.visible = false
+
 		var cutscene_instance = cutscene_scene.instantiate()
 		get_tree().root.add_child(cutscene_instance)
 		cutscene_instance.module_name = "Picked up the Star Bullet module!"
 		cutscene_instance.module_description = "Allows for the shooting of a star bullet that deals 1 damage."
 		cutscene_instance.start_cutscene()
-		
+
 		var item_pickup_instance = item_pickup.instantiate() as Node2D
 		item_pickup_instance.global_position = global_position
 		get_parent().add_child(item_pickup_instance)
-		
+
+		await cutscene_instance.cutscene_finished
+
+		if hud:
+			hud.visible = true
+
 		queue_free()

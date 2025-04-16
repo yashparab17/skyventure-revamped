@@ -46,6 +46,7 @@ outside="Outside areas."
 pitfall="World boundary."
 spawn_points="Spawn points."
 destroying="Destroying projectiles."
+hud="Heads up display."
 
 [gui]
 

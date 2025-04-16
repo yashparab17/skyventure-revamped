@@ -20,7 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://c31w723xx1ssa" path="res://assets/textures/ui/hud/minimap/background.png" id="15_devq0"]
 [ext_resource type="Texture2D" uid="uid://cywpap5poer6r" path="res://assets/textures/ui/hud/minimap/player_indicator.png" id="16_a3iiw"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="HUD" type="CanvasLayer" groups=["hud"]]
 script = ExtResource("1_bo48s")
 
 [node name="HealthDisplay" type="Control" parent="."]

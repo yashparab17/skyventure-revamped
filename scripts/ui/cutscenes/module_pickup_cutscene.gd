@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal cutscene_finished
+
 # Module variables.
 var module_name: String = "Module Name"
 var module_description: String = "Module Description"
@@ -58,11 +60,13 @@ func end_cutscene():
 	# Immediately block further input.
 	input_allowed = false
 	Input.action_release("jump")
-	
+
 	snd_next.play()
 	await snd_next.finished # Wait for sound to finish.
-	
+
 	MusicManager.resume_music()
 	hide()
 	get_tree().paused = false
+
+	emit_signal("cutscene_finished")
 	queue_free()
