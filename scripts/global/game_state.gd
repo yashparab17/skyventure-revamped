@@ -71,7 +71,9 @@ var pending_player_position: Vector2 = Vector2.INF:
 # Weapon system.
 var weapons: Array[Weapon] = [
 	Weapon.new("Star Bullet", preload("res://scenes/projectiles/star_bullet.tscn"), 0.25),
-	Weapon.new("Fireball", preload("res://scenes/projectiles/fireball.tscn"), 0.8)
+	Weapon.new("Fireball", preload("res://scenes/projectiles/fireball.tscn"), 0.8),
+	Weapon.new("Leaf Blower", preload("res://scenes/projectiles/leaf_projectile.tscn"), 0.15),
+	Weapon.new("Water Missile", preload("res://scenes/projectiles/water_missile.tscn"), 1.0),
 ]
 
 var current_weapon_index: int = -1:

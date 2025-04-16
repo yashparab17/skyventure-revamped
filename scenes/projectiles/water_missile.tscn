@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://rm634lvgk7nx"]
+
+[ext_resource type="Texture2D" uid="uid://3h5ycbc8t7fd" path="res://assets/sprites/projectiles/water_missile.png" id="1_foeac"]
+[ext_resource type="Script" uid="uid://u7soawa3yxce" path="res://scripts/projectiles/water_missile.gd" id="2_iyoup"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iyoup"]
+atlas = ExtResource("1_foeac")
+region = Rect2(0, 0, 16, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7pjdn"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iyoup")
+}],
+"loop": true,
+"name": &"water_missile",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w6x3i"]
+size = Vector2(16, 10)
+
+[node name="WaterMissile" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_7pjdn")
+animation = &"water_missile"
+autoplay = "water_missile"
+script = ExtResource("2_iyoup")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="Hitbox" type="Area2D" parent="." groups=["destroying"]]
+collision_layer = 32
+collision_mask = 5
+
+[node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_w6x3i")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

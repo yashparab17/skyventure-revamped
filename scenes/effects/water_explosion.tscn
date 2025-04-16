@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://bcup8hcwopq83"]
+
+[ext_resource type="Texture2D" uid="uid://cge2xoxkdwcw8" path="res://assets/sprites/effects/water_explosion.png" id="1_l6iwb"]
+[ext_resource type="Script" uid="uid://cb6o22oc6320j" path="res://scripts/effects/water_explosion.gd" id="2_qrisu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qrisu"]
+atlas = ExtResource("1_l6iwb")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41mo2"]
+atlas = ExtResource("1_l6iwb")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qx0q3"]
+atlas = ExtResource("1_l6iwb")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eyyob"]
+atlas = ExtResource("1_l6iwb")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ebtr"]
+atlas = ExtResource("1_l6iwb")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lk0gr"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qrisu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_41mo2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qx0q3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyyob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ebtr")
+}],
+"loop": false,
+"name": &"water_explosion",
+"speed": 20.0
+}]
+
+[node name="WaterExplosion" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_lk0gr")
+animation = &"water_explosion"
+autoplay = "water_explosion"
+script = ExtResource("2_qrisu")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

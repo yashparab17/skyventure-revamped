@@ -1,0 +1,86 @@
+[gd_scene load_steps=12 format=3 uid="uid://c31xscmoyu7hb"]
+
+[ext_resource type="Texture2D" uid="uid://daqgkacimjc86" path="res://assets/sprites/effects/leaf_impact.png" id="1_dlum3"]
+[ext_resource type="Script" uid="uid://c15i86gbrsywb" path="res://scripts/effects/leaf_impact.gd" id="2_n6ho7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6ho7"]
+atlas = ExtResource("1_dlum3")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgruq"]
+atlas = ExtResource("1_dlum3")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2bv0"]
+atlas = ExtResource("1_dlum3")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxqsd"]
+atlas = ExtResource("1_dlum3")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1ek3"]
+atlas = ExtResource("1_dlum3")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caw72"]
+atlas = ExtResource("1_dlum3")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anu1e"]
+atlas = ExtResource("1_dlum3")
+region = Rect2(48, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u74f8"]
+atlas = ExtResource("1_dlum3")
+region = Rect2(56, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4sykb"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6ho7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgruq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2bv0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xxqsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1ek3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caw72")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anu1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u74f8")
+}],
+"loop": false,
+"name": &"impact",
+"speed": 20.0
+}]
+
+[node name="LeafImpact" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_4sykb")
+animation = &"impact"
+autoplay = "impact"
+script = ExtResource("2_n6ho7")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

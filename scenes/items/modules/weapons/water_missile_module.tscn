@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=3 uid="uid://c634rypdd0h3l"]
+
+[ext_resource type="Texture2D" uid="uid://cu6842beu176i" path="res://assets/sprites/items/modules/weapons/water_missile_module.png" id="1_cdmd3"]
+[ext_resource type="AudioStream" uid="uid://s2u362nrra63" path="res://assets/sounds/items/modules/get_module.wav" id="1_gvmxb"]
+[ext_resource type="Script" uid="uid://dgm54snifl282" path="res://scripts/items/modules/weapons/water_missile_module.gd" id="2_gqpxw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqpxw"]
+atlas = ExtResource("1_cdmd3")
+region = Rect2(0, 0, 20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjj5v"]
+atlas = ExtResource("1_cdmd3")
+region = Rect2(20, 0, 20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emrqj"]
+atlas = ExtResource("1_cdmd3")
+region = Rect2(40, 0, 20, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cdmd3"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 10.0,
+"texture": SubResource("AtlasTexture_gqpxw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjj5v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emrqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjj5v")
+}],
+"loop": true,
+"name": &"flash",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gqpxw"]
+size = Vector2(22, 14)
+
+[sub_resource type="Gradient" id="Gradient_kjj5v"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_emrqj"]
+gradient = SubResource("Gradient_kjj5v")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="WaterMissileModule" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_cdmd3")
+animation = &"flash"
+autoplay = "flash"
+script = ExtResource("2_gqpxw")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("RectangleShape2D_gqpxw")
+
+[node name="Light" type="PointLight2D" parent="."]
+color = Color(0, 1, 1, 1)
+texture = SubResource("GradientTexture2D_emrqj")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Pickup" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("1_gvmxb")
