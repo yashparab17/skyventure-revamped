@@ -6,6 +6,8 @@
 
 [node name="Layer 0" type="Parallax2D" parent="."]
 scroll_scale = Vector2(1.1, 1.1)
+repeat_size = Vector2(0, 240)
+repeat_times = 5
 
 [node name="Texture" type="TextureRect" parent="Layer 0"]
 offset_right = 512.0

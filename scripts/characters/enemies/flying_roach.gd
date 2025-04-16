@@ -26,7 +26,7 @@ var health_pickup = preload("res://scenes/items/pickups/health_pickup.tscn")
 @export var second_patrol_point: Vector2
 
 # Enemy score.
-@export var score: int = 100
+@export var score: int = 50
 
 ################################################################################
 # PATROL SYSTEM

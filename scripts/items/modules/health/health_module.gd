@@ -1,5 +1,8 @@
 extends AnimatedSprite2D
 
+# Export variables.
+@export var module_id: String = ""
+
 # Item pickup effect.
 @onready var item_pickup = preload("res://scenes/effects/item_pickup.tscn")
 @onready var cutscene_scene = preload("res://scenes/ui/cutscenes/module_pickup_cutscene.tscn")
@@ -14,8 +17,12 @@ extends AnimatedSprite2D
 var player_in_area: bool = false
 var player_ref: Node2D = null
 
+func _ready() -> void:
+	if GameState.has_collected_module(module_id):
+		queue_free()
+
 # Called when the player enters the area.
-func _on_pickup_area_body_entered(body: Node2D) -> void:
+func _on_pickup_area_body_entered(body: Node2D) -> void:	
 	if body.is_in_group("player"):
 		player_in_area = true
 		player_ref = body
@@ -56,6 +63,7 @@ func pickup_module() -> void:
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		GameState.max_health += 1
+		GameState.mark_module_as_collected(module_id)
 		GameState.current_health = GameState.max_health
 		snd_pickup.play()
 		visible = false

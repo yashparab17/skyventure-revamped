@@ -93,7 +93,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_is8i0"]
 size = Vector2(16, 22)
 
-[node name="Flying Roach" type="CharacterBody2D" groups=["enemy"]]
+[node name="FlyingRoach" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_ma4d0")
@@ -116,7 +116,7 @@ autoplay = "fly"
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 32
 
 [node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, -10)

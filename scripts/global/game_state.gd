@@ -96,6 +96,15 @@ var pending_save_data: Dictionary = {}
 # Cutscene system.
 var triggered_cutscenes: Dictionary = {}
 
+# Module system.
+var collected_modules: Dictionary = {}
+
+func has_collected_module(module_id: String) -> bool:
+	return collected_modules.get(module_id, false)
+
+func mark_module_as_collected(module_id: String) -> void:
+	collected_modules[module_id] = true
+
 ################################################################################
 # PUBLIC METHODS - HEALTH
 ################################################################################

@@ -20,6 +20,10 @@ var score: int = 1000
 var player_in_area: bool = false
 var player_ref: Node2D = null
 
+func _ready() -> void:
+	if GameState.has_weapon("Star Bullet"):
+		queue_free()
+
 # Called when the player enters the area.
 func _on_pickup_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):

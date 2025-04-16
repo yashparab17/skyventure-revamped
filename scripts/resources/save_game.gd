@@ -8,3 +8,4 @@ class_name SaveGame
 @export var unlocked_weapons: PackedStringArray = []
 @export var current_weapon: String = ""
 @export var triggered_cutscenes: Dictionary = {}
+@export var collected_modules: Dictionary = {}
