@@ -35,6 +35,16 @@ var coyote_timer: float = 0.0
 # Checks if player can move.
 var can_move: bool = true
 
+# Booster properties.
+var has_booster: bool = true
+var is_boosting: bool = false
+var has_boost_available: bool = true
+var boost_timer: float = 0.0
+var boost_duration: float = 0.35
+var boost_speed: float = 300
+var boost_cooldown: float = 0.7
+var boost_cooldown_timer: float = 0.0
+
 ################################################################################
 # NODE REFERENCES
 ################################################################################
@@ -114,7 +124,10 @@ func _ready() -> void:
 
 # Physics process.
 func _physics_process(delta: float) -> void:
-	apply_gravity(delta)
+	if not is_boosting:
+		apply_gravity(delta)
+	else:
+		pass
 
 	if not can_move or current_state == States.HURT:
 		return # Skip processing if the player is hurt.
@@ -134,6 +147,7 @@ func _physics_process(delta: float) -> void:
 		coyote_timer -= delta
 
 	update_timers(delta)
+	update_boost_timers(delta)
 
 	handle_movement_and_shooting(delta)
 	handle_weapon_switching()
@@ -174,6 +188,22 @@ func update_timers(delta: float) -> void:
 	shoot_timer -= delta
 	walk_snd_timer -= delta
 
+# Updates booster timers.
+func update_boost_timers(delta: float) -> void:
+	if boost_timer > 0:
+		boost_timer -= delta
+		if boost_timer <= 0:
+			end_boost()
+	
+	if boost_cooldown_timer > 0:
+		boost_cooldown_timer -= delta
+	
+	# Reset boost availability when on ground
+	if is_on_floor():
+		has_boost_available = true
+		is_boosting = false
+		boost_cooldown_timer = 0  # Reset cooldown when grounded
+
 # Handles the player's movement and shooting.
 func handle_movement_and_shooting(delta: float) -> void:
 	# Reset from interact state if no longer pressing down.
@@ -193,10 +223,17 @@ func handle_movement_and_shooting(delta: float) -> void:
 		handle_air_movement(direction, delta)
 	
 	# Handle jumping.
-	if Input.is_action_just_pressed("jump") and coyote_timer > 0.0:
-		velocity.y = jump_force
-		current_state = States.JUMP
-		SoundManager.play_sound(snd_jump.stream)
+	if Input.is_action_just_pressed("jump"):
+		if is_on_floor() or coyote_timer > 0.0:
+			# Regular jump
+			velocity.y = jump_force
+			current_state = States.JUMP
+			SoundManager.play_sound(snd_jump.stream)
+			has_boost_available = true  # Reset boost availability on ground jump
+		elif has_booster and has_boost_available and not is_boosting and boost_cooldown_timer <= 0:
+			# Air boost
+			activate_boost()
+			has_boost_available = false  # Use up the boost
 
 	handle_aiming()
 
@@ -475,6 +512,41 @@ func teleport_player() -> void:
 	await get_tree().create_timer(0.1).timeout
 	take_damage(1, global_position.x, true)
 	set_physics_process(true)
+
+################################################################################
+# BOOSTER FUNCTIONS
+################################################################################
+
+func activate_boost() -> void:
+	is_boosting = true
+	boost_timer = boost_duration
+	boost_cooldown_timer = boost_cooldown
+	
+	# Reset velocity for clean boost
+	velocity = Vector2.ZERO
+	
+	if Input.is_action_pressed("aim_up"):
+		velocity.y = -boost_speed * 0.7  # Upward boost (70% strength)
+		current_state = States.JUMP
+	elif Input.is_action_pressed("aim_down"):
+		velocity.y = boost_speed
+		current_state = States.FALL
+	else:
+		# Horizontal boost
+		var direction = 1 if facing_direction == FacingDirection.RIGHT else -1
+		velocity.x = direction * boost_speed
+		current_state = States.JUMP
+	
+	SoundManager.play_sound(snd_jump.stream)
+	
+	# Debug output
+	print("Boost activated - Velocity: ", velocity, " Direction: ", 
+		"Up" if Input.is_action_pressed("aim_up") else 
+		"Down" if Input.is_action_pressed("aim_down") else 
+		"Left" if facing_direction == FacingDirection.LEFT else "Right")
+
+func end_boost() -> void:
+	is_boosting = false
 
 ################################################################################
 # ANIMATION FUNCTIONS
