@@ -14,7 +14,7 @@ extends AnimatedSprite2D
 @onready var snd_pickup: AudioStreamPlayer2D = $Sounds/Pickup
 
 # Score variable.
-var score: int = 1000
+var score: int = 500
 
 # Checks if the player is in the pickup area.
 var player_in_area: bool = false

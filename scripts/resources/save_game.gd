@@ -9,3 +9,4 @@ class_name SaveGame
 @export var current_weapon: String = ""
 @export var triggered_cutscenes: Dictionary = {}
 @export var collected_modules: Dictionary = {}
+@export var booster_unlocked: bool = false

@@ -20,6 +20,11 @@ signal weapon_unlocked(weapon_name)
 # Player signals.
 signal player_position_updated(new_position)
 
+# Booster signals.
+signal booster_unlocked
+signal booster_activated
+signal booster_ended
+
 ################################################################################
 # CONSTANTS
 ################################################################################
@@ -83,6 +88,21 @@ var current_weapon_name := "":
 		if value != current_weapon_name:
 			current_weapon_name = value
 			emit_signal("weapon_changed", current_weapon_name)
+
+# Booster system.
+var has_booster_unlocked: bool = false:
+	set(value):
+		has_booster_unlocked = value
+		emit_signal("booster_unlocked") # You'll need to add this signal
+
+var has_boost_available: bool = true
+var booster_active: bool = false
+var boost_cooldown_timer: float = 0.0
+var boost_cooldown: float = 1.0
+
+# Player reference.
+var player_is_on_floor: bool = false
+var player_node: CharacterBody2D = null
 
 # Spawn system.
 var pending_spawn_data := {
@@ -190,6 +210,46 @@ func get_unlocked_weapon_names() -> PackedStringArray:
 	return unlocked_names
 
 ################################################################################
+# PUBLIC METHODS - BOOSTER MODULE
+################################################################################
+
+func register_player(player: CharacterBody2D) -> void:
+	player_node = player
+
+func unlock_booster() -> void:
+	if not has_booster_unlocked:
+		has_booster_unlocked = true
+		emit_signal("booster_unlocked")
+
+func is_booster_available() -> bool:
+	return has_booster_unlocked and has_boost_available and not player_is_on_floor
+
+func update_boost_timers(delta: float) -> void:
+	if boost_cooldown_timer > 0:
+		boost_cooldown_timer -= delta
+	# Reset cooldown when landing
+	if player_is_on_floor:
+		has_boost_available = true
+		boost_cooldown_timer = 0
+
+func start_boost() -> void:
+	if is_booster_available():
+		booster_active = true
+		has_boost_available = false
+		boost_cooldown_timer = boost_cooldown
+		emit_signal("booster_activated")
+
+func end_boost() -> void:
+	if booster_active:
+		booster_active = false
+		emit_signal("booster_ended")
+
+func reset_booster() -> void:
+	has_booster_unlocked = false
+	booster_active = false
+	boost_cooldown_timer = 0.0
+
+################################################################################
 # PUBLIC METHODS - SPAWN SYSTEM
 ################################################################################
 
@@ -224,6 +284,8 @@ func reset_game_state() -> void:
 	# Reset weapon unlocks but keep the definitions.
 	for weapon in weapons:
 		weapon.unlocked = false
+	
+	reset_booster()
 	
 	# Clear pending position and save.
 	pending_player_position = Vector2.INF

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cchu86rc1g61g"]
+[gd_scene load_steps=12 format=3 uid="uid://cchu86rc1g61g"]
 
 [ext_resource type="Texture2D" uid="uid://bam3thi526hlw" path="res://assets/sprites/items/modules/weapons/fireball_module.png" id="1_0yq4i"]
 [ext_resource type="Script" uid="uid://2ejofcangnn" path="res://scripts/items/modules/weapons/fireball_module.gd" id="2_unqap"]
@@ -48,23 +48,40 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0yq4i"]
 size = Vector2(22, 14)
 
+[sub_resource type="Gradient" id="Gradient_e6jrc"]
+offsets = PackedFloat32Array(0.3, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dmkeu"]
+gradient = SubResource("Gradient_e6jrc")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="FireballModule" type="AnimatedSprite2D" groups=["items"]]
+z_index = -1
 sprite_frames = SubResource("SpriteFrames_euoce")
 animation = &"flash"
 autoplay = "flash"
 script = ExtResource("2_unqap")
 
-[node name="Pickup Area" type="Area2D" parent="."]
+[node name="PickupArea" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 2
 
-[node name="Collision" type="CollisionShape2D" parent="Pickup Area"]
+[node name="Collision" type="CollisionShape2D" parent="PickupArea"]
 shape = SubResource("RectangleShape2D_0yq4i")
+
+[node name="Light" type="PointLight2D" parent="."]
+color = Color(1, 0.576471, 0, 1)
+texture = SubResource("GradientTexture2D_dmkeu")
 
 [node name="Sounds" type="Node" parent="."]
 
 [node name="Pickup" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("3_dmkeu")
 
-[connection signal="body_entered" from="Pickup Area" to="." method="_on_pickup_area_body_entered"]
-[connection signal="body_exited" from="Pickup Area" to="." method="_on_pickup_area_body_exited"]
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
+[connection signal="body_exited" from="PickupArea" to="." method="_on_pickup_area_body_exited"]

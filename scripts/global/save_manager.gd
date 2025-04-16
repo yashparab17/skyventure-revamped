@@ -22,6 +22,7 @@ func save_game() -> void:
 	save_data.current_weapon = GameState.current_weapon_name
 	save_data.triggered_cutscenes = GameState.triggered_cutscenes
 	save_data.collected_modules = GameState.collected_modules
+	save_data.booster_unlocked = GameState.has_booster_unlocked
 	
 	var error = ResourceSaver.save(save_data, SAVE_PATH)
 	if error != OK:
@@ -62,6 +63,9 @@ func load_game() -> bool:
 		
 		# Restore collected modules.
 		GameState.collected_modules = save_data.collected_modules
+		
+		if save_data.booster_unlocked:
+			GameState.unlock_booster()
 		
 		# Change scene.
 		await GameManager.transition_to_scene(save_data.scene_path, true)

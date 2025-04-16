@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://by6l4x7lc28j6" path="res://assets/sprites/projectiles/fireball.png" id="1_nx3os"]
 [ext_resource type="Script" uid="uid://ceu06gin8f7hv" path="res://scripts/projectiles/fireball.gd" id="2_t07v1"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_t07v1"]
-radius = 7.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t07v1"]
+size = Vector2(12, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t07v1"]
 atlas = ExtResource("1_nx3os")
@@ -47,16 +47,15 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_nx3os"]
-radius = 7.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s73vv"]
+size = Vector2(14, 14)
 
 [node name="Fireball" type="CharacterBody2D"]
 collision_layer = 0
-collision_mask = 5
 script = ExtResource("2_t07v1")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_t07v1")
+shape = SubResource("RectangleShape2D_t07v1")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ynm7a")
@@ -69,11 +68,11 @@ one_shot = true
 autostart = true
 
 [node name="Hitbox" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 32
 collision_mask = 5
 
 [node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("CircleShape2D_nx3os")
+shape = SubResource("RectangleShape2D_s73vv")
 debug_color = Color(1, 0.000698955, 0.0821795, 0.42)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,6 +1,6 @@
 extends Camera2D
 
-@export var vertical_aim_offset := 64
+@export var vertical_aim_offset := 32
 
 var player: Node2D
 
