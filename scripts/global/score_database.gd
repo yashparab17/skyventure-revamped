@@ -54,14 +54,14 @@ func _save_score_online(player_name: String, score: int):
 	http_request.request(url, headers, HTTPClient.METHOD_POST, body)
 
 # Retrieves score.
-func _get_online_scores(limit: int = 10):
+func _get_online_scores():
 	var headers = [
 		"apikey: " + API_KEY,
 		"Authorization: Bearer " + API_KEY,
 		"Accept: application/json"
 	]
 	
-	var url = SUPABASE_URL + ENDPOINT + "?select=name,score&order=score.desc&limit=" + str(limit)
+	var url = SUPABASE_URL + ENDPOINT + "?select=name,score&order=score.desc"
 	http_request.request(url, headers, HTTPClient.METHOD_GET)
 
 # Saves score locally.
@@ -82,6 +82,12 @@ func _load_local_scores():
 	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 	var content = file.get_as_text()
+	var parsed = JSON.parse_string(content)
+	
+	# Safeguard for corrupted or invalid JSON.
+	if typeof(parsed) != TYPE_ARRAY:
+		return []
+	
 	return JSON.parse_string(content)
 
 # Handles online scores being loaded.

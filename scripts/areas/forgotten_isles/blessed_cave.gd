@@ -7,7 +7,7 @@ extends Node2D
 @onready var star_bullet_module = $Objects/StarBulletModule
 
 # Preloading music.
-@onready var area_music = preload("res://assets/music/forgotten_isles.mp3")
+@onready var area_music = preload("res://assets/music/pulse.mp3")
 
 # Called when the area loads in.
 func _ready() -> void:

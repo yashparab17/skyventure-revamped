@@ -1,23 +1,37 @@
 extends CanvasLayer
 
+# Preloading variables.
+@onready var main_menu = preload("res://scenes/screens/main_menu.tscn")
+
 # Node references.
 @onready var container: VBoxContainer = $ScrollContainer/VBoxContainer
+@onready var scroll_container: ScrollContainer = $ScrollContainer
 @onready var leaderboard_label: Label = $LeaderboardLabel
 @onready var loading_label: Label = $LoadingLabel
 @onready var error_label: Label = $ErrorLabel
-@onready var retry_button: Button = $RetryButton
+@onready var refresh_button: Button = $PanelContainer/MarginContainer/VBoxContainer/RefreshButton
+@onready var main_menu_button: Button = $PanelContainer/MarginContainer/VBoxContainer/MainMenuButton
+
+# Preloading music.
+@onready var music = preload("res://assets/music/leaderboard.mp3")
 
 func _ready():
+	if not MusicManager.is_playing() or not MusicManager.is_current_music(music):
+		MusicManager.play_music(music)
+		
 	refresh_leaderboard()
 	leaderboard_label.hide()
-	retry_button.hide()
-	retry_button.pressed.connect(_on_retry_button_pressed)
+	refresh_button.hide()
+	main_menu_button.hide()
+	refresh_button.pressed.connect(_on_refresh_button_pressed)
 
 # Refreshes the leaderboard by clearing and re-loading scores.
 func refresh_leaderboard():
 	loading_label.show()
+	scroll_container.hide()
 	error_label.hide()
-	retry_button.hide()
+	refresh_button.hide()
+	main_menu_button.hide()
 	clear_scores()
 	
 	# Load scores (automatically handles online/offline fallback).
@@ -31,6 +45,7 @@ func clear_scores():
 # Displays the given scores in the leaderboard.
 func display_scores(scores: Array):
 	leaderboard_label.show()
+	scroll_container.show()
 	clear_scores()
 	
 	if scores.is_empty():
@@ -45,6 +60,9 @@ func display_scores(scores: Array):
 		var label = Label.new()
 		label.text = "%d. %s - %d" % [i + 1, entry["name"], entry["score"]]
 		container.add_child(label)
+	
+	refresh_button.show()
+	main_menu_button.show()
 
 # Handles the response from the score loading.
 func _on_scores_received(_result, response_code, _headers, body):
@@ -58,13 +76,16 @@ func _on_scores_received(_result, response_code, _headers, body):
 			# Handle unexpected data format
 			error_label.text = "Data format error"
 			error_label.show()
-			retry_button.show()
+			refresh_button.show()
 	else:
 		# Show error message
 		error_label.text = "Error loading scores (Code %d)" % response_code
 		error_label.show()
-		retry_button.show()
+		refresh_button.show()
 
-# Handles the retry button being pressed.
-func _on_retry_button_pressed():
+# Handles the refresh button being pressed.
+func _on_refresh_button_pressed():
 	refresh_leaderboard()
+
+func _on_main_menu_button_pressed() -> void:
+	GameManager.transition_to_scene(main_menu.resource_path, true)

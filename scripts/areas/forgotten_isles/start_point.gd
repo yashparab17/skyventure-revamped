@@ -5,7 +5,6 @@ var intro_cutscene_id = "intro_cutscene"
 
 # Preload variables.
 @onready var cutscene_scene = preload("res://scenes/ui/cutscenes/cutscene.tscn")
-@onready var area_music = preload("res://assets/music/forgotten_isles.mp3")
 
 # Preloading effects.
 var block_destroy = preload("res://scenes/effects/block_destroy.tscn")
@@ -15,6 +14,10 @@ var block_destroy = preload("res://scenes/effects/block_destroy.tscn")
 @onready var player: Node2D = $Player
 @onready var anim: AnimationPlayer = $Animator
 @onready var hud: CanvasLayer = $HUD
+
+# Preloading music.
+@onready var awkward_music = preload("res://assets/music/awkward.mp3")
+@onready var area_music = preload("res://assets/music/forgotten_isles.mp3")
 
 # Called when the area loads in.
 func _ready() -> void:
@@ -27,6 +30,10 @@ func _ready() -> void:
 		hud.hide()
 		await get_tree().create_timer(2.0).timeout
 		await _animate_fake_player()
+	else:
+		# Play area music only if player already saw the cutscene
+		if not MusicManager.is_playing() or not MusicManager.is_current_music(area_music):
+			MusicManager.play_music(area_music)
 	
 	# Initialize other systems after cutscene is done.
 	_initialize_systems()
@@ -42,7 +49,7 @@ func _animate_fake_player() -> void:
 
 # Animates the introduction cutscene.
 func _play_intro_cutscene() -> void:
-	MusicManager.play_music(preload("res://assets/music/awkward.mp3"))
+	MusicManager.play_music(awkward_music)
 	
 	var cutscene_data = [
 		{
@@ -87,7 +94,6 @@ func _play_intro_cutscene() -> void:
 	
 	# Wait for cutscene to finish.
 	await cutscene_instance.tree_exited
-	MusicManager.stop_music()
 	hud.show()
 
 func _initialize_systems() -> void:
@@ -96,7 +102,3 @@ func _initialize_systems() -> void:
 	SpawnManager.set_player(player)
 	SpawnManager.spawn_player()
 	print("Player spawned!")
-
-	# Play the appropriate music.
-	if not MusicManager.is_playing() or not MusicManager.is_current_music(area_music):
-		MusicManager.play_music(area_music)
