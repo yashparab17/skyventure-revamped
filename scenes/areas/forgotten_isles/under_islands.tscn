@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://beny66ev1crw2"]
+[gd_scene load_steps=16 format=4 uid="uid://beny66ev1crw2"]
 
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="1_x3brp"]
 [ext_resource type="Script" uid="uid://nyx6470i7seu" path="res://scripts/areas/forgotten_isles/under_islands.gd" id="1_ywan2"]
@@ -15,6 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://15tbit6med7m" path="res://scenes/objects/doors/spawn_point.tscn" id="8_ywan2"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_m6w8v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtl1m"]
+size = Vector2(20, 106)
 
 [node name="UnderIslands" type="Node2D" groups=["outside"]]
 script = ExtResource("1_ywan2")
@@ -161,3 +164,15 @@ collision_mask = 2
 
 [node name="Collision" type="CollisionShape2D" parent="Pitfall"]
 shape = SubResource("WorldBoundaryShape2D_m6w8v")
+
+[node name="Triggers" type="Node2D" parent="."]
+
+[node name="Cutscene1Trigger" type="Area2D" parent="Triggers"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/Cutscene1Trigger"]
+position = Vector2(480, -275)
+shape = SubResource("RectangleShape2D_vtl1m")
+
+[connection signal="body_entered" from="Triggers/Cutscene1Trigger" to="." method="_on_cutscene_1_trigger_body_entered"]
