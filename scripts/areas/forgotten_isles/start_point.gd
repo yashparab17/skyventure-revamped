@@ -60,7 +60,7 @@ func _play_intro_cutscene() -> void:
 			"portrait": preload("res://assets/textures/ui/cutscene/portraits/player/flabbergasted.png")
 		},
 		{
-			"text": "On second thought... it's cool, considering everything else in my life.",
+			"text": "On second thought... it's cool, considering everything else going on in my life.",
 			"name": "Victor",
 			"portrait": preload("res://assets/textures/ui/cutscene/portraits/player/grinning.png")
 		},

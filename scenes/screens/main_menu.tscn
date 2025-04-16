@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://dwbtm6p4a8ye"]
+[gd_scene load_steps=9 format=4 uid="uid://dwbtm6p4a8ye"]
 
 [ext_resource type="Script" uid="uid://bi2ohkygaft86" path="res://scripts/screens/main_menu.gd" id="1_sjck8"]
 [ext_resource type="Theme" uid="uid://beyey7lcgi7mq" path="res://assets/themes/default.tres" id="2_nee2d"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bdlrbfiidkw6r" path="res://scenes/backforegrounds/forgotten_isles/sky_background.tscn" id="4_kr80i"]
 [ext_resource type="PackedScene" uid="uid://byuo6h23p4gkf" path="res://scenes/backforegrounds/forgotten_isles/sky_foreground.tscn" id="5_e21yp"]
 [ext_resource type="Texture2D" uid="uid://c8xkk7pjpcho3" path="res://assets/sprites/characters/player/player.png" id="7_e21yp"]
+[ext_resource type="AudioStream" uid="uid://dqhggamn0c4ph" path="res://assets/sounds/screens/main_menu/pressed.wav" id="8_vp5vp"]
 
 [node name="MainMenu" type="CanvasLayer" groups=["unpausable"]]
 script = ExtResource("1_sjck8")
@@ -90,6 +91,11 @@ texture = ExtResource("7_e21yp")
 hframes = 8
 vframes = 17
 frame = 104
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Pressed" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_vp5vp")
 
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/NewAdventureButton" to="." method="_on_new_adventure_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
