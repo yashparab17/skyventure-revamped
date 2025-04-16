@@ -1,6 +1,7 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bmy57cy4gyepg"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://bmy57cy4gyepg"]
 
 [ext_resource type="Texture2D" uid="uid://c8pcg8wyh6xy1" path="res://assets/tilesets/forgotten_isles/rugged_rocks.png" id="1_48eed"]
+[ext_resource type="Texture2D" uid="uid://dct4s3i23886v" path="res://assets/tilesets/forgotten_isles/heavenly_monolith.png" id="2_p6jfv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7k6ii"]
 texture = ExtResource("1_48eed")
@@ -162,7 +163,40 @@ texture = ExtResource("1_48eed")
 9:6/0 = 0
 8:7/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8vqpg"]
+texture = ExtResource("2_p6jfv")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0 = 0
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:4/0 = 0
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:4/0 = 0
+3:4/0 = 0
+3:0/0 = 0
+3:1/0 = 0
+
 [resource]
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 38
 sources/0 = SubResource("TileSetAtlasSource_7k6ii")
+sources/1 = SubResource("TileSetAtlasSource_8vqpg")

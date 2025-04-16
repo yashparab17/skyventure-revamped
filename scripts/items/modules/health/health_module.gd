@@ -52,14 +52,18 @@ func animate_light() -> void:
 func pickup_module() -> void:
 	if !player_ref:
 		return
-	
+
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		GameState.max_health += 1
 		GameState.current_health = GameState.max_health
 		snd_pickup.play()
 		visible = false
-		
+
+		var hud = get_tree().get_first_node_in_group("hud")
+		if hud:
+			hud.visible = false
+
 		var cutscene_instance = cutscene_scene.instantiate()
 		get_tree().root.add_child(cutscene_instance)
 		cutscene_instance.module_name = "Picked up a Health Module!"
@@ -69,5 +73,10 @@ func pickup_module() -> void:
 		var item_pickup_instance = item_pickup.instantiate() as Node2D
 		item_pickup_instance.global_position = global_position
 		get_parent().add_child(item_pickup_instance)
-		
+
+		await cutscene_instance.cutscene_finished
+
+		if hud:
+			hud.visible = true
+
 		queue_free()

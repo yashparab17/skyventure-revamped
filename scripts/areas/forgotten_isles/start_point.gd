@@ -21,6 +21,7 @@ func _ready() -> void:
 	fake_player.hide()
 	
 	if not GameState.has_seen_cutscene(intro_cutscene_id):
+		player.can_move = false
 		player.hide()
 		fake_player.show()
 		hud.hide()

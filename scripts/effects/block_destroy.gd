@@ -35,4 +35,4 @@ func animate_light() -> void:
 				6:
 					light.energy = 0.25
 				7:
-					light.energy = 0.125
+					light.energy = 0.0

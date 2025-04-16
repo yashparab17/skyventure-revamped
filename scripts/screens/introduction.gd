@@ -37,9 +37,13 @@ func animate_fake_player() -> void:
 	get_parent().add_child(block_destroy_instance)
 	
 	anim.play("land")
-	await get_tree().create_timer(3.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	exit()
 
 # Exits the introduction scene and transitions to the main menu.
 func exit() -> void:
 	GameManager.transition_to_scene(MAIN_MENU_PATH, true)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("jump"):
+		exit()
