@@ -208,7 +208,7 @@ func _on_land_timer_timeout() -> void:
 
 # Handles the enemy's collision with the player and pitfalls.
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("pitfall") or area.get_parent().has_method("handle_collision"):
+	if area.is_in_group("pitfall") or area.get_parent().has_method("handle_collision") or area.get_parent().has_method("explode"):
 		die()
 
 # Handles the enemy's collision with the player.

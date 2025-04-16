@@ -56,7 +56,8 @@ height = 20
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="WaterMissileModule" type="AnimatedSprite2D"]
+[node name="WaterMissileModule" type="AnimatedSprite2D" groups=["items"]]
+z_index = -1
 sprite_frames = SubResource("SpriteFrames_cdmd3")
 animation = &"flash"
 autoplay = "flash"
@@ -77,3 +78,6 @@ texture = SubResource("GradientTexture2D_emrqj")
 
 [node name="Pickup" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("1_gvmxb")
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
+[connection signal="body_exited" from="PickupArea" to="." method="_on_pickup_area_body_exited"]

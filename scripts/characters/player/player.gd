@@ -64,6 +64,8 @@ var boost_speed: float = 300
 @onready var snd_switch_weapon: AudioStreamPlayer = $Sounds/SwitchWeapon
 @onready var snd_proj_star_bullet: AudioStreamPlayer = $Sounds/ProjectileStarBullet
 @onready var snd_proj_fireball: AudioStreamPlayer = $Sounds/ProjectileFireball
+@onready var snd_proj_leaf: AudioStreamPlayer = $Sounds/ProjectileLeaf
+@onready var snd_proj_water_missile: AudioStreamPlayer = $Sounds/ProjectileWaterMissile
 
 ################################################################################
 # STATE MANAGEMENT
@@ -293,6 +295,10 @@ func collect_module(module_type: String) -> void:
 			GameState.unlock_weapon("Star Bullet")
 		"fireball":
 			GameState.unlock_weapon("Fireball")
+		"leaf_blower":
+			GameState.unlock_weapon("Leaf Blower")
+		"water_missile":
+			GameState.unlock_weapon("Water Missile")
 
 # Handles the weapon switching input.
 func handle_weapon_switching() -> void:
@@ -313,18 +319,18 @@ func shoot_bullet() -> void:
 
 	var current_weapon = GameState.get_current_weapon()
 	if current_weapon and shoot_timer <= 0:
-		var bullet = current_weapon.projectile_scene.instantiate() as Node2D
-		bullet.global_position = aim_node.global_position
-		bullet.direction = Vector2.RIGHT.rotated(aim_node.rotation)
-		bullet.shooter = self
+		if current_weapon.name == "Leaf Blower":
+			shoot_leaf_volley()
+		else:
+			var bullet = current_weapon.projectile_scene.instantiate() as Node2D
+			bullet.global_position = aim_node.global_position
+			bullet.direction = Vector2.RIGHT.rotated(aim_node.rotation)
+			bullet.shooter = self
+			get_tree().current_scene.add_child(bullet)
 		
-		# Play appropriate sounds.
-		if current_weapon.name == "Star Bullet":
-			SoundManager.play_sound(snd_proj_star_bullet.stream)
-		elif current_weapon.name == "Fireball":
-			SoundManager.play_sound(snd_proj_fireball.stream)
+			# Play appropriate sounds.
+			play_weapon_sound(current_weapon.name)
 		
-		get_tree().current_scene.add_child(bullet)
 		shoot_timer = current_weapon.cooldown
 
 # Update the shooting state based on the player's direction and state.
@@ -333,6 +339,50 @@ func update_shooting_state(direction: float) -> void:
 		current_state = States.WALK_SHOOT if direction else States.IDLE_SHOOT
 	else:
 		current_state = States.JUMP_SHOOT if velocity.y < 0 else States.FALL_SHOOT
+
+# Leaf volley.
+func shoot_leaf_volley() -> void:
+	var current_weapon = GameState.get_current_weapon()
+	if !current_weapon:
+		return
+	
+	# First leaf
+	var leaf1 = current_weapon.projectile_scene.instantiate() as Node2D
+	leaf1.global_position = aim_node.global_position
+	leaf1.direction = Vector2.RIGHT.rotated(aim_node.rotation)
+	leaf1.shooter = self
+	get_tree().current_scene.add_child(leaf1)
+	SoundManager.play_sound(snd_proj_leaf.stream)
+	
+	# Second leaf after small delay
+	await get_tree().create_timer(0.05).timeout
+	var leaf2 = current_weapon.projectile_scene.instantiate() as Node2D
+	leaf2.global_position = aim_node.global_position
+	# Slightly spread direction
+	leaf2.direction = Vector2.RIGHT.rotated(aim_node.rotation + 0.1)
+	leaf2.shooter = self
+	get_tree().current_scene.add_child(leaf2)
+	
+	# Third leaf after small delay
+	await get_tree().create_timer(0.05).timeout
+	var leaf3 = current_weapon.projectile_scene.instantiate() as Node2D
+	leaf3.global_position = aim_node.global_position
+	# Slightly spread direction
+	leaf3.direction = Vector2.RIGHT.rotated(aim_node.rotation - 0.1)
+	leaf3.shooter = self
+	get_tree().current_scene.add_child(leaf3)
+
+# Plays the appropriate sound for the current weapon
+func play_weapon_sound(weapon_name: String) -> void:
+	match weapon_name:
+		"Star Bullet":
+			SoundManager.play_sound(snd_proj_star_bullet.stream)
+		"Fireball":
+			SoundManager.play_sound(snd_proj_fireball.stream)
+		"Leaf Blower":
+			SoundManager.play_sound(snd_proj_leaf.stream)
+		"Water Missile":
+			SoundManager.play_sound(snd_proj_water_missile.stream)
 
 ################################################################################
 # INTERACTION FUNCTIONS

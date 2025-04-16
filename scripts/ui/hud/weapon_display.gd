@@ -3,7 +3,9 @@ extends Control
 
 @export var weapon_textures: Dictionary = {
 	"Star Bullet": preload("res://assets/textures/ui/hud/weapon_display/star_bullet.png"),
-	"Fireball": preload("res://assets/textures/ui/hud/weapon_display/fireball.png")
+	"Fireball": preload("res://assets/textures/ui/hud/weapon_display/fireball.png"),
+	"Leaf Blower": preload("res://assets/textures/ui/hud/weapon_display/leaf_blower.png"),
+	"Water Missile": preload("res://assets/textures/ui/hud/weapon_display/water_missile.png"),
 }
 
 @onready var texture_rect := $Texture
