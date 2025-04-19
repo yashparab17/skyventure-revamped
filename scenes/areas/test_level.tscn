@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://dhax1hganbrqw"]
+[gd_scene load_steps=20 format=4 uid="uid://dhax1hganbrqw"]
 
 [ext_resource type="Script" uid="uid://b63yl1lh1d18d" path="res://scripts/areas/test_level.gd" id="1_teidl"]
 [ext_resource type="PackedScene" uid="uid://dm2gstauhcofm" path="res://scenes/characters/player/player.tscn" id="1_x3nfg"]
@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://8npv4letncp" path="res://scenes/objects/stations/health_station.tscn" id="9_sv067"]
 [ext_resource type="PackedScene" uid="uid://bn61jj2l8liu1" path="res://scenes/items/modules/health/health_module.tscn" id="14_2otf0"]
 [ext_resource type="PackedScene" uid="uid://bqqdgr1xsbr3g" path="res://scenes/items/pickups/health_pickup.tscn" id="15_77tbs"]
+[ext_resource type="PackedScene" uid="uid://ddhhs61u2guwu" path="res://scenes/objects/doors/door.tscn" id="18_i4vxt"]
+[ext_resource type="PackedScene" uid="uid://15tbit6med7m" path="res://scenes/objects/doors/spawn_point.tscn" id="19_ym655"]
 
 [node name="TestLevel" type="Node2D"]
 script = ExtResource("1_teidl")
@@ -122,3 +124,12 @@ position = Vector2(224, 184)
 
 [node name="HealthStation" parent="Objects" instance=ExtResource("9_sv067")]
 position = Vector2(256, 184)
+
+[node name="Door1" parent="Objects" instance=ExtResource("18_i4vxt")]
+position = Vector2(152, 176)
+target_scene = "res://scenes/areas/forgotten_isles/vertical_cave.tscn"
+target_spawn_id = "from_test_level"
+
+[node name="FromVerticalCave" parent="Objects/Door1" instance=ExtResource("19_ym655")]
+position = Vector2(0, 12)
+spawn_id = "from_vertical_cave"

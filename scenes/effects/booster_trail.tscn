@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://c3dynveuk2bk7"]
+
+[ext_resource type="Texture2D" uid="uid://lhevwn3qwt5l" path="res://assets/sprites/effects/booster_trail.png" id="1_gjmgj"]
+[ext_resource type="Script" uid="uid://vqqfb60y5d73" path="res://scripts/effects/booster_trail.gd" id="2_kgg0c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgg0c"]
+atlas = ExtResource("1_gjmgj")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnhik"]
+atlas = ExtResource("1_gjmgj")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eb8ex"]
+atlas = ExtResource("1_gjmgj")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y08f0"]
+atlas = ExtResource("1_gjmgj")
+region = Rect2(36, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysdmo"]
+atlas = ExtResource("1_gjmgj")
+region = Rect2(48, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k7de4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kgg0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnhik")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eb8ex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y08f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysdmo")
+}],
+"loop": false,
+"name": &"booster",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BoosterTrail" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_k7de4")
+animation = &"booster"
+autoplay = "booster"
+frame = 4
+frame_progress = 1.0
+script = ExtResource("2_kgg0c")

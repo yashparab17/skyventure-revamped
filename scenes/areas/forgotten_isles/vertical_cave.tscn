@@ -34,7 +34,6 @@ drag_bottom_margin = 0.1
 script = ExtResource("3_7uajy")
 
 [node name="HUD" parent="." instance=ExtResource("4_fd1ja")]
-visible = false
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -84,3 +83,12 @@ target_spawn_id = "from_vertical_cave"
 [node name="FromUnderIslands" parent="Transitions/Door1" instance=ExtResource("8_he8wi")]
 position = Vector2(0, 12)
 spawn_id = "from_under_islands"
+
+[node name="Door2" parent="Transitions" instance=ExtResource("7_4b8dv")]
+position = Vector2(296, -272)
+target_scene = "res://scenes/areas/test_level.tscn"
+target_spawn_id = "from_vertical_cave"
+
+[node name="FromTestLevel" parent="Transitions/Door2" instance=ExtResource("8_he8wi")]
+position = Vector2(0, 12)
+spawn_id = "from_test_level"

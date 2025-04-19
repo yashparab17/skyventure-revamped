@@ -7,6 +7,7 @@ extends CharacterBody2D
 # Preload scenes for effects.
 var entity_death = preload("res://scenes/effects/entity_death.tscn")
 var teleport = preload("res://scenes/effects/teleport.tscn")
+var booster_trail = preload("res://scenes/effects/booster_trail.tscn")
 
 ################################################################################
 # PROPERTIES
@@ -59,6 +60,7 @@ var boost_speed: float = 300
 @onready var snd_bonk: AudioStreamPlayer = $Sounds/Bonk
 @onready var snd_hurt: AudioStreamPlayer = $Sounds/Hurt
 @onready var snd_death: AudioStreamPlayer = $Sounds/Death
+@onready var snd_booster: AudioStreamPlayer = $Sounds/Booster
 
 # Weapon sound references.
 @onready var snd_switch_weapon: AudioStreamPlayer = $Sounds/SwitchWeapon
@@ -563,12 +565,17 @@ func activate_boost() -> void:
 	# Reset velocity for clean boost
 	velocity = Vector2.ZERO
 	
+	# Booster trail.
+	var booster_trail_instance = booster_trail.instantiate() as Node2D
+	booster_trail_instance.global_position = global_position + sprite.position
+	get_parent().add_child(booster_trail_instance)
+	
 	# Determine boost direction
 	if Input.is_action_pressed("aim_up"):
 		velocity.y = -boost_speed * 0.7
 		current_state = States.JUMP
 	elif Input.is_action_pressed("aim_down"):
-		velocity.y = boost_speed * 0.5
+		velocity.y = boost_speed
 		current_state = States.FALL
 	else:
 		# Horizontal boost
@@ -576,7 +583,7 @@ func activate_boost() -> void:
 		velocity.x = direction * boost_speed
 		current_state = States.JUMP
 	
-	SoundManager.play_sound(snd_jump.stream)
+	SoundManager.play_sound(snd_booster.stream)
 
 func end_boost() -> void:
 	is_boosting = false

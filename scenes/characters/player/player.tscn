@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://dm2gstauhcofm"]
+[gd_scene load_steps=61 format=3 uid="uid://dm2gstauhcofm"]
 
 [ext_resource type="Script" uid="uid://bvytmrl784wuv" path="res://scripts/characters/player/player.gd" id="1_4jjpf"]
 [ext_resource type="Texture2D" uid="uid://c8xkk7pjpcho3" path="res://assets/sprites/characters/player/player.png" id="2_3xnwo"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://dsf6idrcom8ud" path="res://assets/sounds/characters/player/hurt.wav" id="5_rgom0"]
 [ext_resource type="AudioStream" uid="uid://dmh4fpgpkdnl4" path="res://assets/sounds/characters/player/death.wav" id="7_w6xla"]
 [ext_resource type="AudioStream" uid="uid://c41io7jkj4e36" path="res://assets/sounds/characters/player/switch_weapon.wav" id="8_3xnwo"]
+[ext_resource type="AudioStream" uid="uid://bin0dd68fylhc" path="res://assets/sounds/characters/player/booster.wav" id="8_blysn"]
 [ext_resource type="AudioStream" uid="uid://clwss3qa34jfo" path="res://assets/sounds/projectiles/star_bullet.wav" id="8_xuses"]
 [ext_resource type="AudioStream" uid="uid://da13h1dsx48xl" path="res://assets/sounds/projectiles/fireball.wav" id="9_42irl"]
 [ext_resource type="AudioStream" uid="uid://uvvmkbxsosmu" path="res://assets/sounds/projectiles/leaf_projectile.wav" id="11_djydg"]
@@ -849,7 +850,7 @@ position = Vector2(0, -8)
 texture = ExtResource("2_3xnwo")
 hframes = 8
 vframes = 17
-frame = 8
+frame = 127
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -892,6 +893,9 @@ stream = ExtResource("5_rgom0")
 
 [node name="Death" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("7_w6xla")
+
+[node name="Booster" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_blysn")
 
 [node name="SwitchWeapon" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_3xnwo")

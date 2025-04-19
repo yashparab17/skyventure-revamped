@@ -17,7 +17,7 @@ var cutscene_1_id = "cutscene_1"
 
 # Called when the area loads in.
 func _ready() -> void:
-	if GameState.has_seen_cutscene(cutscene_1_id):
+	if GameState.has_seen_cutscene(cutscene_1_id) or GameState.has_weapon("Star Bullet"):
 		cutscene_1_trigger.queue_free()
 		
 	# Spawn the player accordingly at the correct position.
